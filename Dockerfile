@@ -4,6 +4,7 @@ FROM starefossen/github-pages:latest
 # ENV JSON_GEM_VERSION 1.8.6
 
 RUN gem install --verbose --no-document \
+    html-proofer \
     kramdown \
     netrc \
     # redcarpet \
