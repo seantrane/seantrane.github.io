@@ -35,7 +35,8 @@ deploy:
   github-token: "$GH_TOKEN"
   name: Sean Trane
   email: seantrane@users.noreply.github.com
-  target-branch: gh-pages
+  keep-history: true
+  target-branch: master
   on:
     repo: seantrane/seantrane.github.io
     branch: master
