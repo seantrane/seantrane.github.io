@@ -11,4 +11,4 @@ This is an [explanation](https://www.youtube.com/watch?v=o3im-TsfQ9I) by [PC Mag
 
 ## [Blockchain, Explained](https://www.youtube.com/watch?v=o3im-TsfQ9I)
 
-{% youtube "https://www.youtube.com/watch?v=o3im-TsfQ9I" %}
+{% include youtube.html id='o3im-TsfQ9I' %}

@@ -12,4 +12,4 @@ This is a very funny [presentation](https://www.youtube.com/watch?v=X0tjziAQfNQ)
 
 ## [10 Tips for failing badly at Microservices by David Schmitz](https://www.youtube.com/watch?v=X0tjziAQfNQ)
 
-{% youtube "https://www.youtube.com/watch?v=X0tjziAQfNQ" %}
+{% include youtube.html id='X0tjziAQfNQ' %}

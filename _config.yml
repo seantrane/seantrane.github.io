@@ -96,7 +96,6 @@ plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
   - jekyll-toc
-  - jekyll-youtube
   - jemoji
   - netrc
   # - redcarpet
