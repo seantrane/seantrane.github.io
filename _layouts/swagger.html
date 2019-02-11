@@ -98,8 +98,9 @@ layout: default
 <section>
   <h2>OpenAPI Specification</h2>
   <p>Copy and then paste into <a href="https://editor.swagger.io/">Swagger Online Editor</a> for best UI experience. <a href="https://github.com/OAI/OpenAPI-Specification/">Learn more about the OpenAPI Specification</a>.</p>
+{% capture dataFilename %}data/{{ page.data }}.yml{% endcapture %}
 {% highlight yaml %}
-{% include data/{{ page.data }}.yml %}
+{% include {{ dataFilename }} %}
 {% endhighlight %}
 </section>
 
