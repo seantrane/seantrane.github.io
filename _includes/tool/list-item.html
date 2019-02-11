@@ -1,0 +1,5 @@
+{% if tool %}
+<li>
+  <h5><a class="tool-link" href="{{ tool.url | prepend: site.baseurl }}">{{ tool.title }}</a></h5>
+</li>
+{% endif %}

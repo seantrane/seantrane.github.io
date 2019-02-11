@@ -1,0 +1,41 @@
+//
+// Badges
+// -------------------------
+
+@mixin badge-styles($badge-color: #555, $badge-text: #fff) {
+  background-color: $badge-color;
+  //border-color: $badge-color;
+  color: $badge-text;
+}
+
+.badge {
+  padding: 3px 5px;
+}
+
+.badge-primary {@include badge-styles($btn-primary-bg)}
+.badge-success {@include badge-styles($btn-success-bg)}
+.badge-warning {@include badge-styles($btn-warning-bg)}
+.badge-danger  {@include badge-styles($btn-danger-bg)}
+.badge-info    {@include badge-styles($btn-info-bg)}
+
+// Semantic Badges
+.badge-section {@include badge-styles($brand-section)}
+.badge-article,
+.badge-nav {
+  @include badge-styles($brand-nav);
+}
+.badge-aside {@include badge-styles($brand-aside)}
+.badge-pullout {@include badge-styles($brand-pullout)}
+// .badge-link{@include badge-styles($link-color)}
+
+// Social Badges
+.badge-facebook {@include badge-styles($color-facebook)}
+.badge-flickr {@include badge-styles($color-flickr)}
+.badge-google-plus {@include badge-styles($color-google-plus)}
+.badge-instagram {@include badge-styles($color-instagram)}
+.badge-linkedin {@include badge-styles($color-linkedin)}
+.badge-pinterest {@include badge-styles($color-pinterest)}
+.badge-twitter {@include badge-styles($color-twitter)}
+.badge-vimeo {@include badge-styles($color-vimeo)}
+.badge-vine {@include badge-styles($color-vine)}
+.badge-youtube {@include badge-styles($color-youtube)}

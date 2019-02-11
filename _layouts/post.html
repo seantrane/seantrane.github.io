@@ -1,0 +1,44 @@
+---
+layout: default
+---
+<article class="post" itemscope itemtype="https://schema.org/BlogPosting">
+
+  {% include page-header.html type='post' %}
+
+  <div class="post-content" itemprop="articleBody">
+    {% if page.date or page.author %}
+    <div class="post-details">
+      {% if page.date %}<div class="post-date">Published <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{% include date.html %}</time></div>{% endif %}
+      {% if page.author %}<div class="post-author">By <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">{{ page.author }}</span></span></div>{% endif %}
+      <ol class="categories">
+        {% assign sortedCategories = page.categories | sort %}
+        {% for category in sortedCategories %}
+          <li>
+            {% capture categoryUri %}/category/{{ category | slugify: "latin" }}/{% endcapture %}
+            <a href="{{ categoryUri | prepend: site.baseurl }}">#{{ category }}</a>
+          </li>
+        {% endfor %}
+      </ol>
+      <div class="post-flourish"></div>
+    </div>
+    {% endif %}
+    {{ content | toc }}
+  </div>
+{% comment %}
+  <div class="related">
+    <h3>Related Posts</h3>
+    {% assign firstCategory = page.categories | first %}
+    {% assign relatedCount = 0 %}
+    {% for related in site.categories[firstCategory] %}
+      {% unless page.permalink == related.permalink %}
+        {% assign relatedCount = relatedCount | plus: 1 %}
+        <a href="{{related.permalink}}">{{ related.title }}</a>
+      {% endunless %}
+
+      {% if relatedCount == 3 %}
+        {% break %}
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endcomment %}
+</article>

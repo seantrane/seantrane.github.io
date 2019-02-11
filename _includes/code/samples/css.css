@@ -1,0 +1,11 @@
+body:before {
+  content: 'Hello World!';
+}
+html {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+.test input[type="number"]::-webkit-inner-spin-button {
+  height: auto;
+}

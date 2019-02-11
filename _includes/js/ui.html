@@ -1,0 +1,45 @@
+<script>
+
+  $('.collapse').collapse();
+  //$(":date").dateinput({format:'mm/dd/yyyy',selectors:true,min:-365,max:1000,offset:[10,20],speed:'fast',firstDay:1});
+  //$(":range").rangeinput();
+
+  // Sticky Navbars
+  $(window).scroll(function(){
+    var $navSticky = $('#nav-sticky');
+    if ( $navSticky.length ) {
+      $navSticky.affix({
+        offset: { top: $navSticky.offset().top }
+      });
+    }
+  });
+
+  // get current URL and apply 'active' class to links
+  var activeUrl = new String(window.location);
+  var activeUrl = activeUrl.split("?");
+  if (activeUrl.length > 1) activeUrl.pop();
+  var activeUrl = activeUrl.join("");
+  var activeUrl = activeUrl.split("#");
+  if (activeUrl.length > 1) activeUrl.pop();
+  var activeUrl = activeUrl.join("");
+  var activeUrl = activeUrl.split("/");
+  activeUrl.shift();activeUrl.shift();activeUrl.shift();
+  var activeUrl = activeUrl.join("/");
+  $('.nav a[href="/'+activeUrl+'"]').parent('li').addClass('active');
+
+  // overrun collapse
+  var n = $("#overrun p").size();
+  if (n > 2) {
+    $("#overrun").slideUp("fast");
+    $("#overrun").before('<p><a href="" id="showoverrun" class="bold">[+] Show</a></p>');
+    $("#showoverrun").click(function() {
+      $("#overrun").slideToggle("fast");
+      $(this).text($(this).text() == '[+] Show' ? '[-] Hide' : '[+] Show');
+      return false;
+    });
+  }
+  if (n == 0) {
+    $("#overrun").wrapInner("<p></p>");
+  }
+
+</script>

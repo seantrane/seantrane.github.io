@@ -1,0 +1,10 @@
+---
+layout: default
+---
+<div class="blog list">
+  {% capture categoryTitle %}<span style="color:rgba(0,0,0,0.2)">#</span>{{ page.category }} <span style="color:rgba(0,0,0,0.3)">posts</span>{% endcapture %}
+  {% include page-header.html title=categoryTitle %}
+
+  {% assign categoryPosts = site.categories[page.category] %}
+  {% include post/list.html list_items=categoryPosts limit=99 %}
+</div>

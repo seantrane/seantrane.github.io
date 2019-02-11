@@ -1,0 +1,28 @@
+name: Apps
+bookmarks:
+  # - title:
+  #   url:
+  - title: Wireframe.cc
+    url: https://wireframe.cc/
+  - title: Gravit Designer
+    url: https://designer.io/
+  - title: RegExr
+    url: http://regexr.com/
+  - title: Diff Checker
+    url: https://www.diffchecker.com/diff
+  - title: Swagger Online Editor
+    url: https://editor.swagger.io/
+  - title: JSFiddle
+    url: https://jsfiddle.net/
+  - title: b64.io
+    url: http://b64.io/
+  - title: Favicon Generator
+    url: https://realfavicongenerator.net/
+  - title: Adobe Kuler
+    url: https://color.adobe.com/create/color-wheel/
+  - title: IcoMoon App
+    url: https://icomoon.io/app/
+  - title: IdeaBoardz
+    url: http://www.ideaboardz.com/
+  - title: StackBlitz
+    url: https://stackblitz.com/

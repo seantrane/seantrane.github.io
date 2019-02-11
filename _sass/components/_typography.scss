@@ -1,0 +1,638 @@
+//
+// Typography
+// --------------------------------------------------
+
+$text-selection-bg: #6bd5ff;
+$text-selection-color: #fff;
+
+::-moz-selection {
+  background: $text-selection-bg;
+  color: $text-selection-color;
+  text-shadow: none;
+}
+::selection {
+  background: $text-selection-bg;
+  color: $text-selection-color;
+  text-shadow: none;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.borderline {
+  border-bottom: 1px solid $link-color;
+  line-height: 1.4;
+  text-decoration: none !important;
+  &:hover,
+  &:focus,
+  &:active {
+    border-bottom-color: $link-hover-color;
+  }
+}
+
+a {
+  text-decoration: underline;
+  &.btn,
+  &.thumbnail,
+  .breadcrumb &,
+  .dropdown-menu &,
+  .list-group &,
+  .nav &,
+  .navbar &,
+  .pager &,
+  .pagination & {
+    text-decoration: none;
+  }
+}
+
+p,
+ul,
+ol,
+pre {
+  margin-bottom: floor($line-height-computed / 1.2);
+}
+
+.lead {
+  // font-family: $brand-font;
+  font-size: $font-size-base;
+  font-weight: 300;
+  line-height: $line-height-base;
+  margin-bottom: floor($line-height-computed * 1.2);
+}
+p {
+  &.lead,
+  .lead & {
+    font-size: floor($font-size-base * 1.2);
+    line-height: 1.35;
+    @media (min-width: $screen-tablet) {
+      font-size: floor($font-size-base * 1.5);
+    }
+    &.accented {
+      color: $brand-primary;
+    }
+  }
+}
+
+tt,
+.monospace {
+  font-family: $font-family-monospace;
+  line-height: 1;
+}
+code {
+  padding: 2px 4px 1px;
+}
+pre {
+  padding: 6px 4px 2px 10px;
+}
+
+.vtop {vertical-align: top}
+.vmiddle {vertical-align: middle}
+.vbottom {vertical-align: bottom}
+
+.wordwrap {
+  -moz-hyphens: auto;
+  -ms-word-break: break-all;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+  word-break: break-all;
+}
+.nobreak {white-space: nowrap}
+
+.nomargin {margin: 0}
+.nopadding {padding: 0}
+
+.clearleft {clear: left}
+.clearright {clear: right}
+.clearboth {clear: both}
+
+.smaller {font-size: $font-size-small}
+.larger {font-size: $font-size-large}
+.text-serif {font-family: $font-family-serif}
+
+.table-striped {
+  > tbody {
+    > tr:nth-of-type(odd) {
+      background-color: $table-bg-accent-odd;
+    }
+    > tr:nth-of-type(even) {
+      background-color: $table-bg-accent-even;
+    }
+  }
+  &.table-hover {
+    > tbody {
+      > tr:nth-of-type(odd):hover,
+      > tr:nth-of-type(even):hover {
+        background-color: $table-bg-hover;
+      }
+    }
+  }
+}
+
+
+table {
+  @extend .table;
+  @extend .table-bordered;
+  @extend .table-condensed;
+  @extend .table-responsive;
+  td {
+    vertical-align: top;
+  }
+}
+
+blockquote {
+  &.text-center {
+    border-right: 5px solid $gray-lighter;
+  }
+}
+
+mark,
+.mark {
+  background-color: $brand-highlight;
+}
+
+// body .title{margin-top:0}
+// .subtitle{color:$gray-light;font-weight:500;margin-top:0;/*font-size:ceil($font-size-base * 1.8)*/}
+
+
+// Headings
+// -------------------------
+
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3,
+h4,
+.h4,
+h5,
+.h5,
+h6,
+.h6 {
+  color: $headings-color; // $brand-primary;
+  font-weight: 700;
+  margin-bottom: $line-height-computed;
+  margin-top: $line-height-computed;
+  text-rendering: optimizelegibility;
+}
+h4,
+.h4,
+h5,
+.h5,
+h6,
+.h6 {
+  margin-bottom: floor($line-height-computed / 2);
+  margin-top: floor($line-height-computed / 1.4);
+}
+small {
+  h2 & { font-size: ceil($font-size-base * 1.375); }
+  h3 & { font-size: ceil($font-size-base * 1.175); }
+  h4 & { font-size: ceil($font-size-base * 1.1); }
+  h1 &,
+  h2 &,
+  h3 &,
+  h4 & {
+    line-height: 1.2;
+  }
+}
+
+$headline-color: $trans-black-1;
+$headline-shadow-color: $trans-black-2;
+
+@mixin headline-shadow($headline-color: $headline-color, $headline-shadow-color: $headline-shadow-color) {
+  -moz-box-shadow: 0 15px 20px -20px $headline-shadow-color;
+  -webkit-box-shadow: 0 15px 20px -20px $headline-shadow-color;
+  border-bottom: 1px solid $headline-color;
+  box-shadow: 0 15px 20px -20px $headline-shadow-color;
+}
+
+.headline {
+  @include headline-shadow;
+  margin: $line-height-computed 0;
+  padding-bottom: floor($line-height-computed / 3);
+  padding-top: floor($line-height-computed / 2);
+}
+
+h1 {
+  @media (max-width: $grid-float-breakpoint-max) {
+    font-size: round($font-size-h1 / 1.2);
+  }
+  &.accented {
+    color: $brand-primary;
+  }
+  &.headline {
+    &.accented {
+      @include headline-shadow($brand-primary, $brand-primary);
+    }
+  }
+}
+
+h2 {
+  &.accented {
+    color: $brand-section;
+  }
+  &.headline {
+    &.accented {
+      @include headline-shadow($brand-section, $brand-section);
+    }
+  }
+}
+
+h3 {
+  &.accented {
+    color: $brand-nav;
+  }
+  &.headline {
+    &.accented {
+      @include headline-shadow($brand-nav, $brand-nav);
+    }
+  }
+}
+
+h4 {
+  &.accented {
+    color: $brand-aside;
+  }
+  &.headline {
+    &.accented {
+      @include headline-shadow($brand-aside, $brand-aside);
+    }
+  }
+}
+
+.sub-head-line {
+  border-bottom: 0;
+  border-top: 3px solid $gray;
+  clear: both;
+  margin: $line-height-computed 0;
+  padding-bottom: 0;
+  padding-top: floor($line-height-computed / 2);
+}
+.sub-head-line-h1 {
+  @extend .sub-head-line;
+  border-top-color: $brand-primary;
+  border-top-width: 6px;
+  color: $brand-primary;
+}
+.sub-head-line-h2 {
+  @extend .sub-head-line;
+  border-top-color: $brand-section;
+  border-top-width: 6px;
+  color: $brand-section;
+}
+.sub-head-line-h3 {
+  @extend .sub-head-line;
+  border-top-color: $brand-nav;
+  color: $brand-nav;
+}
+.sub-head-line-h4 {
+  @extend .sub-head-line;
+  border-top-color: $brand-aside;
+  color: $brand-aside;
+}
+
+//
+// Lists
+// -------------------------
+
+.list-bulleted {
+  list-style: none;
+  padding-left: $padding-large-horizontal;
+  @media (max-width: $grid-float-breakpoint-max) {
+    margin-bottom: 0;
+  }
+  ul {
+    list-style: none;
+    padding-left: $padding-large-horizontal;
+  }
+  li {
+    //margin: 0 0 1px; //* Give each list item a left margin to make room for the numbers */
+    padding: 4px 0 0 10px; //* Add some spacing around the content */
+    text-indent: -7px;//-14px;
+    .icon,
+    .glyphicon {
+      font-size: 85%;
+      margin-right: 7px;
+    }
+  }
+}
+
+.list-numbered {
+  counter-reset: li; //* Initiate a counter */
+  margin-left: 0; //* Remove the default left margin */
+  padding-left: 0; //* Remove the default left padding */
+  > li {
+    list-style: none; //* Disable the normal item numbering */
+    margin: 0 0 1px 1.3em; //* Give each list item a left margin to make room for the numbers */
+    padding: 4px 0 0 8px; //* Add some spacing around the content */
+    position: relative; //* Create a positioning context */
+    &:before {
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      //color: $brand-primary;
+      content: append(counter(li), '.'); //* Use the counter as content */
+      counter-increment: li; //* Increment the counter by 1 */
+      font-family: $font-family-serif;
+      font-size: ($font-size-h4 - 2);
+      font-weight: bold;
+      left: -.9em;
+      margin-right: 8px;
+      //padding: 4px;
+      position: absolute;
+      text-align: center;
+      top: 0;
+      width: 1em;
+    }
+  }
+  li {
+    ol,
+    ul {
+      margin-top: 4px;
+    }
+  }
+  ol {
+    @extend .list-numbered;
+    li:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.list-primary {
+  li {
+    &:before {
+      color: $brand-primary;
+    }
+    .icon,
+    .glyphicon {
+      color: $brand-primary;
+    }
+  }
+}
+
+.list-brand,
+.list-brand-soft,
+.list-brand-hard,
+.list-brand-nav {
+  @extend .list-bulleted;
+  //color: $gray-light;
+  li {
+    line-height: ceil($line-height-computed / 1.1);
+    padding: 5px 0 2px;
+    &.active {
+      font-weight: bold;
+      > a {
+        color: darken($gray-base, 100%);
+        text-decoration: underline;
+      }
+    }
+    > a {
+      // color: $gray;
+      &:hover,
+      &:focus {
+        color: $brand-primary;
+      }
+      &:active {
+        color: $brand-danger;
+        text-decoration: underline;
+      }
+      &.active {
+        color: darken($gray-base, 100%);
+        text-decoration: underline;
+      }
+    }
+  }
+}
+.list-brand-soft {
+  li {
+    > a {
+      color: $gray;
+    }
+  }
+}
+.list-brand {
+  li {
+    font-family: $brand-font;
+  }
+}
+.list-brand-hard {
+  li {
+    font-family: $brand-font;
+    font-size: ceil($font-size-base * 1.1);
+    padding-bottom: $padding-large-vertical;
+  }
+}
+.list-brand-nav {
+  padding-top: $padding-large-vertical;
+  li {
+    font-family: $brand-font;
+    padding-bottom: $padding-large-vertical;
+  }
+}
+
+.fa-ul {
+  $icon-file-excel-color: #008000;
+  $icon-file-pdf-color: #f00;
+  $icon-file-word-color: #00f;
+  @include list-unstyled;
+  li {
+    font-family: $brand-font;
+    font-size: ceil($font-size-base * 1.1);
+    .icon {
+      margin-right: $padding-small-horizontal;
+    }
+    .icon-file-excel-o {
+      color: $icon-file-excel-color;
+    }
+    .icon-file-pdf-o,
+    .icon-file-powerpoint-o {
+      color: $icon-file-pdf-color;
+    }
+    .icon-file-word-o {
+      color: $icon-file-word-color;
+    }
+  }
+}
+
+dt,
+dd {
+  line-height: ($line-height-base - .1);
+  margin-bottom: round($line-height-computed / 4);
+}
+
+.dl-default {
+  dt {
+    @extend .h5;
+    font-weight: 700;
+  }
+  dd {
+    margin-bottom: $line-height-computed;
+    margin-left: $line-height-computed;
+  }
+}
+
+.dl-inset {
+  dt {
+    clear: both;
+    float: none;
+    margin-top: round($line-height-computed / 3);
+  }
+  dd {
+    clear: both;
+    float: none;
+    margin-left: $line-height-computed;
+  }
+}
+
+.dl-brand {
+  @extend .clearfix;
+  dt {
+    clear: left;
+    float: left;
+    margin-right: round($line-height-computed / 3);
+  }
+  dd {
+    margin-bottom: round($line-height-computed / 2);
+    margin-left: round($line-height-computed / 3);
+  }
+}
+
+.dl-codes {
+  @extend .clearfix;
+  dt {
+    background-color: $gray-lighter;
+    clear: left;
+    float: left;
+    margin-right: round($line-height-computed / 3);
+    padding: $padding-small-vertical $padding-small-horizontal ($padding-small-vertical - 1);
+  }
+  dd {
+    float: left;
+    margin-bottom: round($line-height-computed / 2);
+    margin-left: round($line-height-computed / 3);
+  }
+}
+
+.list-underline {
+  li {
+    a {
+      @extend .underline;
+    }
+  }
+}
+
+.list-borderline {
+  li {
+    a {
+      @extend .borderline;
+    }
+  }
+  &.list-brand-soft {
+    li {
+      a {
+        border-color: $gray;
+      }
+    }
+  }
+}
+
+
+//
+// Icons
+// -------------------------
+
+.icon-right {
+  float: right;
+}
+
+@mixin icon-size($icon-font-size: 16px) {
+  font-size: $icon-font-size;
+  height: $icon-font-size;
+  line-height: $icon-font-size;
+  text-align: center;
+  vertical-align: middle;
+  width: $icon-font-size;
+}
+.icon16 { @include icon-size(16px) }
+.icon20 { @include icon-size(20px) }
+.icon24 { @include icon-size(24px) }
+.icon32 { @include icon-size(32px) }
+.icon40 { @include icon-size(40px) }
+.icon48 { @include icon-size(48px) }
+.icon64 { @include icon-size(64px) }
+.icon72 { @include icon-size(72px) }
+.icon96 { @include icon-size(96px) }
+
+
+//
+// Social Icons
+// -------------------------
+
+.social-icons-color {
+  .icon-youtube,
+  .icon-youtube-square {
+    @include transition(color .5s);
+    color: $color-youtube; // #c9304c;
+    &:hover {
+      color: darken($color-youtube, 10%); // #8b2135;
+    }
+  }
+  .icon-twitter,
+  .icon-twitter-square {
+    @include transition(color .5s);
+    color: $color-twitter; // #00adf0;
+    &:hover {
+      color: darken($color-twitter, 10%); // #0076a3;
+    }
+  }
+  .icon-facebook,
+  .icon-facebook-square {
+    @include transition(color .5s);
+    color: $color-facebook; // #3c5188;
+    &:hover {
+      color: darken($color-facebook, 10%); // #253153;
+    }
+  }
+  .icon-linkedin,
+  .icon-linkedin-square {
+    @include transition(color .5s);
+    color: $color-linkedin; // #116999;
+    &:hover {
+      color: darken($color-linkedin, 10%); // #093a54;
+    }
+  }
+  .icon-google-plus,
+  .icon-google-plus-square {
+    @include transition(color .5s);
+    color: $color-google-plus; // #c9340c;
+    &:hover {
+      color: darken($color-google-plus, 10%); // #812108;
+    }
+  }
+  .icon-pinterest,
+  .icon-pinterest-square {
+    @include transition(color .5s);
+    color: $color-pinterest; // #e25a5c;
+    &:hover {
+      color: darken($color-pinterest, 10%); // #cc2426;
+    }
+  }
+  .icon-flickr,
+  .icon-flickr-square {
+    @include transition(color .5s);
+    color: $color-flickr;
+    &:hover {
+      color: darken($color-flickr, 10%);
+    }
+  }
+  .icon-envelope,
+  .icon-envelope-square {
+    @include transition(color .5s);
+    color: $brand-primary;
+    &:hover {
+      color: darken($brand-primary, 10%);
+    }
+  }
+}

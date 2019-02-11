@@ -1,0 +1,20 @@
+name: Articles
+bookmarks:
+  # - title:
+  #   url:
+  - title: What I Talk About When I Talk About Platforms
+    url: https://martinfowler.com/articles/talk-about-platforms.html
+  - title: How Netflix Scales with Node.js and Containers
+    url: https://medium.com/@nodejs/netflixandchill-how-netflix-scales-with-node-js-and-containers-cf63c0b92e57#.5vtl4s2tt
+  - title: 'The Uber Engineering Tech Stack, Part I: The Foundation'
+    url: https://eng.uber.com/tech-stack-part-one/
+  - title: How N26 built a modern banking software with JavaScript & Microservices
+    url: https://community.risingstack.com/how-n26-built-a-modern-banking-software-with-javascript-microservices/
+  - title: Feature Toggles (aka Feature Flags)
+    url: https://martinfowler.com/articles/feature-toggles.html
+  - title: 'Progressive Web Applications: What Exactly Are They?'
+    url: https://speckyboy.com/progressive-web-applications/
+  - title: How to Use Google Analytics in China
+    url: http://grizzlypandamarketing.com/use-google-analytics-china/
+  - title: 'Microservices: Decomposing Applications for Deployability and Scalability'
+    url: http://www.infoq.com/articles/microservices-intro

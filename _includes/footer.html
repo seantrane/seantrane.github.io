@@ -1,0 +1,32 @@
+<footer id="site-footer">
+
+  <div class="container">
+
+    <hr>
+    <div class="row">
+      <div id="site-copyright">
+        <p class="footer-copyright"><abbr title="Copyright">&copy;</abbr> 1993&ndash;<abbr title="Infinity">&infin;</abbr> <span class="sts-name"><span class="sts-first">Sean</span> <span class="sts-middle">Trane</span> <span class="sts-last">Sciarrone</span></span></p>
+        <p class="footer-description">{{ site.description }}</p>
+      </div>
+      <nav id="site-footer-nav">
+        <ul class="nav">
+            <li><a href="{{ "/feed.xml" | prepend: site.baseurl }}"><span class="icon icon-rss"></span> Subscribe</a></li>
+            {% if site.email %}
+            <li><a href="mailto:{{ site.email | encode_email }}"><span class="icon icon-envelope-o"></span> Email</a></li>
+            {% endif %}
+            {% if site.linkedin_username %}
+            <li><a href="https://linkedin.com/in/{{ site.linkedin_username }}"><span class="icon icon-linkedin"></span> LinkedIn</a></li>
+            {% endif %}
+            {% if site.github_username %}
+            <li><a href="https://github.com/{{ site.github_username }}"><span class="icon icon-github"></span> GitHub</a></li>
+            {% endif %}
+            {% if site.twitter_username %}
+            <li><a href="https://twitter.com/{{ site.twitter_username }}"><span class="icon icon-twitter"></span> Twitter</a></li>
+            {% endif %}
+        </ul>
+      </nav>
+    </div>
+
+  </div>
+
+</footer>

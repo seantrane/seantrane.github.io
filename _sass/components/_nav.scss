@@ -1,0 +1,849 @@
+//
+// Dropdowns
+// --------------------------------------------------
+
+.dropdown-menu {
+  > li > a {
+    color: $gray-dark;
+    &:hover,
+    &:focus {
+      background-color: $gray-lighter;
+      color: $link-hover-color;
+    }
+  }
+  > .active > a {
+    &,
+    &:hover,
+    &:focus {
+      background-color: $gray;
+    }
+  }
+}
+
+//
+// Nav
+// --------------------------------------------------
+
+.nav > li > a {
+  @media (max-width: $grid-float-breakpoint-max) {
+    padding: $padding-base-vertical $padding-base-horizontal;
+  }
+}
+
+//
+// Navbar
+// --------------------------------------------------
+
+.navbar {
+  min-height: 0;
+}
+.navbar-nav > li > a {
+  padding-bottom: round($line-height-computed / 2);
+  padding-top: round($line-height-computed / 2);
+}
+// .navbar-toggle { background-color:$gray-lighter; }
+// .navbar-toggle .icon-bar { background-color: $trans-black-3; }
+
+// Undo rounded corners in static and fixed navbars
+.navbar-static-top,
+.navbar-fixed-top,
+.navbar-fixed-bottom {
+  border-radius: 0;
+}
+
+//
+// Navbar
+// --------------------------------------------------
+
+.navbar-form {
+  margin-bottom: 3px;
+  margin-top: 3px;
+}
+
+// User Navigation
+.nav-user {
+  @extend .clearfix;
+  @extend .pull-right;
+  > li {
+    float: left;
+    > a {
+      $nav-user-badge-active-color-hover: #fff;
+      @include transition(all .25s ease-in-out);
+      background-color: transparent; // $gray-lighter;
+      border: 0; // 1px solid $black-trans-1;
+      border-radius: 0;
+      // border-top: 0;
+      color: $link-hover-color;
+      font-family: $navbar-site-link-font;
+      .badge {
+        background-color: darken($gray-lighter, 15%);
+        font-size: 10px;
+        padding: 2px 5px;
+      }
+      .badge-active {
+        background-color: $link-hover-color;
+        color: $gray-lightest;
+        &:hover,
+        &:focus {
+          background-color: $link-color;
+          color: $nav-user-badge-active-color-hover;
+        }
+      }
+      // >= SM
+      @media (min-width: $screen-sm-min) {
+        font-size: 14px;
+        height: 38px;
+        padding: $padding-small-horizontal;
+      }
+      // >= MD
+      @media (min-width: $screen-md-min) {
+        font-size: 15px;
+        height: 38px;
+        padding: $padding-small-horizontal;
+        .badge {
+          font-size: 12px;
+        }
+      }
+      // = XS
+      @media (max-width: $grid-float-breakpoint-max) {
+        background-color: transparent;
+        border: 0;
+        // height: 28px;
+        padding: $padding-small-vertical;
+        .icon {
+          font-size: 24px;
+          line-height: 1;
+        }
+      }
+      &:hover,
+      &:focus {
+        background-color: transparent; // #fff;
+        color: $link-color;
+        .badge-active {
+          &,
+          &:hover,
+          &:focus {
+            background-color: $link-color;
+            color: $nav-user-badge-active-color-hover;
+          }
+        }
+      }
+      &.flag {
+        background-position: center center;
+        background-repeat: no-repeat;
+        // >= SM
+        @media (min-width: $grid-float-breakpoint) {
+          width: 46px;
+        }
+        // = XS
+        @media (max-width: $grid-float-breakpoint-max) {
+          // font-size: 18px;
+          height: 38px;
+          // padding: ($padding-small-vertical / 2);
+          width: 32px;
+        }
+      }
+    }
+    + li {
+      margin-left: 4px;
+    }
+    &.active > a {
+      &,
+      &:hover,
+      &:focus {
+        background-color: $gray-lightest;
+        color: $link-hover-color;
+      }
+    }
+  }
+}
+
+// Search
+.nav-search {
+  @extend .hidden-xs;
+  border: 1px solid $gray-lighter;
+  clear: right;
+  float: right;
+  margin: 5px 0;
+  padding: 0;
+  width: round(percentage((2.75 / $grid-columns)));
+  .form-group {
+    input {
+      &.form-control {
+        &,
+        &:focus {
+          @include box-shadow(none);
+          outline-color: $navbar-site-bg;
+        }
+      }
+    }
+  }
+  .input-group {
+    background-color: $gray-white;
+    width: 100%;
+    &:hover,
+    &:focus {
+      background-color: $gray-white;
+    }
+    input:-webkit-autofill {
+      @include box-shadow(#{'0 0 0 500px #f9f9f9 inset'});
+      -webkit-box-shadow: 0 0 0 500px $gray-white inset;
+      background-color: $gray-white !important;
+    }
+    input {
+      &.form-control {
+        &,
+        &:focus {
+          @include box-shadow(#{'0 0 0 500px #f9f9f9 inset'});
+          -webkit-box-shadow: 0 0 0 500px $gray-white inset;
+          background-color: $gray-white !important;
+          border: 0;
+          border-color: transparent;
+          height: auto;
+          outline: none;
+          outline-color: transparent;
+        }
+      }
+    }
+  }
+  .input-group-btn {
+    width: 64px;
+  }
+  .btn-primary {
+    @include box-shadow(none);
+    background-color: transparent;
+    border-color: transparent;
+    color: $navbar-site-bg;
+    padding: 5px 6px 2px;
+    &:hover,
+    &:active {
+      background-color: transparent;
+      border-color: transparent;
+    }
+    .icon,
+    .glyphicon {
+      font-size: ceil($font-size-base * 1.4);
+      line-height: 0;
+    }
+  }
+}
+
+
+// Site Navigation
+.navbar-site {
+  @media (min-width: $screen-sm-min) {
+    height: $navbar-site-height;
+  }
+  background-color: $navbar-site-bg;
+  background-image: none;
+  border: 0;
+  border-bottom: $navbar-site-border-width solid $navbar-site-border-color;
+  border-radius: 0;
+  margin-bottom: 0;
+  .navbar-form {
+    border: 0;
+    border-color: transparent;
+    margin: 0;
+    padding: 0;
+    .form-group {
+      input {
+        &.form-control {
+          &,
+          &:focus {
+            @include box-shadow(none);
+            outline-color: $navbar-site-bg;
+          }
+        }
+      }
+    }
+    .input-group {
+      background-color: $gray-white;
+      &:hover,
+      &:focus {
+        background-color: lighten($gray-base, 100%);
+      }
+      input {
+        &.form-control {
+          &,
+          &:focus {
+            @include box-shadow(none);
+            background-color: transparent;
+            border: 0;
+            border-color: transparent;
+            height: auto;
+            outline: none;
+            outline-color: transparent;
+          }
+        }
+      }
+    }
+    .btn-primary {
+      @include box-shadow(none);
+      background-color: transparent;
+      border-color: transparent;
+      color: $navbar-site-bg;
+      padding: 1px 6px;
+      &:hover,
+      &:active {
+        background-color: transparent;
+        border-color: transparent;
+      }
+      .icon,
+      .glyphicon {
+        font-size: ceil($font-size-base * 1.4);
+        line-height: 0;
+      }
+    }
+  }
+  .navbar-brand {
+    $navbar-site-brand-color: $trans-white-9;
+    color: $navbar-site-brand-color;
+    font-family: $navbar-site-font;
+    &:hover,
+    &:focus {
+      $navbar-site-brand-hover-bg: $navbar-inverse-brand-hover-bg;
+      background-color: $navbar-inverse-brand-hover-bg;
+      $navbar-site-brand-hover-color: lighten($gray-base, 100%);
+      color: $navbar-site-brand-hover-color;
+    }
+  }
+  .navbar-text {
+    color: $navbar-inverse-color;
+  }
+  .navbar-collapse {
+    border: 0;
+    border-color: transparent;
+    .navbar-form {
+      margin-bottom: 4px;
+      margin-top: 4px;
+      // width: percentage((3 / $grid-columns));
+      .input-group {
+        width: 100%;
+      }
+      .input-group-btn {
+        width: 64px;
+      }
+    }
+    &.collapse {
+      padding-bottom: 0;
+    }
+  }
+  .navbar-toggle {
+    background-color: $navbar-site-toggle-bg;
+    border-color: $navbar-site-toggle-border-color;
+    &:hover,
+    &:focus {
+      background-color: $navbar-site-toggle-hover-bg;
+    }
+    .icon-bar {
+      background-color: $navbar-site-toggle-icon-bar-bg;
+    }
+  }
+  .navbar-nav {
+    margin-bottom: 0;
+    margin-top: 0;
+    > li > a {
+      @include transition(all .25s ease-in-out);
+      background-color: $navbar-site-link-bg;
+      color: $navbar-site-link-color;
+      font-family: $navbar-site-link-font;
+      padding: 9px 13px 10px;
+      @media (min-width: $screen-sm-min) {
+        border-bottom: $navbar-site-border-width solid $navbar-site-border-color;
+      }
+      @media (min-width: $screen-sm) and (max-width: $screen-sm-max) {
+        padding-left: 8px;
+        padding-right: 8px;
+      }
+      &:hover,
+      &:focus {
+        // background-color: $trans-black-2;
+        background-color: $navbar-site-link-hover-bg;
+        border-color: $navbar-site-border-hover-color;
+        color: $navbar-site-link-hover-color;
+      }
+    }
+    > .active > a {
+      &,
+      &:hover,
+      &:focus {
+        background-color: $navbar-site-link-active-bg;
+        border-color: $navbar-site-border-active-color;
+        color: $navbar-site-link-active-color;
+      }
+    }
+    > .disabled > a {
+      &,
+      &:hover,
+      &:focus {
+        background-color: $navbar-site-link-disabled-bg;
+        border-color: $navbar-site-border-disabled-color;
+        color: $navbar-site-link-disabled-color;
+      }
+    }
+    > .open > a {
+      &,
+      &:hover,
+      &:focus {
+        background-color: $navbar-site-link-open-bg;
+        border-color: $navbar-site-border-open-color;
+        color: $navbar-site-link-open-color;
+      }
+    }
+    > .highlighted > a {
+      background-color: $navbar-site-link-highlight-bg;
+      border-color: $body-bg;
+      color: $navbar-site-link-highlight-color;
+      &:hover,
+      &:focus {
+        background-color: $trans-white-2;
+        color: $navbar-site-link-highlight-color;
+      }
+    }
+  }
+  $navbar-site-dropdown-divider-bg: #d7d8e9; // #ddd;
+  $navbar-site-dropdown-link-bg: $gray-lightest;
+  $navbar-site-dropdown-link-bg-active: $navbar-site-link-hover-bg;
+  $navbar-site-dropdown-link-bg-disabled: $gray-lighter;
+  $navbar-site-dropdown-link-bg-hover: $navbar-site-bg;
+  $navbar-site-dropdown-link-border-color: #d7d8e9;
+  $navbar-site-dropdown-link-border-color-active: $navbar-site-link-hover-bg;
+  $navbar-site-dropdown-link-border-color-hover: $navbar-site-bg;
+  $navbar-site-dropdown-link-color: $navbar-site-bg;
+  $navbar-site-dropdown-link-color-active: #fff;
+  $navbar-site-dropdown-link-color-disabled: $gray;
+  $navbar-site-dropdown-link-color-hover: $gray-lightest;
+  .dropdown-menu {
+    font-family: $navbar-site-link-font;
+    padding: 0;
+    > li > a {
+      background-color: $navbar-site-dropdown-link-bg;
+      border-bottom: 1px solid $navbar-site-dropdown-link-border-color;
+      color: $navbar-site-dropdown-link-color;
+      padding: $padding-base-vertical ceil($padding-base-horizontal + 2);
+      &:hover,
+      &:focus {
+        background-color: $navbar-site-dropdown-link-bg-hover;
+        border-color: $navbar-site-dropdown-link-border-color-hover;
+        color: $navbar-site-dropdown-link-color-hover;
+      }
+      &:active {
+        background-color: $navbar-site-dropdown-link-bg-active;
+        border-color: $navbar-site-dropdown-link-border-color-active;
+        color: $navbar-site-dropdown-link-color-active;
+      }
+    }
+    > .active > a {
+      background-color: $navbar-site-dropdown-link-bg-active;
+      border-color: $navbar-site-dropdown-link-border-color-active;
+      color: $navbar-site-dropdown-link-color-active;
+    }
+    .divider {
+      background-color: $navbar-site-dropdown-divider-bg;
+      height: 2px;
+      margin: 0;
+    }
+  }
+  @media (max-width: $grid-float-breakpoint-max) {
+    // Dropdowns get custom display when collapsed
+    .navbar-nav {
+      .open {
+        .dropdown-menu {
+          padding-top: 0;
+          > li > a {
+            background-color: $gray-lightest;
+            border-bottom: 1px solid $navbar-site-dropdown-link-border-color;
+            color: $navbar-site-bg;
+            &:hover,
+            &:focus {
+              background-color: $navbar-site-dropdown-link-bg-hover;
+              border-color: $navbar-site-dropdown-link-border-color-hover;
+              color: $navbar-site-dropdown-link-color-hover;
+            }
+            &:active {
+              background-color: $navbar-site-dropdown-link-bg-active;
+              border-color: $navbar-site-dropdown-link-border-color-active;
+              color: $navbar-site-dropdown-link-color-active;
+            }
+          }
+          > .active > a {
+            &,
+            &:hover,
+            &:focus {
+              background-color: $navbar-site-dropdown-link-bg-active;
+              border-color: $navbar-site-dropdown-link-border-color-active;
+              color: $navbar-site-dropdown-link-color-active;
+            }
+          }
+          > .disabled > a {
+            &,
+            &:hover,
+            &:focus {
+              background-color: $navbar-site-dropdown-link-bg-disabled;
+              color: $navbar-site-dropdown-link-color-disabled;
+            }
+          }
+        }
+      }
+    }
+  }
+  @media (min-width: $screen-sm) {
+    .navbar-collapse {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+}
+
+#header {
+  .navbar-site {
+    .navbar-header {
+      @extend .visible-xs;
+      .navbar-form {
+        margin-right: 70px;
+        padding: 5px;
+      }
+    }
+    .navbar-collapse {
+      .navbar-form {
+        margin-bottom: 5px;
+        margin-top: 4px;
+      }
+    }
+  }
+}
+
+// Tabs
+// -------------------------
+
+.nav-tabs {
+  border-bottom-color: $nav-tabs-border-color;
+  > li {
+    float: left;
+    // Make the list-items overlay the bottom border
+    margin-bottom: -1px;
+
+    // Actual tabs (as links)
+    > a {
+      border: 1px solid transparent;
+      border-radius: $border-radius-base $border-radius-base 0 0;
+      line-height: $line-height-base;
+      margin-right: 2px;
+      &:hover,
+      &:focus {
+        @include gradient-vertical(lighten($nav-tabs-active-link-hover-bg, 6%), lighten($nav-tabs-active-link-hover-bg, 4%));
+        border-color: $nav-tabs-link-hover-border-color $nav-tabs-link-hover-border-color $nav-tabs-border-color;
+      }
+    }
+
+    // Active state, and its :hover to override normal :hover
+    &.active > a {
+      &,
+      &:hover,
+      &:focus {
+        @include gradient-vertical(lighten($nav-tabs-active-link-hover-bg, 2%), $nav-tabs-active-link-hover-bg);
+        // background-color: $nav-tabs-active-link-hover-bg;
+        border: 1px solid $nav-tabs-active-link-hover-border-color;
+        border-bottom-color: $nav-tabs-active-link-hover-border-color;
+        color: $nav-tabs-active-link-hover-color;
+      }
+    }
+  }
+  // pulling this in mainly for less shorthand
+  &.nav-justified {
+    @extend .nav-tabs-justified;
+  }
+}
+
+// Mixin for adding on top the shared `.nav-justified` styles for our tabs
+.nav-tabs-justified {
+  border-bottom: 1px solid $nav-tabs-border-color;
+  > li > a {
+    border-bottom: 1px solid transparent;
+    border-radius: $border-radius-base;
+    // Override margin from .nav-tabs
+    margin-right: 0;
+    &:hover,
+    &:focus {
+      border-bottom: 1px solid transparent;
+    }
+  }
+  > .active > a,
+  > .active > a:hover,
+  > .active > a:focus {
+    border: 1px solid $nav-tabs-justified-link-border-color;
+    border-bottom-color: transparent; // $nav-tabs-justified-active-link-border-color;
+  }
+
+  @media (min-width: $screen-sm-min) {
+    > li > a {
+      // border-bottom: 1px solid $nav-tabs-justified-link-border-color;
+      border-bottom: 1px solid transparent;
+      border-radius: $border-radius-base $border-radius-base 0 0;
+    }
+    > .active > a,
+    > .active > a:hover,
+    > .active > a:focus {
+      border-bottom-color: transparent; // $nav-tabs-justified-active-link-border-color;
+    }
+  }
+}
+
+// Give active tabs different style on small screens
+// @media (max-width: $grid-float-breakpoint-max) {
+//   .nav-tabs > li.active > a {
+//     &,
+//     &:hover,
+//     &:focus {
+//       // color: $gray-white;
+//       // background-color: $gray-light;
+//       border-bottom-color: $nav-tabs-active-link-hover-border-color;
+//     }
+//   }
+// }
+
+@mixin nav-tabber($nav-tabs-color: $link-color, $nav-tabs-hover-color: #fff, $nav-tabs-hover-bg: $nav-tabs-color) {
+  border-bottom: 6px solid $nav-tabs-color;
+  > li {
+    > a {
+      border-bottom-color: $nav-tabs-color;
+      color: $nav-tabs-color;
+      &:hover,
+      &:focus {
+        border-color: $nav-tabs-color;
+        color: darken($nav-tabs-color, 10%);
+      }
+    }
+    &.active > a {
+      &,
+      &:hover,
+      &:focus {
+        @include gradient-vertical(lighten($nav-tabs-hover-bg, 2%), $nav-tabs-hover-bg);
+        border-color: $nav-tabs-color;
+        color: $nav-tabs-hover-color;
+      }
+    }
+  }
+}
+.nav-tabs-section {@include nav-tabber($brand-section)}
+.nav-tabs-article {@include nav-tabber($brand-nav)}
+.nav-tabs-nav {@include nav-tabber($brand-nav)}
+.nav-tabs-aside {@include nav-tabber($brand-aside)}
+.nav-tabs-pullout {@include nav-tabber($brand-pullout)}
+
+
+// Pills
+// -------------------------
+.nav-pills {
+  margin-bottom: $line-height-computed;
+  > li > a {
+    border-radius: 0;
+  }
+}
+
+//
+// Flex
+// -------------------------
+
+.nav-flex {
+  font-family: $brand-font;
+  > li {
+    float: left;
+    > a {
+      @include transition(all .1s ease-in-out);
+      border-radius: 0;
+      color: $link-color;
+      padding: $padding-base-vertical $padding-base-horizontal;
+      &:hover,
+      &:focus {
+        color: darken($link-color, 10%);
+      }
+    }
+    &.active > a {
+      &,
+      &:hover,
+      &:focus {
+        background-color: $link-color;
+        color: lighten($link-color, 100%);
+      }
+    }
+    + li {
+      margin-left: 2px;
+    }
+  }
+  .dropdown-menu {
+    margin-top: -1px;
+  }
+}
+.nav-flex-sm {
+  @media (min-width: $screen-sm) {
+    > li {
+      float: none;
+      + li {
+        margin-left: 0;
+      }
+    }
+  }
+}
+.nav-flex-md {
+  @media (min-width: $screen-md) {
+    > li {
+      float: none;
+      + li {
+        margin-left: 0;
+      }
+    }
+  }
+}
+.nav-flex-lg {
+  @media (min-width: $screen-lg) {
+    > li {
+      float: none;
+      + li {
+        margin-left: 0;
+      }
+    }
+  }
+}
+@mixin nav-flexer($nav-flex-color: $link-color, $nav-flex-hover-color: #fff, $nav-flex-hover-bg: $nav-flex-color) {
+  > li {
+    > a {
+      color: $nav-flex-color;
+      &:hover,
+      &:focus {
+        color: darken($nav-flex-color, 10%);
+      }
+    }
+    &.active > a {
+      &,
+      &:hover,
+      &:focus {
+        background-color: $nav-flex-hover-bg;
+        color: $nav-flex-hover-color;
+      }
+    }
+  }
+}
+.nav-flex-section {@include nav-flexer($brand-section)}
+.nav-flex-article {@include nav-flexer($brand-nav)}
+.nav-flex-nav {@include nav-flexer($brand-nav)}
+.nav-flex-aside {@include nav-flexer($brand-aside)}
+.nav-flex-pullout {@include nav-flexer($brand-pullout)}
+
+.nav-pager {
+  @extend .nav-pills;
+  @extend .nav-justified;
+  margin-bottom: round($navbar-margin-bottom * 1.5);
+  > li {
+    > a {
+      background-color: $gray-lightest;
+      border-left: 1px solid lighten($gray-base, 100%);
+      border-right: 1px solid lighten($gray-base, 100%);
+      color: $brand-primary;
+      &:hover,
+      &:focus {
+        background-color: $navbar-site-border-color;
+        color: $gray-lightest;
+      }
+    }
+    &.active > a {
+      &,
+      &:hover,
+      &:focus {
+        background-color: $brand-nav;
+        border-color: lighten($gray-base, 100%);
+        color: lighten($gray-base, 100%);
+      }
+      @media (min-width: $screen-sm) {
+        &:before {
+          border-bottom: 10px solid transparent;
+          border-left: 15px solid transparent;
+          border-right: 15px solid transparent;
+          border-top: 10px solid $brand-nav;
+          bottom: -20px;
+          content: '';
+          height: 0;
+          left: 44%;
+          position: absolute;
+          width: 0;
+        }
+      }
+    }
+  }
+  > .open > a {
+    &,
+    &:hover,
+    &:focus {
+      background-color: $navbar-site-border-color;
+      border-color: lighten($gray-base, 100%);
+      color: lighten($gray-base, 100%);
+    }
+  }
+}
+
+.pagination > li > a,
+.pagination > li > span {
+  // @media (min-width: $screen-sm) {
+  //   padding: $padding-base-vertical ($padding-base-horizontal + 3);
+  // }
+  @media (min-width: $screen-md) {
+    font-size: 110%;
+    padding: $padding-base-vertical ($padding-base-horizontal + 2);
+  }
+  @media (min-width: $screen-lg) {
+    font-size: 120%;
+    padding: $padding-base-vertical ($padding-base-horizontal + 4);
+  }
+}
+
+.pagination-array {
+  font-family: $font-family-monospace;
+  margin-top: 0;
+  > li > a,
+  > li > span {
+    margin-bottom: 5px;
+    margin-left: 0;
+    margin-right: 5px;
+    padding: $padding-small-vertical ($padding-base-horizontal + 1) 0;
+  }
+  > li > a:hover,
+  > li > a:active {
+    background-color: $link-hover-color;
+    color: lighten($gray-base, 100%);
+  }
+}
+
+.breadcrumb-sts {
+  @include gradient-vertical($gray-white, $gray-lighter);
+  margin-bottom: 0;
+  margin-top: $line-height-computed;
+  > li {
+    margin-right: 5px;
+  }
+  + .page-header {
+    margin-top: 0;
+  }
+}
+
+// .nav-stacked > li.active > a:after {
+//   left: 100%;
+//   border: solid transparent;
+//   content: " ";
+//   height: 0;
+//   width: 0;
+//   position: absolute;
+//   pointer-events: none;
+// }
+
+// .nav-stacked > li.active > a:after {
+//   border-color: transparent;
+//   border-left-color: $brand-primary;
+//   border-width: 10px;
+//   top: 50%;
+//   margin-top: -10px;
+// }
+
+
+// .tab-pane .nav{margin-bottom:20px}
+// .tab-pane .navbar-nav{margin-bottom:0}
+

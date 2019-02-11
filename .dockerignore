@@ -1,0 +1,18 @@
+.bundle
+.dockerignore
+.editorconfig
+.env.example
+# .git
+.markdownlint.yaml
+.sass-cache
+.travis.yml
+*.md
+docker-compose.yml
+Dockerfile
+Dockerfile.*
+docs
+logs
+node_modules
+package-lock.json
+package.json
+vendor

@@ -1,0 +1,145 @@
+.ekko-lightbox {
+  align-items: center;
+  display: flex !important;
+  justify-content: center;
+  padding-right: 0 !important;
+
+  &-container {
+    position: relative;
+    > .ekko-lightbox-item {
+      bottom: 0;
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 100%;
+    }
+  }
+
+  iframe {
+    height: 100%;
+    width: 100%;
+  }
+
+  &-nav-overlay {
+    display: flex;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+
+    a {
+      align-items: center;
+      color: #fff;
+      display: flex;
+      flex: 1;
+      font-size: 30px;
+      opacity: 0;
+      transition: opacity .5s;
+      z-index: 100;
+
+      > * {
+        flex-grow: 1;
+        &:focus {
+          outline: none;
+        }
+      }
+      span {
+        padding: 0 30px;
+      }
+      &:last-child {
+        span {
+          text-align: right;
+        }
+      }
+      &:hover {
+        text-decoration: none;
+      }
+      &:focus {
+        outline: none;
+      }
+      &.disabled {
+        cursor: default;
+        visibility: hidden;
+      }
+    }
+  }
+
+  a:hover {
+    opacity: 1;
+    text-decoration: none;
+  }
+  .modal-dialog {
+    display: none;
+  }
+  .modal-footer {
+    text-align: left;
+  }
+
+  // http://tobiasahlin.com/adjust-huekit/
+  &-loader {
+    align-items: center;
+    bottom: 0;
+    display: flex;           //* establish flex container */
+    flex-direction: column;  //* make main axis vertical */
+    justify-content: center; //* center items vertically, in this case */
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+
+    > div {
+      height: 40px;
+      position: relative;
+      text-align: center;
+      width: 40px;
+
+      > div {
+        animation: sk-bounce 2s infinite ease-in-out;
+        background-color: #fff;
+        border-radius: 50%;
+        height: 100%;
+        left: 0;
+        opacity: .6;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        &:last-child {
+          animation-delay: -1s;
+        }
+      }
+    }
+  }
+
+  .modal-dialog &-loader {
+    > div > div {
+      background-color: #333;
+    }
+  }
+
+  @-webkit-keyframes sk-bounce {
+    0%,
+    100% {
+      -webkit-transform: scale(0);
+    }
+    50% {
+      -webkit-transform: scale(1);
+    }
+  }
+
+  @keyframes sk-bounce {
+    0%,
+    100% {
+      -webkit-transform: scale(0);
+      transform: scale(0);
+    }
+    50% {
+      -webkit-transform: scale(1);
+      transform: scale(1);
+    }
+  }
+
+}

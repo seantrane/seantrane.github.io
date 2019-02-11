@@ -1,0 +1,32 @@
+name: Guidelines
+bookmarks:
+  # - title:
+  #   url:
+  - title: Design Principles
+    url: https://principles.design/
+  - title: The Twelve-Factor App
+    url: https://12factor.net/
+  - title: Google Style Guides
+    url: https://google.github.io/styleguide/
+  - title: Choose an open source license
+    url: https://choosealicense.com/
+  - title: OWASP
+    url: https://www.owasp.org/index.php/Main_Page
+  - title: Every Programmer Should Know
+    url: https://github.com/mtdvio/every-programmer-should-know
+  - title: Awesome Agile Software Development
+    url: https://github.com/lorabv/awesome-agile-software-development
+  - title: The Scrum Guide
+    url: http://scrumguides.org/scrum-guide.html
+  - title: How GitHub Uses GitHub - Communicating with Issues
+    url: https://resources.github.com/webcasts/GitHub-communicating-with-issues/
+  - title: How GitHub Uses GitHub - Communicating with remote teams
+    url: https://resources.github.com/webcasts/GitHub-communicating-with-remote-teams/
+  - title: How GitHub Uses GitHub - Managing your teams
+    url: https://resources.github.com/webcasts/GitHub-managing-your-teams/
+  - title: How GitHub Uses GitHub - Managing your projects
+    url: https://resources.github.com/webcasts/GitHub-managing-your-projects/
+  - title: How GitHub Uses GitHub - Writing documentation for your projects
+    url: https://resources.github.com/webcasts/GitHub-writing-documentation-for-your-projects/
+  - title: Organizing Work with GitHub
+    url: https://resources.github.com/webcasts/Organizing-Work-with-GitHub/

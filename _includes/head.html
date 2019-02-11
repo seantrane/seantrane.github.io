@@ -1,0 +1,35 @@
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  {% capture seo_rendered %}{% seo %}{% endcapture %}
+  {{ seo_rendered | remove_first:'<!-- Begin Jekyll SEO tag v2.3.0 -->' | remove_first:'<!-- End Jekyll SEO tag -->' }}
+
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}">
+
+  <link href="https://fonts.googleapis.com/css?family=Lora:700,700italic,400italic,400" rel="stylesheet" type="text/css">
+
+  <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
+
+  {% assign theme_color = '#000000' %}
+  <link rel="icon" type="image/x-icon" href="{{ "/favicon.ico" | prepend: site.baseurl }}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ "/apple-touch-icon.png" | prepend: site.baseurl }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ "/favicon-32x32.png" | prepend: site.baseurl }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ "/favicon-16x16.png" | prepend: site.baseurl }}">
+  <link rel="manifest" href="{{ "/site.webmanifest" | prepend: site.baseurl }}">
+  <link rel="mask-icon" href="{{ "/safari-pinned-tab.svg" | prepend: site.baseurl }}" color="{{ theme_color }}">
+  <meta name="msapplication-TileColor" content="{{ theme_color }}">
+  <meta name="theme-color" content="{{ theme_color }}">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  {% if page.math %}
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  {% endif %}
+
+</head>

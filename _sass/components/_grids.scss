@@ -1,0 +1,99 @@
+//
+// Grids
+// --------------------------------------------------
+
+.show-grid {
+  margin-bottom: 15px;
+  [class^='col-'],
+  [class^='layout-'] {
+    background-color: $gray-lighter;
+    border: 1px solid $gray-darker;
+    padding-bottom: 10px;
+    padding-top: 10px;
+  }
+}
+
+//
+// Layout
+// -------------------------
+
+body {
+  padding-bottom: 0 !important;
+}
+
+// .layout {
+//   // @include make-row;
+// }
+.layout-full {
+  @include make-xs-column(12);
+}
+.layout-page {
+  @include make-sm-column(12);
+  @include make-md-column(9);
+}
+.layout-article {
+  @include make-sm-column(6);
+}
+.layout-section {
+  @include make-sm-column(9);
+}
+.layout-aside {
+  @include make-sm-column(3);
+}
+.layout-promo {
+  @include make-sm-column(12);
+  @include make-md-column(3);
+}
+.layout-browse {
+  @include make-sm-column(8);
+}
+.layout-nav {
+  @include make-sm-column(4);
+}
+.layout-right {
+  @media (min-width: $screen-sm) {
+    float: right;
+  }
+}
+
+$thingrid-gutter-width: 10px;
+
+.row-thin {
+  @include make-row($thingrid-gutter-width);
+}
+.col-thin-12 {
+  @include make-xs-column(12, $thingrid-gutter-width);
+}
+.col-thin-11 {
+  @include make-xs-column(11, $thingrid-gutter-width);
+}
+.col-thin-10 {
+  @include make-xs-column(10, $thingrid-gutter-width);
+}
+.col-thin-9 {
+  @include make-xs-column(9, $thingrid-gutter-width);
+}
+.col-thin-8 {
+  @include make-xs-column(8, $thingrid-gutter-width);
+}
+.col-thin-7 {
+  @include make-xs-column(7, $thingrid-gutter-width);
+}
+.col-thin-6 {
+  @include make-xs-column(6, $thingrid-gutter-width);
+}
+.col-thin-5 {
+  @include make-xs-column(5, $thingrid-gutter-width);
+}
+.col-thin-4 {
+  @include make-xs-column(4, $thingrid-gutter-width);
+}
+.col-thin-3 {
+  @include make-xs-column(3, $thingrid-gutter-width);
+}
+.col-thin-2 {
+  @include make-xs-column(2, $thingrid-gutter-width);
+}
+.col-thin-1 {
+  @include make-xs-column(1, $thingrid-gutter-width);
+}

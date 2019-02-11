@@ -1,0 +1,33 @@
+body {
+  &:before {
+    content: 'Hello World!';
+  }
+}
+html {
+  -ms-text-size-adjust: 100%; // 2
+  -webkit-text-size-adjust: 100%; // 2
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; // 1
+}
+.test {
+  input {
+    &[type='number'] {
+      &::-webkit-outer-spin-button {
+        height: auto;
+      }
+    }
+  }
+}
+@mixin bg-variant($parent, $color) {
+  #{$parent} {
+    background-color: $color;
+  }
+  a#{$parent}:hover,
+  a#{$parent}:focus {
+    background-color: darken($color, 10%);
+  }
+}
+@mixin make-row($gutter: $grid-gutter-width) {
+  @include clearfix;
+  margin-left:  ceil(($gutter / -2));
+  margin-right: floor(($gutter / -2));
+}

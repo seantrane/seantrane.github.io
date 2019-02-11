@@ -1,0 +1,13 @@
+nav:
+  # - text:
+  #   summary:
+  - text: Who?
+    summary: Who is Sean Trane?
+  - text: Blog
+    summary: My Blog
+  - text: Toolbox
+    summary: My Toolbox
+  - text: Work
+    summary: My Work
+  - text: Contact
+    summary: Contact Me

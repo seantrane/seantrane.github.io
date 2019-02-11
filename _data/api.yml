@@ -1,0 +1,429 @@
+openapi: '3.0.0'
+info:
+  title: 'Sample API'
+  version: '1.0.0-development'
+  description: |
+    This is the Sample API.
+
+    For this sample, you can use the api key `special-key` to test the authorization filters.
+  contact:
+    name: engineering@domain.com
+  termsOfService: https://www.domain.com/terms/
+  license:
+    name: Private
+    url: https://www.domain.com/license
+servers:
+  - url: https://localhost:3000
+  - url: https://api.domain.com
+# ---
+paths:
+  # ----------------------------------------------------------------------------
+  /articles:
+    get:
+      tags:
+        - Articles
+      summary: List Articles by criteria
+      description: Returns list of Articles
+      operationId: getArticles
+      parameters:
+        - name: body
+          in: query
+          description: Article object properties
+          required: false
+          schema:
+            $ref: '#/components/schemas/Article'
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  metadata:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                      status:
+                        type: string
+                  data:
+                    $ref: '#/components/schemas/Article'
+        '400':
+          description: Invalid criteria supplied
+        '404':
+          description: No matching articles found
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Thing'
+      security:
+        - apiKey: []
+        - OAuth2:
+          - read
+    post:
+      tags:
+        - Articles
+      summary: Create new Article
+      description: ''
+      operationId: createArticle
+      parameters:
+        - in: query
+          name: body
+          description: Article object that needs to be added
+          required: false
+          schema:
+            $ref: '#/components/schemas/Article'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  metadata:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                      status:
+                        type: string
+                  data:
+                    $ref: '#/components/schemas/Article'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Article not found
+        '405':
+          description: Validation exception
+      security:
+        - OAuth2:
+          - read
+          - write
+  # ----------------------------------------------------------------------------
+  /articles/{id}:
+    get:
+      tags:
+        - Articles
+      summary: Find Article by ID
+      description: Returns Article
+      operationId: findArticleById
+      parameters:
+        - name: id
+          in: path
+          description: ID of Article that needs to be retrieved
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  metadata:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                      status:
+                        type: string
+                  data:
+                    $ref: '#/components/schemas/Article'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Article not found
+      security:
+        - apiKey: []
+        - OAuth2:
+          - read
+    put:
+      tags:
+        - Articles
+      summary: Update existing Article
+      description: ''
+      operationId: updateArticle
+      parameters:
+        - name: id
+          in: path
+          description: ID of Article that needs to be updated
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: body
+          in: query
+          description: Article object with revisions
+          required: false
+          schema:
+            $ref: '#/components/schemas/Article'
+      responses:
+        '405':
+          description: Invalid input
+      security:
+        - OAuth2:
+          - read
+          - write
+    delete:
+      tags:
+        - Articles
+      summary: Delete Article
+      description: ''
+      operationId: deleteArticle
+      parameters:
+        - name: apiKey
+          in: header
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Article id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '400':
+          description: Invalid article value
+      security:
+        - OAuth2:
+          - read
+          - write
+# ---
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.domain.com/auth/authorize
+          tokenUrl: https://api.domain.com/auth/token
+          scopes:
+            read: Grants read access
+            write: Grants write access
+            admin: Grants access to admin operations
+  schemas:
+    # ----------------------------------------------------------------------------
+    Action:
+      allOf:
+        - $ref: '#/components/schemas/Thing'
+        - type: object
+          description: An action performed by a direct agent and indirect participants upon a direct object. Optionally happens at a location with the help of an inanimate instrument. The execution of the action may produce a result. Specific action sub-type documentation specifies the exact expectation of each argument/role.
+          properties:
+            actionStatus: # Indicates the current disposition of the Action.
+              $ref: '#/components/schemas/ActionStatusType'
+            agent: # The direct performer or driver of the action (animate or inanimate).
+              $ref: '#/components/schemas/Person'
+    # ----------------------------------------------------------------------------
+    ActionStatusType:
+      allOf:
+        - $ref: '#/components/schemas/Enumeration'
+        - type: object
+          description: The status of an Action.
+    # ----------------------------------------------------------------------------
+    Article:
+      allOf:
+        - $ref: '#/components/schemas/CreativeWork'
+        - type: object
+          description: An article, such as a news article or piece of investigative report. Newspapers and magazines have articles of many different types and this is intended to cover them all.
+          properties:
+            articleBody:
+              type: string
+              description: The actual body of the article.
+            articleSection:
+              type: string
+              description: Articles may belong to one or more 'sections' in a magazine or newspaper, such as Sports, Lifestyle, etc.
+    # ----------------------------------------------------------------------------
+    ContactPoint:
+      allOf:
+        - $ref: '#/components/schemas/StructuredValue'
+        - type: object
+          description: A contact point—for example, a Customer Complaints department.
+          properties:
+            contactType:
+              type: string
+              description: A person or organization can have different contact points, for different purposes. For example, a sales contact point, a PR contact point and so on. This property is used to specify the kind of contact point.
+            email:
+              type: string
+              description: Email address.
+            faxNumber:
+              type: string
+              description: The fax number.
+            telephone:
+              type: string
+              description: The telephone number.
+    # ----------------------------------------------------------------------------
+    CreativeWork:
+      allOf:
+        - $ref: '#/components/schemas/Thing'
+        - type: object
+          description: The most generic kind of creative work, including books, movies, photographs, software programs, etc.
+          properties:
+            about:
+              type: string
+              description: The subject matter of the content. Inverse property; 'subjectOf'.
+            author: # The author of this content or rating. Please note that author is special in that HTML 5 provides a special mechanism for indicating authorship via the rel tag. That is equivalent to this and may be used interchangeably.
+              $ref: '#/components/schemas/Person'
+            citation: # A citation or reference to another creative work, such as another publication, web page, scholarly article, etc.
+              $ref: '#/components/schemas/CreativeWork'
+            contributor: # A secondary contributor to the CreativeWork or Event.
+              $ref: '#/components/schemas/Person'
+    # ----------------------------------------------------------------------------
+    Enumeration:
+      allOf:
+        - $ref: '#/components/schemas/Intangible'
+        - type: object
+          description: Lists or enumerations—for example, a list of cuisines or music genres, etc.
+    # ----------------------------------------------------------------------------
+    Intangible:
+      allOf:
+        - $ref: '#/components/schemas/Thing'
+        - type: object
+          description: A utility class that serves as the umbrella for a number of 'intangible' things such as quantities, structured values, etc.
+    # ----------------------------------------------------------------------------
+    Organization:
+      allOf:
+        - $ref: '#/components/schemas/Thing'
+        - type: object
+          description: An organization such as a school, NGO, corporation, club, etc.
+          properties:
+            address:
+              oneOf:
+                - type: string
+                - $ref: '#/components/schemas/PostalAddress'
+              description: Physical address of the item.
+            contactPoint: # A contact point for a person or organization. Supersedes 'contactPoints'.
+              $ref: '#/components/schemas/ContactPoint'
+            department: # A relationship between an organization and a department of that organization, also described as an organization (allowing different urls, logos, opening hours).
+              $ref: '#/components/schemas/Organization'
+            email:
+              type: string
+              description: Email address.
+            employee: # Someone working for this organization. Supersedes employees.
+              $ref: '#/components/schemas/Person'
+    # ----------------------------------------------------------------------------
+    Person:
+      allOf:
+        - $ref: '#/components/schemas/Thing'
+        - type: object
+          description: A person (alive, dead, undead, or fictional).
+          properties:
+            additionalName:
+              type: string
+              description: An additional name for a Person, can be used for a middle name.
+            address:
+              oneOf:
+                - type: string
+                - $ref: '#/components/schemas/PostalAddress'
+              description: Physical address of the item.
+            affiliation: # An organization that this person is affiliated with. For example, a school/university, a club, or a team.
+              $ref: '#/components/schemas/Organization'
+            email:
+              type: string
+              description: Email address.
+            familyName:
+              type: string
+              description: Family name. In the U.S., the last name of an Person. This can be used along with givenName instead of the name property.
+            givenName:
+              type: string
+              description: Given name. In the U.S., the first name of a Person. This can be used along with familyName instead of the name property.
+    # ----------------------------------------------------------------------------
+    PostalAddress:
+      allOf:
+        - $ref: '#/components/schemas/ContactPoint'
+        - type: object
+          description: The mailing address.
+          properties:
+            addressCountry:
+              type: string
+              description: The country. For example, USA. You can also provide the two-letter ISO 3166-1 alpha-2 country code.
+            addressLocality:
+              type: string
+              description: The locality. For example, Mountain View.
+            addressRegion:
+              type: string
+              description: The region. For example, CA.
+            postOfficeBoxNumber:
+              type: string
+              description: The post office box number for PO box addresses.
+            postalCode:
+              type: string
+              description: The postal code. For example, 94043.
+            streetAddress:
+              type: string
+              description: The street address. For example, 1600 Amphitheatre Pkwy.
+    # ----------------------------------------------------------------------------
+    PropertyValue:
+      allOf:
+        - $ref: '#/components/schemas/StructuredValue'
+        - type: object
+          description: A property-value pair, e.g. representing a feature of a product or place. Use the 'name' property for the name of the property. If there is an additional human-readable version of the value, put that into the 'description' property.
+    # ----------------------------------------------------------------------------
+    Review:
+      allOf:
+        - $ref: '#/components/schemas/CreativeWork'
+        - type: object
+          description: A review of an item - for example, of a restaurant, movie, or store.
+          properties:
+            author:
+              $ref: '#/components/schemas/Person'
+    # ----------------------------------------------------------------------------
+    ScholarlyArticle:
+      allOf:
+        - $ref: '#/components/schemas/Article'
+        - type: object
+          description: A scholarly article.
+    # ----------------------------------------------------------------------------
+    StructuredValue:
+      allOf:
+        - $ref: '#/components/schemas/Thing'
+        - type: object
+          description: Structured values are used when the value of a property has a more complex structure than simply being a textual value or a reference to another thing.
+    # ----------------------------------------------------------------------------
+    Thing:
+      type: object
+      description: The most generic type of item.
+      properties:
+        _id:
+          type: string
+          description: Hexstring unique identifier. Generated automatically for new instances.
+        additionalType:
+          type: string
+          description: An additional type for the item, typically used for adding more specific types from external vocabularies in microdata syntax. This is a relationship between something and a class that the thing is in. In RDFa syntax, it is better to use the native RDFa syntax - the 'typeof' attribute - for multiple types. Schema.org tools may have only weaker understanding of extra types, in particular those defined externally.
+        alternateName:
+          type: string
+          description: An alias for the item.
+        description:
+          type: string
+          description: A description of the item.
+        identifier:
+          oneOf:
+            - type: string
+            - $ref: '#/components/schemas/PropertyValue'
+          description: The identifier property represents any kind of identifier for any kind of Thing, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links.
+        name:
+          type: string
+          description: The name of the item.
+        potentialAction:
+          $ref: '#/components/schemas/Action'
+        url:
+          type: string
+          description: URL of the item.

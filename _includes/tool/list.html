@@ -1,0 +1,11 @@
+{% if include.tools %}
+  {% assign tools = include.tools | sort:'title' %}
+  {% if include.type %}
+    {% assign tools = tools | where:'type',include.type %}
+  {% endif %}
+  <ul class="tool-list">
+    {% for tool in tools %}
+      {% include tool/list-item.html tool=tool %}
+    {% endfor %}
+  </ul>
+{% endif %}

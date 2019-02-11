@@ -1,0 +1,35 @@
+# - term:
+#   role:
+#   org:
+# - term: 1993&ndash;1995
+#   role: Painter
+#   org: <abbr title="New York City">NYC</abbr>
+# - term: 1996&ndash;2007
+#   role: Freelancer
+- term: 1998&ndash;1999
+  role: Art Director
+  org: Creative Solutions
+- term: 1998&ndash;1999
+  role: Multimedia Designer/Developer
+  org: Prentice Hall / Pearson Education
+- term: 1999&ndash;2001
+  role: Multimedia Designer/Developer
+  org: Net2Phone
+- term: 2003&ndash;2004
+  role: Multimedia Designer/Developer
+  org: <abbr title="Lawrence Erblaum Associates">LEA</abbr>
+- term: 2005&ndash;2007
+  role: Webmaster
+  org: <abbr title="Lawrence Erblaum Associates">LEA</abbr>
+- term: 2001&ndash;2010
+  role: Director
+  org: Digital Entropy
+- term: 2007&ndash;2015
+  role: Webmaster
+  org: Taylor &amp; Francis Group
+- term: 2015&ndash;2016
+  role: Senior Engineer
+  org: Taylor &amp; Francis Group
+- term: 2016&ndash;present
+  role: Tech Lead
+  org: Taylor &amp; Francis Group

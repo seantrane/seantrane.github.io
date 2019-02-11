@@ -1,0 +1,19 @@
+version: '3.5'
+
+services:
+
+  seantrane-github-io:
+    image: seantrane-github-io:latest
+    container_name: seantrane-github-io
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - '.:/usr/src/app:delegated'
+      # - '_site:/usr/src/app/_site'
+      # - '.sass-cache:/usr/src/app/.sass-cache'
+      # - '/usr/src/app/node_modules'
+    ports:
+      - '4000:4000'

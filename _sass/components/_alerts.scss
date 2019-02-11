@@ -1,0 +1,17 @@
+//
+// Alerts
+// -------------------------
+
+.alert {
+  @include box-shadow(none);
+  border-width: 7px;
+  padding: floor($alert-padding / 1.25) $alert-padding;
+}
+
+.alert-dismissable, // The misspelled .alert-dismissable was deprecated in 3.2.0.
+.alert-dismissible {
+  .close {
+    right: -10px;
+  }
+}
+

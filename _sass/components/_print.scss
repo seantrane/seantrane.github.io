@@ -1,0 +1,29 @@
+@media print {
+
+  // #topnav,
+  #usernav,
+  .navbar-site,
+  #debug,
+  #footer {
+    display: none !important;
+  }
+
+  .nav-flex {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+  .tab-content > .tab-pane {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  .media-img {
+    &,
+    & img {
+      width: 100px !important;
+    }
+  }
+
+}

@@ -1,0 +1,16 @@
+{% assign list_items = include.list_items %}
+{% assign list_limit = 99 %}{% if include.limit %}{% assign list_limit = include.limit %}{% endif %}
+{% for item in list_items limit:list_limit %}
+  {% if forloop.first %}<section>{{ include.list_heading }}<dl class="list repo-list" id="repos">{% endif %}
+    <div class="repo-list-item repo--{{ item.name | slugify }}">
+      <dt><a href="{{ item.html_url }}" title="{{ item.name }}">{{ item.name }}</a>{% if item.fork == true %} <span class="icon icon-code-fork" style="color:#aaa"></span>{% endif %}</dt>
+      <dd>{{ item.description | markdownify }}</dd>
+    </div>
+  {% if forloop.last %}</dl></section>{% endif %}
+{% else %}
+  {{ include.default }}
+{% endfor %}
+{% comment %}
+@see: https://help.github.com/articles/repository-metadata-on-github-pages/
+@see: https://developer.github.com/v3/repos/#list-all-public-repositories
+{% endcomment %}

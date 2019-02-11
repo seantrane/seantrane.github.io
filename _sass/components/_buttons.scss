@@ -1,0 +1,129 @@
+//
+// Buttons
+// --------------------------------------------------
+
+@mixin btn-styles($btn-color: #555, $btn-text: #fff, $btn-border: $btn-color) {
+  background-color: $btn-color;
+  border-color: $btn-border;
+  color: $btn-text;
+  &:hover,
+  &:focus {
+    background-color: darken($btn-color, 10%);
+    color: lighten($btn-text, 5%);
+  }
+  &:active,
+  &.active {
+    background-color: darken($btn-color, 10%);
+    border-color: $btn-border;
+    color: lighten($btn-text, 5%);
+  }
+}
+
+.btn-default,
+.btn-primary,
+.btn-success,
+.btn-info,
+.btn-warning,
+.btn-danger {
+  $shadow: none;
+  @include box-shadow($shadow);
+  // text-shadow: 0 -1px 0 $trans-black-2;
+
+  &:active,
+  &.active {
+    @include box-shadow(none);
+  }
+}
+.btn {
+  @include transition(all .1s ease-in-out);
+  border-radius: 2px;
+  font-family: $brand-font;
+  letter-spacing: 1px;
+  &:active,
+  &.active {
+    @include box-shadow(none);
+    background-image: none;
+  }
+}
+// .btn-default {
+//   @include btn-styles($btn-default-bg, $gray-dark);
+//   // border-color: #ccc;
+//   // text-shadow: 0 1px 0 #fff;
+// }
+.btn-primary { @include btn-styles($btn-primary-bg); }
+.btn-success { @include btn-styles($btn-success-bg); }
+.btn-warning { @include btn-styles($btn-warning-bg); }
+.btn-danger  { @include btn-styles($btn-danger-bg); }
+.btn-info    { @include btn-styles($btn-info-bg); }
+
+.btn-square {
+  padding: 6px;
+  .icon,
+  .glyphicon {
+    font-size: 1.75em;
+    line-height: 0;
+    top: .3em;
+  }
+}
+
+.btn-debug {
+  padding: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  .icon {
+    font-size: 16px;
+    height: 16px;
+    line-height: 16px;
+    width: 16px;
+    @media (min-width: $screen-sm) {
+      font-size: 32px;
+      height: 32px;
+      line-height: 32px;
+      width: 32px;
+    }
+  }
+}
+
+// Semantic Buttons
+.btn-section { @include btn-styles($brand-section); }
+.btn-article,
+.btn-nav {
+  @include btn-styles($brand-nav);
+}
+.btn-aside { @include btn-styles($brand-aside); }
+.btn-pullout { @include btn-styles($brand-pullout); }
+// .btn-link { @include btn-styles($link-color); }
+
+// Social Buttons
+.btn-facebook { @include btn-styles($color-facebook); }
+.btn-flickr { @include btn-styles($color-flickr); }
+.btn-google-plus { @include btn-styles($color-google-plus); }
+.btn-instagram { @include btn-styles($color-instagram); }
+.btn-linkedin { @include btn-styles($color-linkedin); }
+.btn-pinterest { @include btn-styles($color-pinterest); }
+.btn-twitter { @include btn-styles($color-twitter); }
+.btn-vimeo { @include btn-styles($color-vimeo); }
+.btn-vine { @include btn-styles($color-vine); }
+.btn-youtube { @include btn-styles($color-youtube); }
+
+
+// Button Groups
+.btn-group {
+  > .btn + .dropdown-toggle {
+    border-left: 2px solid $trans-white-3;
+  }
+  > .btn-default + .dropdown-toggle {
+    border-left: 1px solid $trans-black-2;
+  }
+}
+
+// Button element
+button {
+  &:active,
+  &.active {
+    @include box-shadow(none);
+    outline: none !important;
+    outline-color: transparent !important;
+  }
+}

@@ -1,0 +1,23 @@
+---
+layout: page
+class: home
+---
+
+<hr>
+<p class="text-center lead"><span class="nobreak">Welcome to my website;</span> <span class="nobreak">a collection of my thoughts,</span> <span class="nobreak">an exhibition of my work, and</span> <span class="nobreak">a sandbox for my bafoonery.</span></p>
+<p class="text-justify">My name is Sean Trane Sciarrone, a passionate and highly motivated leader of engineering teams that build performant, secure, and highly scalable web applications, microservices and platforms. Attracted to innovative companies that value quality, reliability, security and efficiency. Attracted to people who want to challenge themselves and others. Professional interests; Software development processes, Solution architecture, SRE, DevOps, CI/CD, Design, Workflows, Structured data. Loves include; <em class="nobreak">my pack</em>, art, music, nature, culture, cosmos, history, basketball and Ethiopian food.</p>
+<hr>
+
+<div class="row">
+  <div class="col-md-7">
+
+    {% include post/list.html list_items=site.posts limit=10 list_heading='<h2 class="page-heading">Recent Posts</h2>' item_title_el="h3" %}
+
+  </div>
+  <div class="col-md-5 text-right">
+    {% if site.github.public_repositories %}
+      {% assign personal_repos = site.github.public_repositories | where:"fork",false %}
+      {% include tool/repo-list.html list_items=personal_repos list_heading="<h3>Personal Repos</h3>" %}
+    {% endif %}
+  </div>
+</div>

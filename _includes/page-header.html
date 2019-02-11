@@ -1,0 +1,24 @@
+{% assign page_type = 'page' %}
+{% if include.type %}{% assign page_type = include.type %}{% endif %}
+{% assign page_title = page.title %}
+{% if include.title %}{% assign page_title = include.title %}{% endif %}
+{% assign page_meta = page.meta %}
+{% if include.meta %}{% assign page_meta = include.meta %}{% endif %}
+{% if page_meta %}
+  <header class="{{ page_type }}-header">
+    <div class="row">
+      <div class="col-md-8 col-lg-7">
+        <h1 class="{{ page_type }}-title" itemprop="name headline">{{ page_title }}</h1>
+      </div>
+      <div class="col-md-4 col-lg-5">
+        <div class="{{ page_type }}-meta">
+          {{ page_meta }}
+        </div>
+      </div>
+    </div>
+  </header>
+{% else %}
+  <header class="{{ page_type }}-header">
+    <h1 class="{{ page_type }}-title" itemprop="name headline">{{ page_title }}</h1>
+  </header>
+{% endif %}

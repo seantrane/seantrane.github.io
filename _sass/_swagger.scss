@@ -1,0 +1,119 @@
+
+@mixin swagger-method($color) {
+  border: 1px solid $color;
+
+  .swagger-method-title {
+    background: lighten($color, 30%);
+  }
+
+  .swagger-method-link {
+    color: darken($color, 20%);
+  }
+
+  .swagger-method-name {
+    background: $color;
+  }
+}
+
+.swagger-path {
+  font-family: $font-family-monospace;
+  font-size: $font-size-base * 1.2;
+  margin: 25px 0 10px;
+}
+
+.swagger-method {
+  border-radius: 5px;
+  margin: 10px 0;
+  padding: 0;
+}
+
+.swagger-method-title {
+  cursor: pointer;
+  font-size: $font-size-base;
+  margin: 0;
+}
+
+.swagger-method-link {
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.swagger-method-name {
+  color: $gray-white;
+  display: inline-block;
+  margin-right: 10px;
+  padding: 6px 0;
+  text-align: center;
+  width: 80px;
+}
+
+.swagger-method-get {
+  @include swagger-method($brand-success);
+}
+
+.swagger-method-post {
+  @include swagger-method($brand-info);
+}
+
+.swagger-method-put {
+  @include swagger-method($brand-primary);
+}
+
+.swagger-method-patch {
+  @include swagger-method($brand-warning);
+}
+
+.swagger-method-delete {
+  @include swagger-method($brand-danger);
+}
+
+.swagger-method-details {
+  display: none;
+  margin: 0;
+  padding: 15px;
+
+  &.open {
+    display: block;
+  }
+}
+
+.swagger-response {
+  font-size: $font-size-base;
+
+  h5 {
+    margin: 10px 0 5px;
+  }
+}
+
+.swagger-response-code {
+  font-weight: 600;
+
+  &:after {
+    content: ' — ';
+  }
+}
+
+.swagger-parameters-table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-bottom: $grid-gutter-width;
+  width: 100%;
+
+  th,
+  td {
+    border: 1px solid darken($gray-lighter, 5%);
+    padding: 4px 10px;
+  }
+
+  th {
+    background: lighten($gray-lighter, 6%);
+  }
+}
+
+.swagger-parameter-required {
+  &:after {
+    color: $brand-danger;
+    content: ' *';
+  }
+}

@@ -1,0 +1,18 @@
+//
+// Wells
+// -------------------------
+
+.well {
+  @include box-shadow(none);
+  border-width: 7px;
+  min-height: 20px;
+  padding: floor($padding-large-vertical * 1.125) floor($padding-large-horizontal * 1.125);
+}
+
+.well-lg {
+  padding: floor($padding-large-vertical * 1.25) floor($padding-large-horizontal * 1.25);
+}
+
+.well-sm {
+  padding: $padding-base-vertical $padding-base-horizontal;
+}

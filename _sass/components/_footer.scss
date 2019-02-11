@@ -1,0 +1,55 @@
+// Site Footer
+// -------------------------
+
+.sts-name {
+  font-family: $font-family-sans-serif;
+  font-weight: bold;
+  .sts-first {
+    margin-right: -.35em;
+  }
+  .sts-middle {
+    color: $gray;
+    margin-right: -.25em;
+  }
+  .sts-last {
+    color: lighten($gray-base, 66.6%);
+  }
+}
+
+#site-footer {
+  #site-copyright {
+    @extend .col-sm-6;
+    text-align: center;
+    @media (min-width: $screen-sm) {
+      text-align: left;
+    }
+    .footer-description {
+      color: lighten($gray-base, 66.6%);
+      font: italic $font-size-small $font-family-serif;
+    }
+  }
+  #site-footer-nav {
+    @extend .col-sm-6;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    .nav {
+      @extend .nav-pills;
+      text-align: center;
+      li {
+        display: inline-block;
+        float: none;
+        list-style-image: none;
+      }
+    }
+    @media (min-width: $screen-sm) {
+      margin-left: 0;
+      margin-right: 0;
+      text-align: right;
+      .nav {
+        float: right !important;
+      }
+    }
+  }
+}
+

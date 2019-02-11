@@ -1,0 +1,50 @@
+---
+layout: page
+type: guide
+title: CI/CD Services
+author: seantrane
+---
+
+There are a lot of [continuous
+integration](http://en.wikipedia.org/wiki/Continuous_integration) and [continuous
+delivery](http://en.wikipedia.org/wiki/Continuous_delivery) services.
+All of them have a different set of functionality; some of them require payment,
+some of them are free, some only manage continuous integration and not delivery/deployment, etc.
+
+* https://blog.takipi.com/jenkins-vs-travis-ci-vs-circle-ci-vs-teamcity-vs-codeship-vs-gitlab-ci-vs-bamboo/
+* https://www.thoughtworks.com/radar/tools/jenkins-as-a-deployment-pipeline
+* http://concourse.ci/concourse-vs.html
+
+---
+
+## Comparison list/table of CI/CD services
+
+There is a
+[similar](https://en.wikipedia.org/wiki/Comparison_of_continuous_integration_software)
+comparison on Wikipedia.
+
+This table was inspired by a [similar](https://github.com/ligurio/awesome-ci/blob/master/README.md) comparison on GitHub.
+
+Plan/cost shorthand syntax:<br/>
+`<monthly-cost> : <concurrent_builds> . <total_builds> / <projects> {<users>}`
+
+| Name/Links | Description | Features | Repos | Open | Pricing | Host | Pipe | Config | StackShare |
+|------------|-------------|----------|-------|:----:|---------|------|------|--------|------------|
+| [Bamboo](https://www.atlassian.com/software/bamboo) <br/>- _[docs](https://confluence.atlassian.com/alldoc/bamboo-documentation-directory-23855144.html)_ <br/>- _[pricing](https://www.atlassian.com/software/bamboo/pricing)_ | Tie automated builds, tests, and releases together in a single workflow. <br/> > _All but deprecated by [Bitbucket Pipelines](https://bitbucket.org/product/features/pipelines)_ |  | Bitbucket, Git, Mercurial, Perforce, Webhooks |  | 1x$10: ~.~/10 <br/> 1x$880: ~.~/~ | Self |  | UI + SQL | [5★ 115§ 7✓](https://stackshare.io/bamboo) |
+| [Buddy](https://buddy.works/) <br/>- _[docs](https://buddy.works/help)_ <br/>- _[pricing](https://buddy.works/pricing)_ | Continuous Delivery, simplified. Build any app and run any command in isolated Docker containers. Deploy everywhere. | FTP/SFTP, AWS, Kubernetes, Google Cloud, Heroku, DigitalOcean & more. Run apps from your Git repo. | GitHub, GitLab, Bitbucket & more. |  | $0: 1.120/5 <br/> $49: 1.~/20 <br/> $98: 2.~/~ | SaaS | Pipe | UI *or* Code | [59★ 74§ 513✓](https://stackshare.io/buddy) |
+| [Buildkite](https://buildkite.com/) <br/>- _[docs](https://buildkite.com/docs/guides/getting-started)_ <br/>- _[source](https://github.com/buildkite/buildkite-agent)_ <br/>- _[pricing](https://buildkite.com/pricing)_ | Build automation platform which gives you complete control, without the pain of running your own CI system. | **Lang:** .NET/C#, C/C++, Clojure, Elixir, Erlang, Go, Java, Node/JS, Objective-C, PHP, Python, Ruby, Rust, Scala, Swift | GitHub, Bitbucket, GitLab, Custom |  | $0: OS/Edu<br/> $15: ~.~/~ {1} <br/> _Trial (14d)_ | SaaS |  | UI | [14★ 43§ 109✓](https://stackshare.io/buildkite) |
+| [CircleCI](https://circleci.com/) <br/>- _[docs](https://circleci.com/docs)_ <br/>- _[pricing](https://circleci.com/pricing)_ | CI/CD platform for teams of all sizes to rapidly build/release software at scale, in the cloud or behind a firewall. | | GitHub, Bitbucket |  | $0: 1.<1500min>/~ <br/> $50: 2.~/~ | Both | Pipe | Code | [127★ 1,190§ 878✓](https://stackshare.io/circleci) |
+| [CodeFresh](https://codefresh.io/) <br/>- _[docs](https://docs.codefresh.io/)_ <br/>- _[pricing](https://codefresh.io/pricing)_ | CodeFresh is a Docker-native CI/CD platform. Instantly build, test and deploy Docker images to Kubernetes | **Lang:** Go, Java, Node/JS, PHP, Python, Ruby, Rust, etc. | GitHub, Bitbucket, GitLab, Webhooks |  | $0: 1.120/~ {2} <br/> $69: 2.220/~ {5} <br/> $299: 3.~/~ {10} | SaaS | Pipe | UI + Code | [25★ 13§ 14✓](https://stackshare.io/codefresh) |
+| [Codeship](https://www.codeship.io/) <br/>- _[docs](https://www.codeship.io/documentation)_ <br/>- _[ebook](http://ebooks.codeship.io/efficiency-in-development-workflows-by-codeship/)_ <br/>- _[pricing](https://codeship.io/pricing)_ | Fast and secure hosted Continuous Integration service that scales. | **Lang:** Dart, Elixir, Go, Java, JVM-based, Node/JS, PHP, Python, Ruby | GitHub, Bitbucket, GitLab |  | $0: Open <br/> $0: 1.100/~ <br/> $75+: 1.~/~ <br/> $150+: 2.~/~ | SaaS |  | Code | [97★ 629§ 1,440✓](https://stackshare.io/codeship) |
+| [Concourse CI](http://concourse.ci/) <br/>- _[docs](https://concourse.ci/introduction.html)_ <br/>- _[source](http://concourse.ci/downloads.html)_ | Self-hosted CI solution written in Golang, backed by [Cloud Foundry](https://www.cloudfoundry.org/). |  | GitHub, OAuth | O | Free | Self | Pipe | CLI + Code | [16★ 32§ 24✓](https://stackshare.io/concourse) |
+| [Drone](https://drone.io/) <br/>- _[docs](http://docs.drone.io/)_ <br/>- _[source](https://github.com/drone/drone)_ <br/>- _[pricing](https://drone.io/pricing)_ | Continuous Integration service |  | GitHub, Bitbucket, Google Code, Custom |  | $0: Open <br/> $125: 2.~/~ <br/> $250: 4.~/~ <br/> $500: 8.~/~ | Both | Pipe | CLI + Code | [36★ 104§ 194✓](https://stackshare.io/drone-io) |
+| [GoCD](https://gocd.io/) <br/>- _[docs](https://docs.gocd.io/)_ <br/>- _[source](https://gocd.io/download)_ | Automate and streamline your build-test-release cycle for reliable, continuous delivery of your product. _Sponsored by [ThoughtWorks](http://www.thoughtworks.com/)_. | | Git, Perforce, Mercurial, Subversion, TFS, [Custom](https://gocd.io/plugins) | O | Free | Self | Pipe | UI _[+ Code]_ | [30★ 65§ 184✓](https://stackshare.io/go-cd) |
+| [Jenkins](https://jenkins.io/) <br/>- _[docs](https://jenkins.io/doc)_ <br/>- _[source](https://github.com/jenkinsci/jenkins)_ | The leading open source automation server, providing hundreds of plugins to support building, deploying and automating any project. | Android, C/C++, Docker, Embedded, Java, PHP, Python, Ruby | GitHub, Bitbucket, Custom | O | Free | Self | Pipe | UI + Code | [267★ 3,640§ 1,970✓](https://stackshare.io/jenkins) |
+| [Semaphore](https://semaphoreci.com/) <br/>- _[docs](https://semaphoreci.com/docs/)_ <br/>- _[pricing](https://semaphoreci.com/pricing)_ | Hosted continuous integration and delivery solution for open source and private projects. | **Lang:** C/C++, Clojure, Elixir, Erlang, Go, Java, Node/JS, PHP, Ruby, Scala  | GitHub, Bitbucket |  | $0: Open <br/> $25: 1.~/~ <br/> $83: 2.~/~ <br/> $166: 4.~/~ <br/> $332: 8.~/~ <br/> $499: 12.~/~ <br/> _Trial (30d)_ | SaaS |  | UI | [15★ 83§ 69✓](https://stackshare.io/semaphore) |
+| [Shippable](https://www.shippable.com/) <br/>- _[docs](http://docs.shippable.com/)_ <br/>- _[pricing](https://www.shippable.com/pricing.html)_ | CI/CD and DevOps automation platform with Docker support that simplifies provisioning, building, testing, and deploying any application anywhere. | **Lang:** Go, Java, Node/JS, PHP, Python, Ruby, Scala; <br/>**DBs:** CouchDB, MongoDB, MySQL, Neo4j, Postgres, Redis, RethinkDB, SQLite | GitHub, Bitbucket, GitLab |  | $0: Open <br/> $0: 1.150/~ <br/> $25: {#C4L}.~/~ <br/> $75: {#C4XL}.~/~ <br/> $150: {#C42XL}.~/~ <br/> _Support:_ $500+/mo <br/> _Server:_ $500/yr + $20/user/mo | Both | Pipe | Code | [13★ 40§ 126✓](https://stackshare.io/shippable) |
+| [Solano CI](https://www.solanolabs.com/) <br/>- _[docs](http://docs.solanolabs.com/)_ <br/>- _[pricing](https://www.solanolabs.com/#pricing)_ | Hosted service that runs your test suite on a distributed infrastructure. <br/> > _[GE Digital](https://www.ge.com/digital/) has acquired [Solano Labs](https://www.solanolabs.com/) for their [Predix platform](https://www.ge.com/digital/predix)._ | Self-hosted version called [Solano Private CI](https://ci.solanolabs.com/private-ci), _used by [Airbnb](http://nerds.airbnb.com/testing-at-airbnb/)_. | GitHub, Bitbucket, GitLab, Custom |  | $15: 2.<10h>/~ {2} <br/> $50: 4.<40h>/~ {5} <br/> $100: 8.<200h>/~ {6} <br/> $125+: ?.~/~ <br/> _Trial (14d)_ | Both |  | Code | [12★ 24§ 29✓](https://stackshare.io/solano-ci) |
+| [TeamCity](https://www.jetbrains.com/teamcity/) <br/>- _[docs](https://confluence.jetbrains.com/display/TCD10/TeamCity+Documentation)_ <br/>- _[pricing](https://www.jetbrains.com/teamcity/buy/#license-type=new-license)_ | A Java-based build management and continuous integration server from JetBrains. | Support [wide variety of web browsers and build tools](https://confluence.jetbrains.com/display/TCD10/Supported+Platforms+and+Environments#SupportedPlatformsandEnvironments-BuildRunners) | Git, SVN, Perforce, Mercurial, CVS & many more. |  | $0: 3.~/100 <br/> $299: 4.~/110 <br/> $598: 5.~/120 | SaaS |  | UI | [24★ 374§ 221✓](https://stackshare.io/teamcity) |
+| [Travis CI](https://travis-ci.org/) <br/>- _[docs](http://docs.travis-ci.com/user/getting-started/)_ <br/>- _[source](https://github.com/travis-ci/travis-ci)_ <br/>- _[pricing](https://travis-ci.com/plans)_ | Hosted continuous integration and deployment system for open source and private projects. | **Lang:** C, C++, Clojure, Erlang, Go, Groovy, Haskell, Java, Node/JS, Objective-C, Perl, PHP, Python, Ruby, Rust, Scala. | GitHub |  | $0: Open <br/> $69: 1.~/~ <br/> $129: 2.~/~ <br/> $249: 5.~/~ <br/> $489: 10.~/~ | SaaS |  | Code | [178★ 1,880§ 1,700✓](https://stackshare.io/travis-ci) |
+| [Visual Studio Team Services](https://www.visualstudio.com/team-services/) <br/>- _[docs](https://www.visualstudio.com/en-us/docs/overview)_ <br/>- _[pricing](https://docs.microsoft.com/en-us/vsts/billing/buy-more-build-vs)_ | Cloud-based collaboration services for version control, agile planning, continuous delivery, and analytics application for Visual Studio, Eclipse, Xcode. |  | Visual Studio Team Services, GitHub, Custom |  | <br/> $0: 1.<4h>/1 {1} <br/> $40: 1.<6h>/2 {1} <br/> $80: 1.<6h>/3 {1} | SaaS | Pipe | UI *or* Code | [11★ 94§ 14✓](https://stackshare.io/visual-studio-team-services) |
+| ........................ | ................................ | ................................ | . | . | ................................ | . | . | . | . |
+

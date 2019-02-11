@@ -1,0 +1,154 @@
+//
+// Jumbotron
+// --------------------------------------------------
+
+.jumbotron {
+  font-family: $brand-font;
+  padding: floor($jumbotron-padding / 1.2);
+  > :first-child {
+    margin-top: 0;
+  }
+  > :last-child {
+    margin-bottom: 0;
+  }
+  p {
+    font-size: $jumbotron-font-size;
+    font-weight: 500;
+    margin-bottom: floor($line-height-computed / 1.2);
+    max-width: 980px;
+  }
+  @media screen and (max-width: $screen-xs-max) {
+    margin-left: -15px;
+    margin-right: -15px;
+  }
+  @media screen and (min-width: $screen-sm-min) {
+    padding-bottom: $jumbotron-padding;
+    padding-top:    $jumbotron-padding;
+
+    .container & {
+      padding-left:  $jumbotron-padding;
+      padding-right: $jumbotron-padding;
+    }
+    h1,
+    .h1 {
+      font-size: ceil($font-size-h1 * 1.2);
+    }
+    h2,
+    .h2 {
+      font-size: ceil($font-size-h2 * 1.2);
+    }
+    h2,
+    .h2,
+    h3,
+    .h3,
+    h4,
+    .h4,
+    h5,
+    .h5 {
+      color: inherit;
+    }
+  }
+}
+
+.brand-img {
+  $brand-img-bg: transparent;
+  $brand-img-color: #fff;
+  background-color: $brand-img-bg;
+  background-image: url('/images/bg-skin.png');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: $brand-img-color;
+  padding: 0;
+  text-shadow: 0 2px 1px $trans-black-5;
+  @media screen and (min-width: $screen-sm-min) {
+    padding: 0;
+    .container & {
+      padding: 0;
+    }
+  }
+  .btn,
+  button,
+  input,
+  textarea {
+    text-shadow: none;
+  }
+  small {
+    color: $brand-img-color;
+  }
+  a,
+  a:visited,
+  a:hover,
+  a:active {
+    color: $brand-img-color;
+  }
+  p {
+    a {
+      text-decoration: underline;
+    }
+  }
+  .btn {
+    text-decoration: none;
+  }
+  .btn-default {
+    &,
+    &:visited,
+    &:hover,
+    &:active {
+      color: $gray-darkest;
+    }
+  }
+  &.jumbotron {
+    p {
+      font-size: $font-size-h5;
+      margin-right: ($grid-gutter-width * 10);
+    }
+    .brand-img-inner {
+      padding: floor($jumbotron-padding / 1.2);
+    }
+  }
+}
+// .brand-img-color {
+//   // background-color: rgba(0,109,180,0.6);
+// }
+.brand-img-inner {
+  background-color: transparent;
+  background-position: bottom right;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  padding: $padding-large-vertical $padding-large-horizontal;
+  @media screen and (max-width: $screen-xs-max) {
+    background-image: none !important;
+  }
+  // @media screen and (min-width: $screen-sm-min) {
+  //   padding-top:    $jumbotron-padding;
+  //   padding-bottom: $jumbotron-padding;
+  //   .container & {
+  //     padding-left:  $jumbotron-padding;
+  //     padding-right: $jumbotron-padding;
+  //   }
+  // }
+}
+.brand-img-head {
+  > :first-child {
+    margin-top: 0;
+  }
+  > :last-child {
+    margin-bottom: 0;
+  }
+  .headline {
+    border-bottom: 3px solid $trans-white-5;
+    border-top: 0;
+    padding-bottom: 10px;
+    padding-top: 0;
+  }
+}
+.brand-img-body {
+  > :first-child {
+    margin-top: $padding-large-vertical;
+  }
+  > :last-child {
+    margin-bottom: 0;
+  }
+}
+

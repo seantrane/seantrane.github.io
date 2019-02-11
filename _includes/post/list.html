@@ -1,0 +1,12 @@
+{% assign list_items = include.list_items %}
+{% assign list_limit = 99 %}{% if include.limit %}{% assign list_limit = include.limit %}{% endif %}
+{% assign item_title_el = 'h2' %}{% if include.item_title_el %}{% assign item_title_el = include.item_title_el %}{% endif %}
+{% assign show_meta = 1 %}{% if include.show_meta %}{% assign show_meta = include.show_meta %}{% endif %}
+{% assign show_summary = 0 %}{% if include.show_summary %}{% assign show_summary = include.show_summary %}{% endif %}
+{% for item in list_items limit:list_limit %}
+  {% if forloop.first %}<section>{{ include.list_heading }}<ul class="post-list">{% endif %}
+  {% include post/list-item.html post=item show_meta=show_meta show_summary=show_summary title_el=item_title_el %}
+  {% if forloop.last %}</ul></section>{% endif %}
+{% else %}
+  {{ include.default }}
+{% endfor %}

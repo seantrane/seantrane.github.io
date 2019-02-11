@@ -1,0 +1,16 @@
+---
+layout: default
+---
+<div
+  class="page{% if page.class %} page--{{ page.class }}{% endif %}"
+  itemscope
+  itemtype="{% if page.itemtype %}{{ page.itemtype }}{% else %}https://schema.org/WebPage{% endif %}"
+>
+
+  {% if page.class != 'home' %}{% include page-header.html %}{% endif %}
+
+  <div class="page-content" itemprop="mainContentOfPage">
+    {{ content | toc }}
+  </div>
+
+</div>

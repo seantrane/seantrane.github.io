@@ -1,0 +1,23 @@
+{% assign list_items = include.list_items %}
+{% assign list_limit = 99 %}{% if include.limit %}{% assign list_limit = include.limit %}{% endif %}
+{% for item in list_items limit:list_limit %}
+  {% assign bookmark_group = item[1] %}
+  {% assign bookmarks = bookmark_group.bookmarks | sort:'title' %}
+  {% assign bookmark_group_id = bookmark_group.name | downcase | prepend: 'bookmarks-' %}
+  {% if forloop.first %}<section>{{ include.list_heading }}<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">{% endif %}
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="heading--{{ bookmark_group_id }}">
+      <h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse--{{ bookmark_group_id }}" aria-expanded="true" aria-controls="collapse--{{ bookmark_group_id }}">{{ bookmark_group.name }}</a></h4>
+    </div>
+    <div id="collapse--{{ bookmark_group_id }}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading--{{ bookmark_group_id }}">
+      <ul class="list-group">
+        {% for bookmark in bookmarks %}{% if bookmark.url != '' and bookmark.title != '' %}
+        <a href="{{ bookmark.url }}" class="list-group-item">{{ bookmark.title }}</a>
+        {% endif %}{% endfor %}
+      </ul>
+    </div>
+  </div>
+  {% if forloop.last %}</div></section>{% endif %}
+{% else %}
+  {{ include.default }}
+{% endfor %}

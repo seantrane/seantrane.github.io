@@ -1,0 +1,14 @@
+{% assign list_items = include.list_items %}
+{% assign list_limit = 99 %}{% if include.limit %}{% assign list_limit = include.limit %}{% endif %}
+{% assign list_name = 'Portfolio' %}{% if include.list_name %}{% assign list_name = include.list_name %}{% endif %}
+{% for item in list_items limit:list_limit %}
+  {% if forloop.first %}<section>{{ include.list_heading }}<div class="image-gallery image-gallery-{{ list_name | slugify }}">{% endif %}
+  <a class="thumbnail" href="{{ item.path | prepend: site.baseurl }}" data-toggle="lightbox" data-gallery="image-gallery-{{ list_name | slugify }}" data-type="image">
+    <img src="{{ item.path | prepend: site.baseurl }}" alt="">
+  </a>
+  {% if forloop.last %}</div></section>{% endif %}
+{% else %}
+{% comment %}
+@see: https://shopify.github.io/liquid/tags/iteration/
+{% endcomment %}
+{% endfor %}

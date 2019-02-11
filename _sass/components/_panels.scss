@@ -1,0 +1,173 @@
+//
+// Panels
+// -------------------------
+
+@mixin panel-alternate(
+  $panel-color: $brand-primary,
+  $panel-bg-color: $well-bg,
+  $panel-border-width: 6px 0 0,
+  $panel-heading-padding: 7px 11px 6px,
+  $panel-heading-color: #fff
+  ) {
+  background-color: $panel-bg-color;
+  border: 0;
+  border-bottom: 1px solid $trans-black-1;
+  //border-color: $panel-color;
+  //border-width: $panel-border-width;
+  & > .panel-heading {
+    -moz-box-shadow: 0 10px 20px -10px $panel-color;
+    -webkit-box-shadow: 0 10px 20px -10px $panel-color;
+    background-color: $panel-color;
+    border-bottom: 1px solid $trans-black-2;
+    border-top: 1px solid $trans-black-1;
+    box-shadow: 0 10px 20px -10px $panel-color;
+    color: $panel-heading-color;
+    padding: $panel-heading-padding;
+    text-shadow: 0 0 10px $trans-black-3;
+    + .panel-collapse {
+      .panel-body {
+        border-width: 0;
+      }
+    }
+    .panel-title {
+      color: $panel-heading-color;
+    }
+  }
+  & > .panel-footer {
+    background-color: darken($panel-bg-color, 3.3%);
+    border-top-color: darken($panel-bg-color, 10%);
+    + .panel-collapse {
+      .panel-body {
+        border-width: 0;
+      }
+    }
+  }
+  & > .list-group {
+    // border-bottom-color: $panel-color;
+    .list-group-item {
+      border-bottom-color: screen($panel-color, lighten($gray-base, 73.3%));
+      border-top-color: screen($panel-color, lighten($gray-base, 73.3%));
+      color: $panel-color;
+      padding: $padding-base-vertical $padding-base-horizontal;
+    }
+  }
+}
+
+.panel {
+  @include box-shadow(none);
+  margin: $line-height-computed 0;
+  .panel-body {
+    @include clearfix;
+  }
+  > .list-group {
+    border-bottom: 1px solid $gray-lighter;
+    .list-group-item {
+      border-left-color: $gray-lightest;
+      border-right-color: $gray-lightest;
+      border-width: 1px;
+    }
+  }
+}
+.panel-body > :last-child {
+  margin-bottom: 0;
+}
+.panel-default {
+  @include panel-alternate($gray-8, $well-bg, 0);
+}
+.panel-primary {
+  @include panel-alternate($brand-primary);
+}
+
+.panel-section {
+  @include panel-alternate($brand-section);
+}
+.panel-article,
+.panel-nav {
+  @include panel-alternate($brand-nav);
+}
+.panel-aside {
+  @include panel-alternate($brand-aside);
+}
+.panel-pullout {
+  @include panel-alternate($brand-pullout);
+}
+
+.panel-plain {
+  @include panel-alternate($link-hover-color, $gray-lighter, 0, 5px);
+  .panel-body {
+    background-color: $gray-lightest;
+    padding: 0 10px 10px 15px;
+  }
+}
+
+.panel-action {
+  @include panel-alternate($brand-success);
+}
+
+.panel-success {
+  @include panel-alternate($brand-success, $state-success-bg);
+}
+.panel-warning {
+  @include panel-alternate($brand-warning, $state-warning-bg);
+}
+.panel-danger {
+  @include panel-alternate($brand-danger, $state-danger-bg);
+}
+.panel-info {
+  @include panel-alternate($brand-info, $state-info-bg);
+}
+
+.panel-layered {
+  // @include panel-alternate($brand-primary, $well-bg, 0);
+  box-shadow:
+  0 1px 1px $trans-black-2, // The top layer shadow
+  0 10px 0 -5px $gray-lighter, // The second layer
+  0 10px 1px -4px $trans-black-2, // The second layer shadow
+  0 20px 0 -10px $gray-lighter, // The third layer
+  0 20px 1px -9px $trans-black-2;
+  margin-bottom: round($line-height-computed * 1.5);
+}
+
+.panel-rounded {
+  border-radius: 4px;
+}
+
+.panel-open {
+  background: transparent none;
+}
+
+.panel-outline {
+  background: transparent none;
+  border-bottom: 2px solid lighten($gray-base, 86.5%);
+  border-left: 1px solid lighten($gray-base, 86.5%);
+  border-radius: 3px 3px 0 0;
+  border-right: 1px solid lighten($gray-base, 86.5%);
+}
+
+@mixin panel-stiches(
+  $panel-color: $gray-lightest,
+  $panel-bg-color: $gray,
+  $panel-border-color: $trans-white-7,
+  $panel-box-shadow-color: $trans-black-2,
+  $panel-text-shadow-color: $trans-black-1
+  ) {
+  @include gradient-vertical(lighten($panel-bg-color, 7%), $panel-bg-color);
+  background: $panel-bg-color;
+  border: 2px dashed $panel-border-color;
+  box-shadow: 0 0 0 4px $panel-bg-color, 0 0 10px 5px $panel-box-shadow-color;
+  color: $panel-color;
+  position: relative;
+  text-shadow: -1px -1px $panel-text-shadow-color;
+}
+
+.panel-stiched {
+  @include panel-stiches;
+}
+
+#accordion {
+  .panel-heading {
+    a {
+      display: block;
+    }
+  }
+}

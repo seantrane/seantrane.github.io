@@ -1,0 +1,109 @@
+---
+layout: page
+permalink: /who/
+title: Who is Sean Trane?
+meta:
+- '<em>Who? What? When? Why?&nbsp;How?</em><br>'
+- 'The answers to those questions and more&hellip;<br>'
+- '&hellip;or less&hellip;'
+---
+
+<article class="row">
+
+  <section class="col-md-7"><h2 id="biography">Biography</h2>
+
+    <img src="https://www.gravatar.com/avatar/93db19ad1cafa3db1e0f785bb94f835e?s=120" style="float:right" />
+
+    <p>Professionally, I've primarily been an <em>engineering manager</em> and <em>full-stack developer</em> for over a decade and I've been designing/developing websites and online solutions for {{ 'now' | date: "%Y" | minus:1998 }}&nbsp;years.</p>
+
+    <p>By the year 2000, I had already been an art director for a design firm and a multimedia designer/developer at both an academic publisher and a telecommunications company. With skills in all areas of graphic design, corporate identity, multimedia design, sound design and web development, I became a full-time freelancer in mid-2001 and co-founded a creative development&nbsp;firm.</p>
+
+    <p>A few years later, I took on several roles at another academic publisher to supplement my income. In 2007 I took on a role of <em>Webmaster</em> at (yet another) academic publishing company, Taylor &amp; Francis Group. In 2010 I decided to reduce my personal business and endeavors so that I could focus solely on in-house roles, regaining some much-needed freedom in my personal life.</p>
+
+    <p>Web design and development has evolved a lot over the years. Roles have diversified, mediums and devices have improved (mercifully), business needs have evolved. Web development has gone beyond application development and into advanced platform engineering. The skill-set required these days to develop web-based applications is as diverse and demanding as it has ever been. Currently, I'm known as a <em>Tech/Delivery Lead</em> and I spend most of my time leading development teams to build highly scalable web apps, microservices and platforms.</p>
+
+    <p>My professional passions include; <a href="https://en.wikipedia.org/wiki/Design">Design</a>, <a href="https://en.wikipedia.org/wiki/Workflow">Workflows</a>, <a href="https://en.wikipedia.org/wiki/Software_development_process">Software development processes</a>, <a href="https://en.wikipedia.org/wiki/Site_Reliability_Engineering">SRE</a>/<a href="https://en.wikipedia.org/wiki/DevOps">DevOps</a>, <a href="https://www.thoughtworks.com/continuous-integration">CI</a>/<a href="https://continuousdelivery.com/">CD</a>, <a href="https://en.wikipedia.org/wiki/Solution_architecture">Solution architecture</a>, <a href="https://developers.google.com/search/docs/guides/intro-structured-data">Structured data</a>.</p>
+
+  </section>
+
+  <section class="col-md-5">
+
+    <section><h2 id="summary">Summary</h2>
+      <dl class="dl-horizontal">
+        <dt>Title(s)/Role(s)</dt>
+          <dd>Tech/Delivery Lead</dd>
+        <dt>Employer(s)</dt>
+          <dd>Taylor &amp; Francis Group</dd>
+        <dt>Experienced</dt>
+          <dd>{{ 'now' | date: "%Y" | minus:1993 }} years</dd>
+        <dt>Education</dt>
+          <dd>Associate's Degree in <span class="nobreak">Visual Communications</span>, <em class="nobreak">Art Institute of Fort Lauderale</em></dd>
+          <dd><span class="nobreak">Computer Graphics</span>, <em class="nobreak">Montclair State University</em></dd>
+      </dl>
+    </section>
+
+    {% if site.data.work_timeline %}{% assign work_timeline = site.data.work_timeline | reverse %}
+    <section><h2 id="work-experience-timeline">Work Experience Timeline</h2>
+      <dl class="dl-horizontal">
+        {% for entry in work_timeline %}
+        <dt>{{ entry.term }}</dt>
+          <dd>{{ entry.role }}{% if entry.org %}, <em class="nobreak">{{ entry.org }}</em>{% endif %}</dd>
+        {% endfor %}
+      </dl>
+    </section>
+    {% endif %}
+
+  </section>
+
+  <section class="col-md-12"><h2 id="skills" class="section-header">Skills <em>that pay bills (and some that don't)</em></h2>
+
+    <p>This is a massive list of software, services, technologies and standards that I've had experience with. It's challenging to organize this list, and present the experience I have with it. For better or worse, I've chosen to represent my skill-level using icons.</p>
+    <p><strong>Legend:</strong> <span class="icon icon16 icon-heart" style="color:rgb(204, 0, 0)"></span> <em>(true love)</em>, <span class="icon icon16 icon-fire" style="color:rgb(255, 123, 0)"></span> <em>(everyday use)</em>, <span class="icon icon16 icon-star" style="color:rgb(255, 217, 0)"></span> <em>(favorite)</em>, <span class="icon icon16 icon-flash" style="color:rgb(0, 238, 255)"></span> <em>(signficant experience)</em>, <span class="icon icon16 icon-spinner" style="color:rgb(0, 116, 0)"></span> <em>(beginner)</em>, <span class="icon icon16 icon-hourglass-end" style="color:rgb(150, 110, 0)"></span> <em>(dated knowledge)</em>, <span class="icon icon16 icon-trash" style="color:rgb(99, 99, 99)"></span> <em>(dead skill)</em>, <span class="icon icon16 icon-frown-o" style="color:rgb(99, 99, 99)"></span> <em>(trollface)</em></p>
+
+    <section class="row">
+
+      {% if site.data.skills %}{% for skillgroup in site.data.skills %}
+      <section class="col-md-4">
+        <h4 id="{{ skillgroup.id }}">{{ skillgroup.name }}</h4>
+        {% if skillgroup.skillset %}
+        <ul>
+          {% for skill in skillgroup.skillset %}{% if skill.name != '' %}
+          <li>
+            {% if skill.url %}<a href="{{ skill.url }}">{{ skill.name }}</a>{% else %}{{ skill.name }}{% endif %}
+            {% if skill.subtext %} <em class="text-muted smaller">({{ skill.subtext }})</em>{% endif %}
+            {% if skill.tags %}
+            {% assign skilltags = skill.tags | split: ', ' %}
+            {% for skilltag in skilltags %}
+              {% if skilltag == 'heart' %}
+                <span class="icon icon16 icon-{{ skilltag }}" style="color:rgb(204, 0, 0)"></span>
+              {% elsif skilltag == 'fire' %}
+                <span class="icon icon16 icon-{{ skilltag }}" style="color:rgb(255, 123, 0)"></span>
+              {% elsif skilltag == 'star' %}
+                <span class="icon icon16 icon-{{ skilltag }}" style="color:rgb(255, 217, 0)"></span>
+              {% elsif skilltag == 'flash' %}
+                <span class="icon icon16 icon-{{ skilltag }}" style="color:rgb(0, 238, 255)"></span>
+              {% elsif skilltag == 'beginner' %}
+                <span class="icon icon16 icon-spinner" style="color:rgb(0, 116, 0)"></span>
+              {% elsif skilltag == 'hourglass' %}
+                <span class="icon icon16 icon-hourglass-end" style="color:rgb(150, 110, 0)"></span>
+              {% elsif skilltag == 'trash' %}
+                <span class="icon icon16 icon-{{ skilltag }}" style="color:rgb(99, 99, 99)"></span>
+              {% elsif skilltag == 'trollface' %}
+                <span class="icon icon16 icon-frown-o" style="color:rgb(99, 99, 99)"></span>
+              {% else %}
+                :{{ skilltag }}:
+              {% endif %}
+            {% endfor %}
+            {% endif %}
+          </li>
+          {% endif %}{% endfor %}
+        </ul>
+        {% endif %}
+      </section>
+      {% endfor %}{% endif %}
+
+    </section>
+
+  </section>
+
+</article>

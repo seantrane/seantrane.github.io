@@ -1,0 +1,152 @@
+// Pygments CSS Theme: BalanceD
+// ----------------------------------------------------------------------------
+
+$pygment--bg: #333;
+$pygment--color: #f8f8f8;
+
+$pygment--red-bg: #eef;
+
+$pygment--comment-color:     #777;
+$pygment--constant-color:    #a3d1ff;
+$pygment--error-bg:          #e3d2d2;
+$pygment--error-color:       #a00;
+$pygment--inserted-color:    #ffb8ff;
+$pygment--keyword-color:     #c33;
+$pygment--literal-color:     #ae81ff;
+$pygment--name-color:        #e3832d;
+$pygment--operator-color:    #fff;
+$pygment--punctuation-color: #eee;
+$pygment--string-color:      #9c6;
+$pygment--variable-color:    #dbaf00;
+
+$pygment--heading-color:    #999;
+$pygment--output-color:     #888;
+$pygment--subheading-color: #aaa;
+
+$pygment--attribute-color:         #c7b299;
+$pygment--builtin-color:           mix($pygment--name-color, $pygment--variable-color);
+$pygment--builtin-psuedo-color:    #999;
+$pygment--class-color:             #c63;
+$pygment--decorator-color:         lighten($pygment--variable-color, 20%);
+$pygment--deleted-color:           #777;
+$pygment--deleted-specific-color:  $pygment--deleted-color;
+$pygment--entity-color:            $pygment--constant-color;
+$pygment--function-color:          #c63;
+$pygment--inserted-specific-color: $pygment--inserted-color;
+$pygment--label-color:             #69c;
+$pygment--namespace-color:         #aaa;
+$pygment--number-color:            $pygment--constant-color;
+$pygment--prompt-color:            #aaa;
+$pygment--string-escape-color:     $pygment--constant-color;
+$pygment--string-iterpol-color:    $pygment--variable-color;
+$pygment--string-regex-color:      $pygment--constant-color;
+$pygment--string-symbol-color:     $pygment--variable-color;
+$pygment--tag-color:               #aa9786;
+$pygment--text-whitespace-color:   #555;
+$pygment--type-color:              $pygment--class-color;
+
+$pygment--css-class-color:         #f9f;
+
+.highlight {
+  // @extend %vertical-rhythm;
+  background: $pygment--bg;
+  border-left: 10px solid lighten($pygment--bg, 11%);
+  color: $pygment--color;
+  pre {
+    background: $pygment--bg;
+    border: 0;
+    color: $pygment--color;
+    padding: 9px 3px 6px 8px;
+  }
+  .highlighter-rouge & {
+    background: $pygment--red-bg;
+  }
+  .c   { color: $pygment--comment-color; }             // Comment
+  .err {                                               // Error
+    background-color: $pygment--error-bg;
+    color: $pygment--error-color;
+  }
+  .k   { color: $pygment--keyword-color; }             // Keyword
+  .l   { color: $pygment--literal-color; }             // Literal
+  .n   { color: $pygment--name-color; }                // Name
+  .o   { color: $pygment--operator-color; }            // Operator
+  .p   { color: $pygment--punctuation-color; }         // Punctuation
+  .ch  { color: $pygment--comment-color; }             // Comment.Hashbang
+  .cm  { color: $pygment--comment-color; }             // Comment.Multiline
+  .cpf { color: $pygment--comment-color; }             // Comment.PreprocFile
+  .cp  { color: $pygment--comment-color; }             // Comment.Preproc
+  .c1  { color: $pygment--comment-color; }             // Comment.Single
+  .cs  { color: $pygment--comment-color; }             // Comment.Special
+  .gd  {                                               // Generic.Deleted
+    color: $pygment--deleted-color;
+    text-decoration: strikethrough;
+    .x { color: $pygment--deleted-specific-color; }    // Generic.Deleted.Specific
+  }
+  .ge  { font-style: italic; }                         // Generic.Emph
+  .gr  { color: $pygment--error-color; }               // Generic.Error
+  .gh  { color: $pygment--heading-color; }             // Generic.Heading
+  .gi  {                                               // Generic.Inserted
+    color: $pygment--inserted-color;
+    .x { color: $pygment--inserted-specific-color; }   // Generic.Inserted.Specific
+  }
+  .go  { color: $pygment--output-color; }              // Generic.Output
+  .gp  { color: $pygment--prompt-color; }              // Generic.Prompt
+  .gs  { font-weight: bold; }                          // Generic.Strong
+  .gu  { color: $pygment--subheading-color; }          // Generic.Subheading
+  .gt  { color: $pygment--error-color; }               // Generic.Traceback
+  .kc  { color: $pygment--constant-color; }            // Keyword.Constant
+  .kd  { color: $pygment--keyword-color; }             // Keyword.Declaration
+  .kn  { color: $pygment--operator-color; }            // Keyword.Namespace
+  .kp  { font-weight: bold; }                          // Keyword.Pseudo
+  .kr  { font-weight: bold; }                          // Keyword.Reserved
+  .kt  { color: $pygment--type-color; }                // Keyword.Type
+  .ld  { color: $pygment--string-color; }              // Literal.Date
+  .m   { color: $pygment--number-color; }              // Literal.Number
+  .s   { color: $pygment--string-color; }              // Literal.String
+  .na  { color: $pygment--attribute-color; }           // Name.Attribute
+  .nb  { color: $pygment--builtin-color; }             // Name.Builtin
+  .nc  { color: $pygment--class-color; }               // Name.Class
+  .no  { color: $pygment--class-color; }               // Name.Constant
+  .nd  { color: $pygment--decorator-color; }           // Name.Decorator
+  .ni  { color: $pygment--entity-color; }              // Name.Entity
+  .ne  { color: $pygment--function-color; }            // Name.Exception
+  .nf  { color: $pygment--function-color; }            // Name.Function
+  .nl  { color: $pygment--label-color; }               // Name.Label
+  .nn  { color: $pygment--namespace-color; }           // Name.Namespace
+  .nx  { color: $pygment--class-color; }               // Name.Other
+  .py  { color: $pygment--name-color; }                // Name.Property
+  .nt  { color: $pygment--tag-color; }                 // Name.Tag
+  .nv  { color: $pygment--variable-color; }            // Name.Variable
+  .ow  { color: $pygment--operator-color; }            // Operator.Word
+  .w   { color: $pygment--text-whitespace-color; }     // Text.Whitespace
+  .mb  { color: $pygment--number-color; }              // Literal.Number.Bin
+  .mf  { color: $pygment--number-color; }              // Literal.Number.Float
+  .mh  { color: $pygment--number-color; }              // Literal.Number.Hex
+  .mi  { color: $pygment--number-color; }              // Literal.Number.Integer
+  .mo  { color: $pygment--number-color; }              // Literal.Number.Oct
+  .sa  { color: $pygment--string-color; }              // Literal.String.Affix
+  .sb  { color: $pygment--string-color; }              // Literal.String.Backtick
+  .sc  { color: $pygment--string-color; }              // Literal.String.Char
+  .dl  { color: $pygment--string-color; }              // Literal.String.Delimiter
+  .sd  { color: $pygment--comment-color; }             // Literal.String.Doc
+  .s2  { color: $pygment--string-color; }              // Literal.String.Double
+  .se  { color: $pygment--string-escape-color; }       // Literal.String.Escape
+  .sh  { color: $pygment--string-color; }              // Literal.String.Heredoc
+  .si  { color: $pygment--string-iterpol-color; }      // Literal.String.Interpol
+  .sx  { color: $pygment--string-color; }              // Literal.String.Other
+  .sr  { color: $pygment--string-regex-color; }        // Literal.String.Regex
+  .s1  { color: $pygment--string-color; }              // Literal.String.Single
+  .ss  { color: $pygment--string-symbol-color; }       // Literal.String.Symbol
+  .bp  { color: $pygment--builtin-psuedo-color; }      // Name.Builtin.Pseudo
+  .fm  { color: $pygment--inserted-color; }            // Name.Function.Magic
+  .vc  { color: $pygment--variable-color; }            // Name.Variable.Class
+  .vg  { color: $pygment--variable-color; }            // Name.Variable.Global
+  .vi  { color: $pygment--variable-color; }            // Name.Variable.Instance
+  .vm  { color: $pygment--name-color; }                // Name.Variable.Magic
+  .il  { color: $pygment--number-color; }              // Literal.Number.Integer.Long
+
+  //.language-css {                                      // CSS
+  //  .nc  { color: $pygment--css-class-color; }         // Name.Class
+  //}
+
+}

@@ -1,0 +1,458 @@
+//
+// Labels
+// -------------------------
+
+.label {
+  border-radius: 1em;
+  font-family: $font-family-serif;
+  font-style: italic;
+  padding: .2em .6em .3em .7em;
+  h1 &,
+  h2 &,
+  h3 &,
+  h4 &,
+  h5 &,
+  h6 & {
+    padding: 0 .3em 0 .4em;
+  }
+}
+
+//
+// Forms
+// -------------------------
+
+.form-control {
+  color: $gray-darkest;
+}
+.form-horizontal {
+  .form-label {
+    @include make-sm-column(3);
+  }
+  .form-field {
+    @include make-sm-column(9);
+  }
+  .form-pushfield {
+    @include make-sm-column-offset(3);
+    @include make-sm-column(9);
+  }
+}
+.error {
+  &.form-control {
+    border-color: $state-danger-text;
+    &:focus {
+      border-color: $input-border-focus;
+    }
+  }
+}
+.required {
+  &.form-control {
+    border-color: $gray-darkest;
+    &:focus {
+      border-color: $input-border-focus;
+    }
+    .has-warning & {
+      border-color: $state-warning-text;
+    }
+    .has-error & {
+      border-color: $state-danger-text;
+    }
+    .has-success & {
+      border-color: $state-success-text;
+    }
+  }
+}
+
+.is-required {
+  .form-control {
+    border-color: $gray-darkest;
+    &:focus {
+      border-color: $input-border-focus;
+    }
+  }
+  .help-block,
+  .form-label,
+  .control-label,
+  .radio,
+  .checkbox,
+  .radio-inline,
+  .checkbox-inline {
+    font-weight: 700;
+  }
+}
+fieldset {
+  padding-bottom: 1em;
+}
+legend {
+  -moz-box-shadow: 0 10px 15px -13px $brand-primary;
+  -webkit-box-shadow: 0 10px 15px -13px $brand-primary;
+  border-bottom: 1px solid $brand-primary;
+  border-top: 1px solid $brand-primary;
+  box-shadow: 0 10px 15px -13px $brand-primary;
+  color: $brand-primary;
+  font-family: $headings-font-family;
+  font-style: italic;
+  font-weight: $headings-font-weight;
+  margin: $line-height-computed 0;
+  padding-bottom: 0;
+  padding-top: 0; // round($line-height-computed / 3);
+}
+label {
+  font-family: $brand-font;
+  font-weight: 500;
+  &.error {
+    border-top: 2px solid $state-danger-text;
+    color: $state-danger-text;
+    display: block;
+    font-family: $brand-font;
+    font-size: 85%;
+    font-style: italic;
+  }
+}
+.force-inline {
+  .form-group {
+    display: inline-block;
+    margin-bottom: 0;
+    vertical-align: middle;
+  }
+  .form-control {
+    display: inline-block;
+    vertical-align: middle;
+    width: auto;
+  }
+  .input-group > .form-control {
+    width: 100%;
+  }
+  .form-label {
+    margin-bottom: 0;
+    vertical-align: middle;
+  }
+}
+.form-inline {
+  @media (min-width: $screen-sm-min) {
+    .input-group {
+      .input-group-btn {
+        width: 1%;
+      }
+    }
+  }
+}
+
+.form-captcha {
+  @extend .form-group;
+  margin-left: auto;
+  margin-right: auto;
+  width: 304px;
+}
+
+
+//
+// Bootstrap Validator v0.5.0
+// -------------------------
+
+.bv-form {
+  .help-block {
+    margin-bottom: 0;
+  }
+  .tooltip-inner {
+    text-align: left;
+  }
+}
+.nav-tabs {
+  li {
+    &.bv-tab-success > a {
+      color: $brand-success;
+    }
+    &.bv-tab-error > a {
+      color: $brand-danger;
+    }
+  }
+}
+
+
+//
+// bootstrap-datepicker
+// https://github.com/eternicode/bootstrap-datepicker
+// -------------------------
+
+.datepicker {
+  border-radius: $border-radius-base;
+  &-inline {
+    width: 220px;
+  }
+  direction: ltr;
+  &#{&}-rtl {
+    direction: rtl;
+    table {
+      tr {
+        td {
+          span {
+            float: right;
+          }
+        }
+      }
+    }
+  }
+  &-dropdown {
+    left: 0;
+    padding: 4px;
+    top: 0;
+    &:before {
+      border-bottom: 7px solid $dropdown-border;
+      border-bottom-color: $trans-black-2;
+      border-left:   7px solid transparent;
+      border-right:  7px solid transparent;
+      border-top:    0;
+      content: '';
+      display: inline-block;
+      position: absolute;
+    }
+    &:after {
+      border-bottom: 6px solid $dropdown-bg;
+      border-left:   6px solid transparent;
+      border-right:  6px solid transparent;
+      border-top:    0;
+      content: '';
+      display: inline-block;
+      position: absolute;
+    }
+    &.datepicker-orient-left:before   { left: 6px; }
+    &.datepicker-orient-left:after    { left: 7px; }
+    &.datepicker-orient-right:before  { right: 6px; }
+    &.datepicker-orient-right:after   { right: 7px; }
+    &.datepicker-orient-bottom:before { top: -7px; }
+    &.datepicker-orient-bottom:after  { top: -6px; }
+    &.datepicker-orient-top:before {
+      border-bottom: 0;
+      border-top: 7px solid $dropdown-border;
+      bottom: -7px;
+    }
+    &.datepicker-orient-top:after {
+      border-bottom: 0;
+      border-top: 6px solid $dropdown-bg;
+      bottom: -6px;
+    }
+  }
+  > div {
+    display: none;
+  }
+  table {
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    margin: 0;
+    user-select: none;
+    tr {
+      td,
+      th {
+        border: 0;
+        border-radius: 4px;
+        height: 30px;
+        text-align: center;
+        width: 30px;
+      }
+      td {
+        &.old,
+        &.new {
+          color: $btn-link-disabled-color;
+        }
+        &.day:hover,
+        &.focused {
+          background: $gray-lighter;
+          cursor: pointer;
+        }
+        &.disabled,
+        &.disabled:hover {
+          background: none;
+          color: $btn-link-disabled-color;
+          cursor: default;
+        }
+        &.highlighted {
+          $highlighted-bg: $state-info-bg;
+          @include button-variant(#000, $highlighted-bg, darken($highlighted-bg, 20%));
+          border-radius: 0;
+
+          &.focused {
+            background: darken($highlighted-bg, 10%);
+          }
+
+          &.disabled,
+          &.disabled:active {
+            background: $highlighted-bg;
+            color: $btn-link-disabled-color;
+          }
+        }
+        &.today {
+          $range-today-bg-color: #ffa500;
+          $today-bg: lighten($range-today-bg-color, 30%);
+          @include button-variant(#000, $today-bg, darken($today-bg, 20%));
+
+          &.focused {
+            background: darken($today-bg, 10%);
+          }
+
+          &.disabled,
+          &.disabled:active {
+            background: $today-bg;
+            color: $btn-link-disabled-color;
+          }
+        }
+        &.range {
+          $range-bg: $gray-lighter;
+          @include button-variant(#000, $range-bg, darken($range-bg, 20%));
+          border-radius: 0;
+
+          &.focused {
+            background: darken($range-bg, 10%);
+          }
+
+          &.disabled,
+          &.disabled:active {
+            background: $range-bg;
+            color: $btn-link-disabled-color;
+          }
+          &.highlighted {
+            $range-highlighted-bg: mix($state-info-bg, $gray-lighter, 50%);
+            @include button-variant(#000, $range-highlighted-bg, darken($range-highlighted-bg, 20%));
+
+            &.focused {
+              background: darken($range-highlighted-bg, 10%);
+            }
+
+            &.disabled,
+            &.disabled:active {
+              background: $range-highlighted-bg;
+              color: $btn-link-disabled-color;
+            }
+          }
+          &.today {
+            $range-today-bg-color: #ffa500;
+            $range-today-bg: mix($range-today-bg-color, $gray-lighter, 50%);
+            @include button-variant(#000, $range-today-bg, darken($range-today-bg, 20%));
+
+            &.disabled,
+            &.disabled:active {
+              background: $range-today-bg;
+              color: $btn-link-disabled-color;
+            }
+          }
+        }
+        &.selected {
+          &,
+          &.highlighted {
+            @include button-variant(#fff, $gray-light, $gray);
+            text-shadow: 0 -1px 0 $trans-black-2;
+          }
+        }
+        &.active {
+          &,
+          &.highlighted {
+            @include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border);
+            text-shadow: 0 -1px 0 $trans-black-2;
+          }
+        }
+        span {
+          border-radius: 4px;
+          cursor: pointer;
+          display: block;
+          float: left;
+          height: 54px;
+          line-height: 54px;
+          margin: 1%;
+          width: 23%;
+          &:hover,
+          &.focused {
+            background: $gray-lighter;
+          }
+          &.disabled,
+          &.disabled:hover {
+            background: none;
+            color: $btn-link-disabled-color;
+            cursor: default;
+          }
+          &.active {
+            &,
+            &:hover,
+            &.disabled,
+            &.disabled:hover {
+              @include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border);
+              text-shadow: 0 -1px 0 $trans-black-2;
+            }
+          }
+          &.old,
+          &.new {
+            color: $btn-link-disabled-color;
+          }
+        }
+      }
+    }
+  }
+  // Inline display inside a table presents some problems with
+  // border and background colors.
+  .table-striped & {
+    table {
+      tr {
+        td,
+        th {
+          background-color: transparent;
+        }
+      }
+    }
+  }
+
+  .datepicker-switch {
+    width: 145px;
+  }
+
+  .datepicker-switch,
+  .prev,
+  .next,
+  tfoot {
+    tr {
+      th {
+        cursor: pointer;
+        &:hover {
+          background: $gray-lighter;
+        }
+      }
+    }
+  }
+
+  // Basic styling for calendar-week cells
+  .cw {
+    font-size: 10px;
+    padding: 0 2px 0 5px;
+    vertical-align: middle;
+    width: 12px;
+  }
+}
+.input-group {
+  &.date {
+    .input-group-addon {
+      cursor: pointer;
+    }
+  }
+}
+.input-daterange {
+  width: 100%;
+  input {
+    text-align: center;
+  }
+  input:first-child {
+    border-radius: 3px 0 0 3px;
+  }
+  input:last-child {
+    border-radius: 0 3px 3px 0;
+  }
+  .input-group-addon {
+    border-width: 1px 0;
+    line-height: $line-height-base;
+    margin-left: -5px;
+    margin-right: -5px;
+    min-width: 16px;
+    padding: 4px 5px;
+    text-shadow: 0 1px 0 $trans-white-9;
+    width: auto;
+  }
+}

@@ -1,0 +1,34 @@
+<header id="site-header">
+  <div class="container">
+    <div class="row">{% comment %}
+      <nav id="site-usernav">
+        <ul class="nav nav-user">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon icon-bars"></span></a>
+            <ul class="dropdown-menu pull-right">
+              {% for my_page in site.pages %}
+                {% if my_page.title %}
+                <li><a class="page-link" href="{{ my_page.url | prepend: site.baseurl }}">{{ my_page.title }}</a></li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          </li>
+        </ul>
+      </nav>{% endcomment %}
+      <div id="site-branding">
+        <strong id="site-logo"><a href="{{ site.baseurl }}/">{{ site.title }}</a></strong>
+      </div>
+      <nav id="site-nav">
+        <ul class="nav">
+          {% for nav in site.data.main.nav %}
+          <li><a
+            href="{{ nav.text | slugify | append:'/' | prepend:'/' | prepend: site.baseurl }}"
+            class="nh-{{ nav.text | slugify }}"
+            title="{{ nav.summary }}"
+            >{{ nav.text }}</a></li>
+          {% endfor %}
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>

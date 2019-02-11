@@ -1,0 +1,93 @@
+<script>
+
+  // apply brand list bullets
+  $('.list-bulleted li').prepend('<span class="icon icon-chevron-right"></span> ');
+  //$('.list-numbered li').prepend('<span class="list-item-number"></span> ');
+  $('.list-brand li').prepend('<span class="icon icon-bolt"></span> ');
+  // $('ul:not([class]) li').prepend('<span class="icon icon-chevron-right"></span> ');
+  // $('ul:not([class])').addClass('list-bulleted');
+
+  // apply FontAwesome list bullets
+  $(".fa-ul > li > a").each(function(){
+    var listItem = $(this).parent();
+    var fileUrl = $(this).attr('href');
+    var fileExt = fileUrl.substr( (fileUrl.lastIndexOf('.') +1) );
+    switch(fileExt) {
+      case 'zip':
+      case 'rar':
+        listItem.prepend('<span class="icon icon-file-archive-o"></span>');
+      break;
+      case 'aiff':
+      case 'aac':
+      case 'flac':
+      case 'fls':
+      case 'm4a':
+      case 'mp3':
+      case 'ogg':
+      case 'wav':
+      case 'wma':
+        listItem.prepend('<span class="icon icon-file-audio-o"></span>');
+      break;
+      case 'csv':
+      case 'json':
+      case 'rdf':
+      case 'xml':
+      case 'xsl':
+      case 'xslt':
+        listItem.prepend('<span class="icon icon-file-code-o"></span>');
+      break;
+      case 'xls':
+      case 'xlsm':
+      case 'xlsx':
+        listItem.prepend('<span class="icon icon-file-excel-o"></span>');
+      break;
+      case 'gif':
+      case 'jpg':
+      case 'png':
+      case 'tif':
+      case 'tiff':
+        listItem.prepend('<span class="icon icon-file-image-o"></span>');
+      break;
+      case 'pdf':
+        listItem.prepend('<span class="icon icon-file-pdf-o"></span>');
+      break;
+      case 'ppt':
+      case 'pptm':
+      case 'pptx':
+        listItem.prepend('<span class="icon icon-file-powerpoint-o"></span>');
+      break;
+      case 'doc':
+      case 'docx':
+        listItem.prepend('<span class="icon icon-file-word-o"></span>');
+      break;
+      case 'rtf':
+      case 'txt':
+        listItem.prepend('<span class="icon icon-file-text-o"></span>');
+      break;
+      case '264':
+      case 'avi':
+      case 'flv':
+      case 'h264':
+      case 'mov':
+      case 'mp4':
+      case 'mpg':
+      case 'mpg4':
+      case 'swf':
+      case 'wmv':
+        listItem.prepend('<span class="icon icon-file-video-o"></span>');
+      break;
+    }
+  });
+
+  // apply 'lead' class to first paragraph
+  $(".leadhighlight > p:first").addClass('lead');
+
+  // Pullquote Creator
+  $('span.pullquote').each(function(){
+    text = $(this).text();
+    text=text.replace( /\((.*)\)/gi, " " );
+    if ($(this).is(".right")) $(this).parent().before('<blockquote class="pullquote right"><p>'+text+'</p></blockquote>');
+    else $(this).parent().before('<blockquote class="pullquote"><p>'+text+'</p></blockquote>');
+  });
+
+</script>

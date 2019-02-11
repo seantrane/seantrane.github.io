@@ -1,0 +1,794 @@
+# ------------------------------------------------------------------------------
+# SKILLS
+# ------------------------------------------------------------------------------
+#
+# Tags Legend (GitHub Emoji):
+#   - heart (true love)
+#   - fire (everyday use)
+#   - star (favorite)
+#   - flash (signficant experience)
+#   - beginner (beginner)
+#   - hourglass (dated knowledge)
+#   - trash (dead skill)
+#   - trollface (trollface)
+#
+# Skillset Object Template:
+# - id: template
+#   name: Template
+#   skillset:
+#     - name:
+#       subtext:
+#       url:
+#       tags:
+#
+- id: programming-scripting
+  name: Programming and Scripting
+  skillset:
+    - name: Elixir
+      url: https://elixir-lang.org/
+      tags: beginner
+    - name: ECMAScript
+      url: https://en.wikipedia.org/wiki/ECMAScript
+      tags: fire, flash
+    - name: Java
+      url: https://en.wikipedia.org/wiki/Java_(programming_language)
+    - name: JavaScript
+      url: https://en.wikipedia.org/wiki/JavaScript
+      tags: fire, flash
+    - name: Kotlin
+      url: https://kotlinlang.org/
+      tags: beginner
+    - name: PHP
+      url: https://en.wikipedia.org/wiki/PHP
+      tags: flash
+    - name: Python
+      url: https://www.python.org/
+      tags: beginner
+    - name: Ruby
+      url: https://www.ruby-lang.org/en/
+      tags: hourglass
+    - name: Shell script
+      subtext: '<a href="https://en.wikipedia.org/wiki/Bash_(Unix_shell)">Bash</a>/<a href="https://en.wikipedia.org/wiki/Z_shell">zsh</a>/<a href="http://pubs.opengroup.org/onlinepubs/9699919799/">POSIX</a>'
+      url: https://en.wikipedia.org/wiki/Shell_script
+      tags: fire, flash
+    - name: SQL
+      url: https://en.wikipedia.org/wiki/SQL
+    - name: TypeScript
+      url: https://www.typescriptlang.org/
+      tags: fire, star, flash
+- id: data-storage-messaging
+  name: Data Storage and Messaging
+  skillset:
+    - name: ActiveMQ
+      url: http://activemq.apache.org/
+    - name: Amazon DynamoDB
+      url: https://aws.amazon.com/dynamodb/
+    - name: Amazon RDS
+      url: https://aws.amazon.com/rds/
+    - name: Amazon SQS/SNS/SES
+      url: https://aws.amazon.com/sqs/
+    - name: CouchDB
+      url: http://couchdb.apache.org/
+      tags: beginner
+    - name: Elasticsearch
+      url: https://www.elastic.co/
+      tags: star, beginner
+    - name: GraphQL
+      url: https://graphql.org/
+      tags: beginner
+    - name: Kafka
+      url: http://kafka.apache.org/
+      tags: beginner
+    - name: MariaDB
+      url: https://mariadb.org/
+    - name: Memcached
+      url: https://memcached.org/
+    - name: MongoDB
+      url: https://www.mongodb.com/
+      tags: fire, flash
+    - name: MSSQL
+      url: https://en.wikipedia.org/wiki/Microsoft_SQL_Server
+    - name: MySQL
+      url: https://www.mysql.com/
+      tags: flash
+    - name: Neo4j
+      url: https://neo4j.com/
+      tags: beginner
+    - name: PostgreSQL
+      url: https://www.postgresql.org/
+      tags: star, flash
+    - name: Redis
+      url: https://redis.io/
+      tags: star, flash
+    - name: SQLite
+      url: https://www.sqlite.org/
+- id: markup-standards
+  name: Markup and Standards
+  skillset:
+    - name: Atom
+      url: https://en.wikipedia.org/wiki/Atom_(standard)
+      tags: flash
+    - name: DOM
+      url: https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model
+      tags: flash
+    - name: HTML5
+      url: https://en.wikipedia.org/wiki/HTML5
+      tags: fire, star, flash
+    - name: JSON
+      url: https://en.wikipedia.org/wiki/JSON
+      tags: fire, star, flash
+    - name: JSON-LD
+      url: https://json-ld.org/
+      tags: heart, fire, star
+    - name: JSON Schema
+      url: http://json-schema.org/
+      tags: fire, flash
+    - name: JWT
+      url: https://jwt.io/
+      tags: star, flash
+    - name: Markdown
+      url: https://daringfireball.net/projects/markdown/
+      tags: fire, star, flash
+    - name: MediaWiki
+      url: https://www.mediawiki.org/wiki/MediaWiki
+      tags: flash
+    - name: OAS / Swagger
+      url: https://github.com/OAI/OpenAPI-Specification
+      tags: heart, fire, star, flash
+    - name: OAuth
+      url: https://oauth.net/
+      tags: flash
+    - name: OOP
+      url: https://en.wikipedia.org/wiki/Object-oriented_programming
+      tags: flash
+    - name: RAML
+      url: https://raml.org/
+    - name: RDFa
+      url: https://rdfa.info/
+      tags: flash
+    - name: Regular Expressions (regex)
+      url: https://regexr.com/
+      tags: fire, star, flash
+    - name: REST
+      url: https://en.wikipedia.org/wiki/Representational_state_transfer
+      tags: heart, fire, star, flash
+    - name: RSS
+      url: https://en.wikipedia.org/wiki/RSS
+      tags: flash
+    - name: Schema.org
+      url: http://schema.org/
+      tags: heart, star, flash
+    - name: SOAP
+      url: https://en.wikipedia.org/wiki/SOAP
+      tags: flash, trollface
+    - name: XHTML
+      url: https://en.wikipedia.org/wiki/XHTML
+      tags: flash, trollface
+    - name: XML
+      url: https://en.wikipedia.org/wiki/XML
+      tags: fire, flash
+    - name: YAML
+      url: http://yaml.org/
+      tags: fire, star, flash
+- id: frameworks-libraries-and-tools
+  name: Frameworks, Libraries and Tools
+  skillset:
+    - name: Angular
+      subtext: JS
+      url: https://angular.io/
+      tags: fire, flash
+    - name: Angular Material
+      subtext: CSS/JS
+      url: https://material.angular.io/
+    - name: Bootstrap
+      subtext: CSS/JS
+      url: http://getbootstrap.com/
+      tags: fire, flash
+    - name: CakePHP
+      subtext: PHP
+      url: https://cakephp.org/
+      tags: hourglass
+    - name: CodeIgniter
+      subtext: PHP
+      url: https://codeigniter.com/
+      tags: flash, hourglass
+    - name: Ember.js
+      subtext: JS
+      url: https://www.emberjs.com/
+      tags: beginner
+    - name: Express
+      subtext: JS
+      url: http://expressjs.com/
+      tags: fire, flash
+    - name: Ionic
+      subtext: JS
+      url: https://ionicframework.com/
+      tags: beginner
+    - name: Jekyll
+      subtext: Ruby
+      url: https://jekyllrb.com/
+      tags: fire, flash
+    - name: jQuery
+      subtext: JS
+      url: https://jquery.com/
+      tags: flash
+    - name: Koa
+      subtext: JS
+      url: https://koajs.com/
+    - name: Laravel
+      subtext: PHP
+      url: https://laravel.com/
+      tags: heart, star, flash
+    - name: Less
+      subtext: CSS
+      url: http://lesscss.org/
+      tags: flash
+    - name: Mongoose
+      subtext: JS
+      url: http://mongoosejs.com/
+      tags: flash
+    - name: MuleSoft
+      subtext: API/RAML
+      url: https://www.mulesoft.com/
+    - name: Node.js
+      subtext: JS
+      url: https://nodejs.org/
+      tags: heart, fire, star, flash
+    - name: Nrwl Nx
+      subtext: JS
+      url: https://nrwl.io/nx
+      tags: fire, star
+    - name: Phoenix
+      subtext: Elixir
+      url: http://phoenixframework.org/
+      tags: beginner
+    - name: React
+      subtext: JS
+      url: https://reactjs.org/
+      tags: fire
+    - name: Restify
+      subtext: JS
+      url: http://restify.com/
+    - name: Ruby on Rails
+      subtext: Ruby
+      url: https://gorails.com/
+      tags: hourglass
+    - name: Sass
+      subtext: CSS
+      url: http://sass-lang.com/
+      tags: fire, star, flash
+    - name: Spark
+      subtext: Java
+      url: http://sparkjava.com/
+      tags: beginner
+    - name: Spring
+      subtext: Java
+      url: https://spring.io/
+      tags: beginner
+    - name: Serverless Framework
+      subtext: JS
+      url: https://serverless.com/framework/
+      tags: fire, star
+    - name: Swagger
+      subtext: API/OAS
+      url: https://swagger.io/
+      tags: fire, star, flash
+    - name: Symfony
+      subtext: PHP
+      url: https://symfony.com/
+      tags: hourglass
+    - name: Vue.js
+      subtext: JS
+      url: https://vuejs.org/
+    - name: Yeoman
+      url: http://yeoman.io/
+      tags: fire, flash
+    - name: Zend Framework
+      subtext: PHP
+      url: https://framework.zend.com/
+      tags: hourglass
+- id: testing-monitoring
+  name: Testing and Monitoring
+  skillset:
+    - name: BDD
+      url: https://www.agilealliance.org/glossary/bdd/
+      tags: star
+    - name: Behat
+      url: http://behat.org/
+    - name: BrowserStack
+      url: https://www.browserstack.com/
+      tags: flash
+    - name: Codeception
+      url: http://codeception.com/
+    - name: Codecov
+      url: https://codecov.io/
+    - name: Coveralls
+      url: https://coveralls.io/
+    - name: Cucumber
+      url: https://cucumber.io/
+      tags: star
+    - name: Dynatrace
+      url: https://www.dynatrace.com/
+      tags: star
+    - name: Galen Framework
+      url: http://galenframework.com/
+    - name: Gherkin
+      url: https://cucumber.io/docs/reference
+      tags: star
+    - name: Google Analytics
+      url: https://www.google.com/analytics/
+      tags: fire, flash
+    - name: Google PageSpeed
+      url: https://developers.google.com/speed/
+      tags: flash
+    - name: Istanbul
+      url: https://istanbul.js.org/
+      tags: fire, flash
+    - name: Jasmine
+      url: https://jasmine.github.io/
+      tags: flash
+    - name: Jest
+      url: https://facebook.github.io/jest/
+      tags: star
+    - name: JMeter
+      url: https://jmeter.apache.org/
+    - name: JUnit
+      url: http://junit.org/
+    - name: Karma
+      url: https://karma-runner.github.io/
+      tags: flash
+    - name: 'Linters: <a href="https://palantir.github.io/tslint/">TSLint</a>, <a href="https://eslint.org/">ESLint</a>, <a href="https://github.com/sasstools/sass-lint">SassLint</a>'
+      tags: flash
+    - name: Mocha
+      url: https://mochajs.org/
+      tags: flash
+    - name: New Relic
+      url: https://newrelic.com/
+      tags: fire, flash
+    - name: '<a href="https://github.com/segmentio/nightmare">Nightmare</a> / <a href="https://github.com/segmentio/daydream">Daydream</a>'
+    - name: OWASP
+      url: https://www.owasp.org/
+    - name: Pa11y
+      url: http://pa11y.org/
+    - name: PagerDuty
+      url: https://www.pagerduty.com/
+    - name: phpspec
+      url: http://www.phpspec.net/
+    - name: PHPUnit
+      url: https://phpunit.de/
+    - name: Postman
+      url: https://www.getpostman.com/
+      tags: fire, star, flash
+    - name: Protractor
+      url: https://www.protractortest.org/
+      tags: flash
+    - name: Puppeteer
+      url: https://pptr.dev/
+      tags: star
+    - name: Selenium
+      url: http://www.seleniumhq.org/
+      tags: flash
+    - name: Sentry
+      url: https://sentry.io/
+      tags: fire, flash
+    - name: ShellCheck
+      url: https://www.shellcheck.net/
+      tags: fire, flash
+    - name: Sonar
+      url: https://www.sonarcloud.io/
+      tags: fire, star, flash
+    - name: TDD
+      url: https://www.agilealliance.org/glossary/tdd/
+      tags: heart, fire, flash
+    - name: YSlow
+      url: http://yslow.org/
+      tags: flash
+- id: devops-infrastructure
+  name: DevOps and Infrastructure
+  skillset:
+    - name: Amazon EC2/ECS/ECR
+      url: https://aws.amazon.com/ecs/
+      tags: fire, flash
+    - name: AWS Cloud​Formation
+      url: https://aws.amazon.com/cloudformation/
+    - name: AWS Elastic Beanstalk
+      url: https://aws.amazon.com/elasticbeanstalk/
+      tags: fire, flash
+    - name: AWS Lambda
+      url: https://aws.amazon.com/lambda/
+      tags: fire
+    - name: Apache HTTP Server
+      url: https://httpd.apache.org/
+      tags: flash
+    - name: Bamboo
+      url: https://www.atlassian.com/software/bamboo
+      tags: fire, flash, trollface
+    - name: BitBucket
+      url: https://bitbucket.org/
+      tags: flash
+    - name: Bitbucket Pipelines
+      url: https://bitbucket.org/product/features/pipelines
+    - name: CircleCI
+      url: https://circleci.com/
+    - name: Codeship
+      url: https://codeship.com/
+    - name: Docker
+      url: https://www.docker.com/
+      tags: heart, fire, star, flash
+    - name: Docker Hub
+      url: https://hub.docker.com/
+    - name: GitHub
+      url: https://github.com
+      tags: heart, fire, star, flash
+    - name: GitLab
+      url: https://gitlab.com/
+      tags: flash
+    - name: GoCD
+      url: https://www.gocd.org/
+    - name: Jenkins
+      url: https://jenkins-ci.org/
+      tags: flash
+    - name: Kubernetes
+      url: https://kubernetes.io/
+      tags: beginner
+    - name: Nginx
+      url: http://nginx.org/
+      tags: flash
+    - name: Puphpet
+      url: https://puphpet.com/
+      tags: trash
+    - name: Puppet
+      url: https://puppet.com/
+      tags: trollface
+    - name: Segment Stack
+      url: https://github.com/segmentio/stack
+    - name: Shippable
+      url: https://www.shippable.com/
+    - name: Terraform
+      url: https://www.terraform.io/
+      tags: star, flash
+    - name: Travis CI
+      url: https://travis-ci.com/
+      tags: fire, star, flash
+    - name: Vagrant
+      url: https://www.vagrantup.com/
+      tags: trash
+    - name: VirtualBox
+      url: https://www.virtualbox.org/
+- id: cloud-web-services
+  name: Cloud/Web Services
+  skillset:
+    - name: Amazon
+      url: https://developer.amazon.com/services-and-apis
+      tags: flash
+    - name: AWS
+      url: https://aws.amazon.com/
+      tags: fire, flash
+    - name: Facebook
+      url: https://developers.facebook.com/
+    - name: GCP
+      url: https://cloud.google.com/
+    - name: Google
+      url: https://developers.google.com/
+      tags: flash
+    - name: Google Firebase
+      url: https://firebase.google.com/
+      tags: beginner
+    - name: Heroku
+      url: https://www.heroku.com/
+    - name: mLab
+      url: https://mlab.com/
+      tags: flash
+- id: building-dependencies
+  name: Building and Dependencies
+  skillset:
+    - name: apk
+      subtext: Alpine Linux
+      url: https://wiki.alpinelinux.org/wiki/Alpine_Linux_package_management
+    - name: APT
+      subtext: Debian/Ubuntu
+      url: https://wiki.debian.org/Apt
+    - name: Babel
+      subtext: JS/ES
+      url: https://babeljs.io/
+    - name: Bower
+      url: https://bower.io/
+      tags: trash
+    - name: Bundler
+      subtext: Ruby
+      url: http://bundler.io/
+    - name: Composer
+      subtext: PHP
+      url: https://getcomposer.org/
+      tags: flash
+    - name: Gradle
+      subtext: Java
+      url: https://gradle.org/
+      tags: beginner
+    - name: Grunt
+      subtext: JS
+      url: https://gruntjs.com/
+      tags: trash
+    - name: Gulp
+      subtext: JS
+      url: https://gulpjs.com/
+      tags: flash
+    - name: Homebrew
+      subtext: OSX
+      url: https://brew.sh/
+      tags: heart, star, flash
+    - name: Linuxbrew
+      subtext: Linux
+      url: http://linuxbrew.sh/
+    - name: Maven
+      subtext: Java
+      url: https://maven.apache.org/
+    - name: npm
+      subtext: Node/JS
+      url: https://www.npmjs.com/
+      tags: fire, star, flash
+    - name: TypeScript Compiler
+      url: https://www.typescriptlang.org/docs/handbook/compiler-options.html
+      tags: fire, star, flash
+    - name: Webpack
+      subtext: JS
+      url: https://webpack.js.org/
+      tags: flash
+    - name: Yarn
+      subtext: Node/JS
+      url: https://yarnpkg.com/
+      tags: fire, flash
+    - name: '<a href="http://yum.baseurl.org/">Yum</a>/<a href="http://rpm.org/">RPM</a>'
+      subtext: Fedora/Red Hat
+- id: website-content-management
+  name: Website/Content Management
+  skillset:
+    - name: Atlassian Confluence
+      url: https://www.atlassian.com/software/confluence/
+      tags: fire, flash
+    - name: Centralpoint
+      url: https://www.oxcyon.com/centralpoint-dxp
+      tags: trash
+    - name: Drupal
+      url: https://www.drupal.org/
+      tags: flash
+    - name: Ektron CMS
+      url: https://www.episerver.com/products/platform/ektron/
+      tags: trash
+    - name: ExpressionEngine
+      url: https://expressionengine.com/
+      tags: flash
+    - name: Joomla! / Mambo
+      url: https://www.joomla.org/
+      tags: flash, trash, trollface
+    - name: MediaWiki
+      url: https://www.mediawiki.org/wiki/MediaWiki
+      tags: flash
+    - name: SharePoint
+      url: http://www.sharepoint.com
+      tags: trollface
+    - name: Shopify
+      url: https://www.shopify.com/
+    - name: Weebly
+      url: https://www.weebly.com/
+    - name: Wix
+      url: https://www.wix.com/
+      tags: flash
+    - name: WordPress
+      url: https://wordpress.com/
+      tags: flash
+- id: projects-teams-and-tasks
+  name: Projects, Teams and Tasks
+  skillset:
+    - name: Atlassian Confluence
+      url: https://www.atlassian.com/software/confluence/
+      tags: fire, flash
+    - name: Atlassian JIRA
+      url: https://www.atlassian.com/software/jira/
+      tags: fire, flash
+    - name: Basecamp
+      url: https://basecamp.com/
+    - name: Copper Project
+      url: https://www.copperproject.com/
+    - name: IdeaBoardz
+      url: http://www.ideaboardz.com/
+    - name: Slack
+      url: https://slack.com/
+      tags: fire, star, flash
+    - name: StoriesOnBoard
+      url: http://storiesonboard.com/
+    - name: Team O'clock
+      url: https://www.teamoclock.com/
+    - name: Trello
+      url: https://trello.com/
+      tags: star, flash
+- id: template-languages
+  name: Template Languages
+  skillset:
+    - name: Blade
+      url: https://laravel.com/docs/blade
+      tags: flash
+    - name: Handlebars
+      url: http://handlebarsjs.com/
+    - name: Latte
+      url: https://latte.nette.org/
+    - name: Liquid
+      url: https://shopify.github.io/liquid/
+      tags: fire, flash
+    - name: Mustache
+      url: https://mustache.github.io/
+    - name: Pug (Jade)
+      url: https://pugjs.org/
+    - name: Smarty
+      url: https://www.smarty.net/
+    - name: Twig
+      url: https://twig.symfony.com/
+    - name: Velocity
+      url: http://velocity.apache.org/
+- id: business-software
+  name: Business/Planning Software
+  skillset:
+    - name: Apple Keynote
+      url: https://www.apple.com/keynote/
+    - name: Apple Numbers
+      url: https://www.apple.com/numbers/
+    - name: Apple Pages
+      url: https://www.apple.com/pages/
+    - name: draw.io
+      url: https://www.draw.io/
+      tags: fire, flash
+    - name: FileMaker
+      url: http://www.filemaker.com/
+      tags: trash
+    - name: LibreOffice
+      url: https://www.libreoffice.org/
+    - name: Lucidchart
+      url: https://www.lucidchart.com/
+      tags: fire, flash
+    - name: Microsoft Office
+      url: https://products.office.com/
+      tags: fire, flash
+    - name: Microsoft Visio
+      url: https://products.office.com/
+    - name: QuickBooks
+      url: https://quickbooks.intuit.com/
+- id: development-software
+  name: Development Software
+  skillset:
+    - name: Adobe Dreamweaver
+      url: https://www.adobe.com/products/dreamweaver.html
+      tags: flash, trollface
+    - name: Atom
+      url: https://atom.io/
+      tags: heart, fire, star, flash
+    - name: Eclipse
+      url: https://www.eclipse.org/ide/
+    - name: iTerm2
+      url: https://www.iterm2.com/
+      tags: fire, star, flash
+    - name: JetBrains IntelliJ IDEA
+      url: https://www.jetbrains.com/idea
+      tags: star
+    - name: JetBrains PhpStorm
+      url: https://www.jetbrains.com/phpstorm/
+      tags: star, flash
+    - name: JetBrains WebStorm
+      url: https://www.jetbrains.com/webstorm/
+      tags: star, flash
+    - name: Microsoft Visual Studio Code
+      url: https://code.visualstudio.com/
+      tags: heart, fire, star, flash
+    - name: OWASP ZAPP
+      url: https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project
+    - name: Postman
+      url: https://www.getpostman.com/apps
+      tags: fire, star, flash
+    - name: Robo 3T (formerly Robomongo)
+      url: https://robomongo.org/
+      tags: flash
+    - name: Sourcetree
+      url: https://www.sourcetreeapp.com/
+      tags: fire, star, flash
+    - name: Sublime Text
+      url: http://www.sublimetext.com/
+      tags: flash
+- id: media-software
+  name: Media Software
+  skillset:
+    - name: Ableton Live
+      url: https://www.ableton.com/
+    - name: Adobe Acrobat Pro
+      url: https://acrobat.adobe.com/
+    - name: Adobe Audition
+      url: https://www.adobe.com/products/audition.html
+    - name: Adobe Director
+      url: https://www.adobe.com/products/director.html
+      tags: trash
+    - name: Adobe Fireworks
+      url: https://www.adobe.com/products/fireworks.html
+      tags: flash
+    - name: Adobe Flash
+      url: https://en.wikipedia.org/wiki/Adobe_Flash
+      tags: flash, trash, trollface
+    - name: Adobe Illustrator
+      url: https://www.adobe.com/products/illustrator.html
+      tags: star, flash
+    - name: Adobe InDesign
+      url: https://www.adobe.com/products/indesign.html
+      tags: flash
+    - name: Adobe Photoshop
+      url: https://www.adobe.com/products/photoshop.html
+      tags: heart, star, flash
+    - name: Adobe Premiere Pro
+      url: https://www.adobe.com/products/premiere.html
+    - name: Apple Final Cut Pro
+      url: https://www.apple.com/final-cut-pro/
+    - name: Apple Logic Pro
+      url: https://www.apple.com/logic-pro/
+      tags: flash
+    - name: GIMP
+      url: https://www.gimp.org/
+    - name: Gravit Designer
+      url: https://www.designer.io/
+    - name: Krita
+      url: https://krita.org/
+- id: graveyard
+  name: 'The Graveyard :skull::skull::skull:'
+  skillset:
+    - name: ActionScript
+      url: https://en.wikipedia.org/wiki/ActionScript
+      tags: trash, trollface
+    - name: 3ds Max
+      url: https://en.wikipedia.org/wiki/Autodesk_3ds_Max
+      tags: trash
+    - name: ArcView
+      url: https://en.wikipedia.org/wiki/ArcView
+      tags: trash
+    - name: BBEdit
+      url: https://www.barebones.com/products/bbedit/
+      tags: flash, trash
+    - name: BIAS Deck & Peak
+      url: https://en.wikipedia.org/wiki/BIAS
+      tags: flash, trash
+    - name: Bryce
+      url: https://en.wikipedia.org/wiki/Bryce_(software)
+      tags: flash, trash
+    - name: Cakewalk Sonar
+      url: http://www.cakewalk.com/products/sonar
+      tags: trash
+    - name: CorelDRAW
+      url: https://www.coreldraw.com/
+      tags: trash
+    - name: Cubase
+      url: https://www.steinberg.net/en/products/cubase/start.html
+      tags: trash
+    - name: Fontographer
+      url: https://en.wikipedia.org/wiki/Fontographer
+      tags: trash
+    - name: FreeHand
+      url: https://en.wikipedia.org/wiki/Adobe_FreeHand
+      tags: trash
+    - name: GoLive
+      url: https://en.wikipedia.org/wiki/Adobe_GoLive
+      tags: trash
+    - name: HomeSite
+      url: https://en.wikipedia.org/wiki/Macromedia_HomeSite
+      tags: trash
+    - name: ImageReady
+      url: https://en.wikipedia.org/wiki/Adobe_ImageReady
+      tags: trash
+    - name: Painter
+      url: https://en.wikipedia.org/wiki/Corel_Painter
+      tags: flash, trash
+    - name: QuarkXPress
+      url: https://en.wikipedia.org/wiki/QuarkXPress
+      tags: flash, trash, trollface
+    - name: Sound Forge
+      url: https://en.wikipedia.org/wiki/Sound_Forge
+      tags: trash
+    - name: TextMate
+      url: https://macromates.com/
+      tags: flash, trash
+    - name: VBScript
+      url: https://en.wikipedia.org/wiki/VBScript
+      tags: trash, trollface

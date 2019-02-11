@@ -1,0 +1,20 @@
+{% if include.post %}
+{% assign title_el = "h2" %}{% if include.title_el %}{% assign title_el = include.title_el %}{% endif %}
+{% assign show_meta = 1 %}{% if include.show_meta %}{% assign show_meta = include.show_meta %}{% endif %}
+{% assign show_summary = 0 %}{% if include.show_summary %}{% assign show_summary = include.show_summary %}{% endif %}
+<li itemscope itemtype="https://schema.org/BlogPosting">
+  <{{ title_el }} class="post-list-item-title">
+    <a class="post-link" href="{{ include.post.url | prepend: site.baseurl }}" itemprop="url"><span itemprop="name">{{ include.post.title }}</span></a>
+  </{{ title_el }}>
+  {% if include.show_meta == 1 %}
+  <div class="post-list-item-meta">
+    <time datetime="{{ include.post.date | date_to_xmlschema }}" itemprop="datePublished">{{ include.post.date | date: "%Y-%m-%d" }}</time>
+  </div>
+  {% endif %}
+  {% if include.show_summary == 1 and include.post.summary %}
+  <div class="post-list-item-summary" itemprop="description">
+    {{ include.post.summary | truncatewords: 50 }}
+  </div>
+  {% endif %}
+</li>
+{% endif %}

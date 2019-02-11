@@ -1,0 +1,39 @@
+---
+layout: page
+title: The Blog
+subtitle: A Collection of My Posts, Articles and Periodic Ramblings
+permalink: /blog/
+meta:
+- '<code>bläɡ</code> <em>noun</em><br>'
+- 'a regularly updated website/page,<br>'
+- 'that is written in an informal style.'
+---
+
+<div class="row">
+
+  <div class="blog-articles col-md-9">
+
+    {% include post/list.html list_items=site.posts %}
+
+    {% comment %}
+    <p class="rss-subscribe">
+      <a href="{{ "/feed.xml" | prepend: site.baseurl }}" class="btn btn-pullout"><span class="icon icon-rss"></span> Subscribe</a>
+    </p>
+    {% endcomment %}
+
+  </div>
+
+  <div class="col-md-3">
+    <div class="panel panel-default">
+      <div class="panel-heading"><h3 class="panel-title">Categories</h3></div>
+      <ul class="list-group">
+        {% assign siteCategories = site.categories | sort %}
+        {% for category in siteCategories %}
+        {% capture categoryUri %}/category/{{ category[0] | slugify: "latin" }}/{% endcapture %}
+        <a href="{{ categoryUri | prepend: site.baseurl }}" class="list-group-item">{{ category[0] }}</a>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+</div>
