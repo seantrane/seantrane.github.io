@@ -1,5 +1,4 @@
 source 'https://rubygems.org'
-source 'http://gems.github.com'
 gem 'html-proofer'
 gem 'github-pages'
 gem 'kramdown'
