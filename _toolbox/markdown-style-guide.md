@@ -12,7 +12,7 @@ This is a style guide to illustrate markdown syntax and the presentation styles 
 
 ## Headings
 
-```
+```md
 # Heading 1
 ## Heading 2
 ### Heading 3
@@ -32,7 +32,7 @@ This is a style guide to illustrate markdown syntax and the presentation styles 
 
 ## Text styling
 
-```
+```md
 - *italic*
 - **bold**
 - ~~strikethrough~~
@@ -60,7 +60,7 @@ This is a style guide to illustrate markdown syntax and the presentation styles 
 
 ## Lists
 
-```
+```md
 * Thing one with an asterisk
 + Thing two with a plus
 - Thing three with a minus
@@ -70,7 +70,7 @@ This is a style guide to illustrate markdown syntax and the presentation styles 
 + Thing two with a plus
 - Thing three with a minus
 
-```
+```md
 1. The first order of business
 2. The second order of business
   * The first part of the 2nd order
@@ -88,7 +88,7 @@ This is a style guide to illustrate markdown syntax and the presentation styles 
 
 ## Links
 
-```
+```md
 [This is an external link to Google](https://www.google.com/)
 [This is a relative link to elsewhere in the site](/projects/)
 [This is a link with a custom title](https://github.com/ "GitHub")
@@ -104,7 +104,7 @@ This is a style guide to illustrate markdown syntax and the presentation styles 
 
 ## Named Anchors
 
-```
+```md
 [Anchor Link](#anchor)
 
 Anchor Placement <a id="anchor"></a>
@@ -120,7 +120,7 @@ Anchor Placement <a id="anchor"></a>
 
 Images work like links, but with a prefaced `!`. This supports SVG as well PNG, JPG, etc...
 
-```
+```md
 ![](/images/seantrane.png)
 ![An image with alt text](/images/ad-hireme.png)
 ```
@@ -131,7 +131,7 @@ Images work like links, but with a prefaced `!`. This supports SVG as well PNG, 
 
 HTML can also be used, so sizing adjustments can be done with:
 
-```
+```md
 <img style="width:100px;" src="/images/seantrane.png"/>
 ```
 
@@ -141,7 +141,7 @@ HTML can also be used, so sizing adjustments can be done with:
 
 ## Code
 
-```
+```md
 Inline monospaced-font can be made `by surrounding text with back-ticks`.
 ```
 
@@ -175,7 +175,7 @@ puts s
 
 ## Tables
 
-```
+```md
 column A | column B | column C | column D
 --------:| -------- | -------- | --------
 1A       | 1B       | 1C       | 1D
@@ -193,13 +193,13 @@ column A | column B | column C | column D
 
 ## Block-quotes
 
-```
+```md
 > The data we have is not the data we want, and the data we need is not the data we have.
 ```
 
 > The data we have is not the data we want, and the data we need is not the data we have.
 
-```
+```md
 > Block-quote
 >> Nested Block-quote
 ```
@@ -211,7 +211,7 @@ column A | column B | column C | column D
 
 ## Horizontal rule
 
-```
+```md
 ***
 ---
 ___
@@ -225,7 +225,7 @@ ___
 
 ## Line breaks
 
-```
+```md
 Here's a line for us to start with.
 
 This line is separated by two newlines, so it will be a separate paragraph.
@@ -241,15 +241,15 @@ This line is separated by two newlines, so it will be a separate paragraph.
 This line is also a separate paragraph, though...
 Adding a single line break does not create a new paragraph.
 
-```
-Use two trailing spaces  
-on the right  
-to create line-break tags  
+```md
+Use two trailing spaces
+on the right
+to create line-break tags
 ```
 
-Use two trailing spaces  
-on the right  
-to create line-break tags  
+Use two trailing spaces
+on the right
+to create line-break tags
 
 ---
 
@@ -266,11 +266,13 @@ There are convenient ways, when using [Jekyll](https://jekyllrb.com/), to activa
 **Load MathJax Example (using [Liquid conditional statement](https://github.com/Shopify/liquid/wiki/Liquid-for-Designers#if--else)):**
 
 {% raw %}
+
 ```html
 {% if page.math %}
   <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 {% endif %}
 ```
+
 {% endraw %}
 
 **Example equation in Markdown:**
@@ -298,17 +300,21 @@ When using *Jekyll* and its default *Kramdown* parser, which has *MathJax* built
 **Inline equations:**
 
 {% raw %}
+
 ```html
 {% eqinline \dot{x} = \sigma(y-x) %}
 ```
+
 {% endraw %}
 
 **Displayed equations:**
 
 {% raw %}
+
 ```html
 {% eq \left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right) %}
 ```
+
 {% endraw %}
 
 > *The Liquid code above will cause errors if Kramdown is not the active Markdown parser.*
