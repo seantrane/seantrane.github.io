@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-gem 'html-proofer'
+# gem 'html-proofer'
 gem 'github-pages'
 gem 'kramdown'
 gem 'netrc'
