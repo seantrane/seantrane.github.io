@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "GitHub Labels that are logical, colorful and sensible"
+short_title: Logical GitHub Labels
 date:   2018-08-18 01:00:00 -0500
 categories:
   - Engineering

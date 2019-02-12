@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  CI/CD Services & Software Comparison
+short_title:  CI/CD Comparison
 date:   2018-01-12 01:00:00 -0500
 categories:
   - DevOps

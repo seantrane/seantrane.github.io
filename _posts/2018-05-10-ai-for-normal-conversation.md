@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  AI System for Normal Conversation
+short_title: AI for Normal Conversation
 date:   2018-05-10 01:00:00 -0500
 categories:
   - Technology

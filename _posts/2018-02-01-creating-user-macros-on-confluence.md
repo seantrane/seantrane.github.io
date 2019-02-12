@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  Creating User Macros on Confluence
+short_title:  User Macros on Confluence
 date:   2018-02-01 01:00:00 -0500
 categories:
   - Content Management

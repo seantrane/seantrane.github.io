@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  Migrating from SonarQube to SonarCloud
+short_title: Migrating from SonarQube to Cloud
 date:   2019-01-22 01:00:00 -0500
 categories:
   - DevOps
