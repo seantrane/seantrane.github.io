@@ -4,7 +4,8 @@
 $pygment--bg: #333;
 $pygment--color: #f8f8f8;
 
-$pygment--red-bg: #eef;
+$pygment--rouge-bg: $pygment--bg;
+$pygment--red-bg: $pygment--rouge-bg;
 
 $pygment--comment-color:     #777;
 $pygment--constant-color:    #a3d1ff;
@@ -59,7 +60,7 @@ $pygment--css-class-color:         #f9f;
     padding: 9px 3px 6px 8px;
   }
   .highlighter-rouge & {
-    background: $pygment--red-bg;
+    background: $pygment--rouge-bg;
   }
   .c   { color: $pygment--comment-color; }             // Comment
   .err {                                               // Error
