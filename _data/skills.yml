@@ -733,7 +733,7 @@
     - name: Krita
       url: https://krita.org/
 - id: graveyard
-  name: 'The Graveyard :skull::skull::skull:'
+  name: 'The Graveyard'
   skillset:
     - name: ActionScript
       url: https://en.wikipedia.org/wiki/ActionScript
