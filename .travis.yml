@@ -27,24 +27,36 @@ before_install:
 install:
   - travis_retry npm install
   - travis_retry bundle install
-script:
-  - travis_retry github-label-sync -a "$GH_TOKEN" -l 'https://git.io/fAe5i' seantrane/seantrane.github.io
-  - JEKYLL_GITHUB_TOKEN="$GH_TOKEN" JEKYLL_ENV=production bundle exec jekyll build --destination site
-  # - htmlproofer ./site --disable-external
-deploy:
-  - provider: script
-    script: npm run semantic-release
-    on:
-      repo: seantrane/seantrane.github.io
-      branch: develop
-  - provider: pages
-    skip-cleanup: true
-    github-token: "$GH_TOKEN"
-    name: Sean Trane
-    email: seantrane@users.noreply.github.com
-    keep-history: true
-    target-branch: master
-    local-dir: ./site
-    on:
-      repo: seantrane/seantrane.github.io
-      branch: develop
+stages:
+  - test
+  - name: deploy
+    if: repo = seantrane/seantrane.github.io
+        AND type != pull_request
+        AND branch = develop
+jobs:
+  include:
+    - stage: test
+      name: 'Checks and Tests'
+      script:
+        - travis_retry github-label-sync -a "$GH_TOKEN" -l 'https://git.io/fAe5i' seantrane/seantrane.github.io
+        - JEKYLL_GITHUB_TOKEN="$GH_TOKEN" JEKYLL_ENV=production bundle exec jekyll build --destination site
+        # - htmlproofer ./site --disable-external
+    - stage: deploy
+      name: 'Publish and Release'
+      script:
+        - npm run semantic-release
+    - name: 'Deploy GitHub Pages'
+      script:
+        - JEKYLL_GITHUB_TOKEN="$GH_TOKEN" JEKYLL_ENV=production bundle exec jekyll build --destination site
+      deploy: &pages
+        provider: pages
+        skip-cleanup: true
+        github-token: "$GH_TOKEN"
+        name: Sean Trane
+        email: seantrane@users.noreply.github.com
+        keep-history: true
+        target-branch: master
+        local-dir: ./site
+        on:
+          repo: seantrane/seantrane.github.io
+          branch: develop
