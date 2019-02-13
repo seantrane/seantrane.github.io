@@ -32,14 +32,19 @@ script:
   - JEKYLL_GITHUB_TOKEN="$GH_TOKEN" JEKYLL_ENV=production bundle exec jekyll build --destination site
   # - htmlproofer ./site --disable-external
 deploy:
-  provider: pages
-  skip-cleanup: true
-  github-token: "$GH_TOKEN"
-  name: Sean Trane
-  email: seantrane@users.noreply.github.com
-  keep-history: true
-  target-branch: master
-  local-dir: ./site
-  on:
-    repo: seantrane/seantrane.github.io
-    branch: develop
+  - provider: script
+    script: npm run semantic-release
+    on:
+      repo: seantrane/seantrane.github.io
+      branch: develop
+  - provider: pages
+    skip-cleanup: true
+    github-token: "$GH_TOKEN"
+    name: Sean Trane
+    email: seantrane@users.noreply.github.com
+    keep-history: true
+    target-branch: master
+    local-dir: ./site
+    on:
+      repo: seantrane/seantrane.github.io
+      branch: develop
