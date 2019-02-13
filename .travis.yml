@@ -54,7 +54,7 @@ jobs:
         github-token: "$GH_TOKEN"
         name: Sean Trane
         email: seantrane@users.noreply.github.com
-        keep-history: true
+        # keep-history: true
         target-branch: master
         local-dir: ./site
         on:
