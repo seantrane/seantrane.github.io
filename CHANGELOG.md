@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [1.0.1](https://github.com/seantrane/seantrane.github.io/compare/v1.0.0...v1.0.1) (2019-02-14)
+
+
+### Bug Fixes
+
+* **readme:** update website domain ([a18330f](https://github.com/seantrane/seantrane.github.io/commit/a18330f))
+
 # 1.0.0 (2019-02-13)
 
 
