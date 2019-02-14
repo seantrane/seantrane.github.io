@@ -31,7 +31,7 @@ We also recommend to read [How to Contribute to Open Source](https://opensource.
 
 Thank you for contributing.
 
-- Create your branch from `master`.
+- Create your branch from `develop`. **The `master` branch is only for GitHub Pages deployments.**
 - Ensure your [git commit messages follow the required format](https://github.com/seantrane/engineering/blob/master/STYLE_GUIDES.md#git-commit-messages).
 - Ensure your scripts are well-formed, well-documented and object-oriented.
 - Ensure your scripts are stateless and can be reused by all.
