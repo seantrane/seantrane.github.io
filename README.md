@@ -1,6 +1,6 @@
 # seantrane.github.io
 
-> A [website for Sean Trane Sciarrone](https://seantrane.github.io/), using [GitHub Pages](https://pages.github.com/), [Jekyll](https://jekyllrb.com/), [Bundler](https://bundler.io/) and [Node.js](https://nodejs.org/)/[npm](https://www.npmjs.com/).
+> A [website for Sean Trane Sciarrone](https://seantrane.com/), using [GitHub Pages](https://pages.github.com/), [Jekyll](https://jekyllrb.com/), [Bundler](https://bundler.io/) and [Node.js](https://nodejs.org/)/[npm](https://www.npmjs.com/).
 
 ---
 
@@ -22,7 +22,7 @@
 
 ## Usage <a id="usage"></a>
 
-Visit the [seantrane.github.io](https://seantrane.github.io) website.
+Visit the [seantrane.com](https://seantrane.com) website.
 
 ---
 
