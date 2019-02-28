@@ -2,23 +2,25 @@ language: node_js
 node_js:
   - '10'
 cache:
+  bundler: true
   directories:
     - ~/.npm
     - node_modules
   npm: true
-  bundler: true
 notifications:
   email: false
 addons:
   apt:
     packages:
-    - libcurl4-openssl-dev
+      - libcurl4-openssl-dev
 branches:
   only:
     - develop
 env:
   global:
-  - NOKOGIRI_USE_SYSTEM_LIBRARIES=true # speeds up installation of html-proofer
+    - PATH=$HOME/.local/bin:$PATH
+    - PATH=$PWD:$PATH
+    - NOKOGIRI_USE_SYSTEM_LIBRARIES=true # speeds up installation of some gems
 before_install:
   # package-lock.json was introduced in npm@5
   - '[[ $(node -v) =~ ^v9.*$ ]] || npm install -g npm@latest' # skipped when using node 9
