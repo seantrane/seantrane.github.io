@@ -1,0 +1,1811 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Sean Trane Sciarrone</title>
+    <description>Thinker, Tech Lead, Full-Stack Developer, Designer, Artist, Composer, Stalwart
+</description>
+    <link>https://seantrane.github.io/</link>
+    <atom:link href="https://seantrane.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Tue, 09 Jul 2019 17:21:28 -0400</pubDate>
+    <lastBuildDate>Tue, 09 Jul 2019 17:21:28 -0400</lastBuildDate>
+    <generator>Jekyll v3.8.5</generator>
+    
+      <item>
+        <title>Migrating from SonarQube to SonarCloud</title>
+        <description>&lt;p&gt;&lt;a href=&quot;https://sonarcloud.io&quot;&gt;SonarCloud&lt;/a&gt; (SaaS) differs from &lt;a href=&quot;https://www.sonarqube.org/&quot;&gt;SonarQube&lt;/a&gt; (self-hosted) in a number of different ways. This page documents the process of migrating from SonarQube to SonarCloud.&lt;/p&gt;
+
+&lt;p&gt;The most important thing to remember when performing this migration is that SonarCloud has different names for the configurable properties available in a &lt;code class=&quot;highlighter-rouge&quot;&gt;sonar-project.properties&lt;/code&gt; file. The best place to find the property keys in SonarCloud is within the configuration settings area of the SonarCloud interface. Each configuration option therein shows the respective property key as would be used in the config file.&lt;/p&gt;
+
+&lt;p&gt;If a configuration option does not appear in the SonarCloud configuration settings, then it means it does not exist in SonarCloud. This is especially the case with SonarQube plugins, which do not exist in the same way on the cloud version, as SonarCloud comes with many popular plugins already baked into the service. SonarCloud does this because one cannot install plugins in SonarCloud, and this is a fundamental difference between the software. Not to worry though, because SonarCloud plugins are better integrated and easier to manage than it’s server-based counterpart.&lt;/p&gt;
+
+&lt;p&gt;Please use the &lt;code class=&quot;highlighter-rouge&quot;&gt;sonar-project.properties&lt;/code&gt; standards and practices described on &lt;a href=&quot;/posts/sonarcloud-configuration-18288/&quot;&gt;the SonarCloud Configuration
+page&lt;/a&gt; to make modifications to existing SonarQube project config files. Any
+SonarQube configuration properties that are not supported will simply be ignored by SonarCloud. When using
+SonarCloud, the &lt;code class=&quot;highlighter-rouge&quot;&gt;sonar.organization&lt;/code&gt; config property is required or it will not upload - regardless of setting up
+the host URL and authentication properly.&lt;/p&gt;
+
+&lt;p&gt;When uploading results to SonarCloud or SonarQube, the &lt;code class=&quot;highlighter-rouge&quot;&gt;sonar-scanner&lt;/code&gt; CLI usage is virtually the same, just a
+different host URL;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sonar-scanner &lt;span class=&quot;nt&quot;&gt;-Dsonar&lt;/span&gt;.host.url&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;https://sonarcloud.io ...&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;using-sonarcloud-with-travis-ci&quot;&gt;Using SonarCloud with Travis CI&lt;/h2&gt;
+
+&lt;p&gt;Travis CI has excellent integration with SonarCloud, requiring very little to get up and running. The first step is
+to ensure the Travis CI SonarCloud add-on is activated in the &lt;code class=&quot;highlighter-rouge&quot;&gt;.travis.yml&lt;/code&gt; config file;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;na&quot;&gt;addons&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;sonarcloud&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;organization&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;sonar-org&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Then you must ensure that the SonarCloud auth token is available as an environment variable; &lt;code class=&quot;highlighter-rouge&quot;&gt;SONAR_TOKEN&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;After that, you simply have to run &lt;code class=&quot;highlighter-rouge&quot;&gt;sonar-scanner&lt;/code&gt; after your linting/testing is complete and, of course, that your
+&lt;code class=&quot;highlighter-rouge&quot;&gt;sonar-project.properties&lt;/code&gt; file is configured properly and your test reports are consumable by Sonar.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;na&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;npm test&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;npm sonar-scanner&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;using-sonarcloud-other-ci-toolsservices&quot;&gt;Using SonarCloud other CI tools/services&lt;/h2&gt;
+
+&lt;p&gt;It is relatively painless to switch from SonarQube to SonarCloud, as it is simply a change from using a SonarQube
+server host to using &lt;code class=&quot;highlighter-rouge&quot;&gt;sonarcloud.io&lt;/code&gt;. In addition to the hostname change, one must also provide authentication for
+SonarCloud.&lt;/p&gt;
+
+&lt;p&gt;To make this process easier for users and plans, &lt;em&gt;environment variables&lt;/em&gt; be provided to be used
+within job scripting. Here are the variables to be provided:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;SONARCLOUD_HOST_URL&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;https://sonarcloud.io&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;SONARCLOUD_ORG&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;sonar-org&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;SONARCLOUD_TOKEN_PASSWORD&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;********&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;using-sonarcloud-with-bamboo&quot;&gt;Using SonarCloud with Bamboo&lt;/h3&gt;
+
+&lt;p&gt;&lt;em&gt;Bamboo Global Variables&lt;/em&gt; can be accessed using the &lt;code class=&quot;highlighter-rouge&quot;&gt;${bamboo_...}&lt;/code&gt; variable naming convention, for example; &lt;code class=&quot;highlighter-rouge&quot;&gt;${bamboo_SONARCLOUD_HOST_URL}&lt;/code&gt;. The following command is all that is needed;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sonar-scanner &lt;span class=&quot;nt&quot;&gt;-Dsonar&lt;/span&gt;.host.url&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;bamboo_SONARCLOUD_HOST_URL&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-Dsonar&lt;/span&gt;.login&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;bamboo_SONARCLOUD_TOKEN_PASSWORD&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+</description>
+        <pubDate>Tue, 22 Jan 2019 01:00:00 -0500</pubDate>
+        <link>https://seantrane.github.io/posts/migrating-from-sonarqube-to-sonarcloud-19022/</link>
+        <guid isPermaLink="true">https://seantrane.github.io/posts/migrating-from-sonarqube-to-sonarcloud-19022/</guid>
+        
+        
+        <category>DevOps</category>
+        
+        <category>Engineering</category>
+        
+        <category>Security</category>
+        
+      </item>
+    
+      <item>
+        <title>Security Monitoring in GitHub</title>
+        <description>&lt;p&gt;GitHub has data services that can scan a repository for known security vulnerabilities found in dependencies.&lt;/p&gt;
+
+&lt;h2 id=&quot;settings-and-configuration&quot;&gt;Settings and Configuration&lt;/h2&gt;
+
+&lt;h3 id=&quot;data-services&quot;&gt;Data Services&lt;/h3&gt;
+
+&lt;p&gt;You can find configuration for GitHub Data Services on the Repository Settings page. It is advisable to enable all settings in this area. Security monitoring and alerting cannot happen unless GitHub is granted permission to scan the dependencies of a repository.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/images/posts/github-repo-settings-data-services.png&quot;&gt;&lt;img src=&quot;/images/posts/github-repo-settings-data-services.png&quot; alt=&quot;GitHub Repository Data Services Settings&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;github-alerts-settings&quot;&gt;GitHub Alerts Settings&lt;/h3&gt;
+
+&lt;p&gt;Vulnerability alerts can be sent to any person or team. You can find configuration options within the Alerts section of the Repository Settings page. The default is organization and repository admins. It is best practice to only add GitHub Teams, if necessary. Additionally, as the section description says; users can manage their own notification settings, which controls how alerts are sent/received.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/images/posts/github-repo-settings-alerts.png&quot;&gt;&lt;img src=&quot;/images/posts/github-repo-settings-alerts.png&quot; alt=&quot;GitHub Repository Alerts Settings&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;github-vulnerability-alerts&quot;&gt;GitHub Vulnerability Alerts&lt;/h2&gt;
+
+&lt;p&gt;The primary location of a GitHub Vulnerability Alert is at the top of the Repository page, displayed only to individuals granted access via the Alerts Settings.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/images/posts/github-repo-security-alert.png&quot;&gt;&lt;img src=&quot;/images/posts/github-repo-security-alert.png&quot; alt=&quot;GitHub Repository Security Alert&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Clicking See security alert leads to the Alerts section of the Repository Insights page, which provides a summary of open vulnerabilities.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/images/posts/github-repo-alerts-vulnerability.png&quot;&gt;&lt;img src=&quot;/images/posts/github-repo-alerts-vulnerability.png&quot; alt=&quot;GitHub Repository Vulnerability Alert&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Clicking a vulnerability will lead to a Vulnerability Details page, where all additional information is available. The instructions provided are not necessarily advisable, as the may be signifying a “sub-dependency”, in which case the direct dependency would need the consideration.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/images/posts/github-repo-alerts-vulnerability-details.png&quot;&gt;&lt;img src=&quot;/images/posts/github-repo-alerts-vulnerability-details.png&quot; alt=&quot;GitHub Repository Vulnerability Alert Details&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Wed, 16 Jan 2019 01:00:00 -0500</pubDate>
+        <link>https://seantrane.github.io/posts/security-monitoring-in-github-19016/</link>
+        <guid isPermaLink="true">https://seantrane.github.io/posts/security-monitoring-in-github-19016/</guid>
+        
+        
+        <category>Engineering</category>
+        
+        <category>Security</category>
+        
+      </item>
+    
+      <item>
+        <title>Merging Strategies in GitHub</title>
+        <description>&lt;p&gt;Different projects use different git merging strategies. Even though this post is really talking about git itself, you can
+use this information without actually using GitHub. It also applies to any other online Git frontends like
+Bitbucket as well.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;TLDR&lt;/strong&gt;: If you need to maintain all commit IDs in your branches after they are merged/deleted you must use
+&lt;strong&gt;Create a merge commit&lt;/strong&gt;. If it’s an open source project with contributors, &lt;strong&gt;Squash and merge&lt;/strong&gt; is the best choice.
+If it’s a private repo where you can control the engineers &lt;strong&gt;Rebase and merge&lt;/strong&gt; is a good choice, however &lt;strong&gt;Squash
+and merge&lt;/strong&gt; also works just as well.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;merge-options&quot;&gt;Merge Options&lt;/h2&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th width=&quot;30%&quot;&gt;The following dropdown is presented when the arrow to the right of the merge button is clicked:&lt;/th&gt;
+      &lt;td&gt;
+        &lt;p&gt;&lt;a href=&quot;/images/posts/github-repo-merge-button-options.png&quot;&gt;&lt;img src=&quot;/images/posts/github-repo-merge-button-options.png&quot; alt=&quot;GitHub repository merge button options&quot; style=&quot;float:left;margin-right:10px&quot; /&gt;&lt;/a&gt; &lt;em&gt;Whichever one you select will automatically stay selected, so you don't have to select it each time.&lt;/em&gt;&lt;/p&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Merge button options can be restricted on the Repository Settings page:&lt;/th&gt;
+      &lt;td&gt;
+        &lt;p&gt;&lt;a href=&quot;/images/posts/github-repo-settings-merge-button.png&quot;&gt;&lt;img src=&quot;/images/posts/github-repo-settings-merge-button.png&quot; alt=&quot;GitHub repository merge button settings&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h2 id=&quot;merge-option-comparison&quot;&gt;Merge Option Comparison&lt;/h2&gt;
+
+&lt;p&gt;Each strategy has its own advantages and disadvantages. This table is worded in a way where a ✅ generally means it does that task/option/thing better. However, that’s not strictly true in all cases. In fact, you may specifically not want it to have that feature.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th width=&quot;62%&quot;&gt;Topic&lt;/th&gt;
+      &lt;th width=&quot;19%&quot;&gt;Create&amp;nbsp;a Merge&amp;nbsp;commit&lt;/th&gt;
+      &lt;th width=&quot;19%&quot;&gt;Squash and&amp;nbsp;merge&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        &lt;div&gt;
+          &lt;strong&gt;+ &lt;a role=&quot;button&quot; data-toggle=&quot;collapse&quot; href=&quot;#history-is-immutable&quot; aria-expanded=&quot;false&quot; aria-controls=&quot;history-is-immutable&quot;&gt;
+            History is immutable
+          &lt;/a&gt;&lt;/strong&gt;
+        &lt;/div&gt;
+        &lt;div id=&quot;history-is-immutable&quot; class=&quot;collapse in&quot;&gt;
+          &lt;div&gt;
+            &lt;p&gt;The history is never modified, so commit IDs will always stay persistent. If your repository, build system, delivery pipeline, bundled application versions or documentation relies on commit IDs staying the same in your entire history (including deleted feature branches) then this can be a deal breaker that means you have to use Create a merge commit.&lt;/p&gt;
+            &lt;p&gt;It's important to note that rewriting history (if done correctly) should only affect the feature branches before they are merged into you main or stable branch. You would only rewrite history on the main branch if something went terribly wrong (such as passwords got accidentally committed and merged).&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/td&gt;
+      &lt;td&gt;✅&lt;/td&gt;
+      &lt;td&gt;⛔&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        &lt;div&gt;
+          &lt;strong&gt;+ &lt;a role=&quot;button&quot; data-toggle=&quot;collapse&quot; href=&quot;#avoids-introducing-commits-that-break-ci&quot; aria-expanded=&quot;false&quot; aria-controls=&quot;avoids-introducing-commits-that-break-ci&quot;&gt;
+            Avoids introducing commits that break CI
+          &lt;/a&gt;&lt;/strong&gt;
+        &lt;/div&gt;
+        &lt;div id=&quot;avoids-introducing-commits-that-break-ci&quot; class=&quot;collapse in&quot;&gt;
+          &lt;div&gt;
+            &lt;p&gt;If you have a CI system running your tests (such as Travis CI), it will be likely be trigged when you push code. However, it does not test every commit, only the most recent. This means it's possible to push 5 commits where 4 of them cause a failure in the build system but the 5th one passes.&lt;/p&gt;&lt;p&gt;A common scenario is when a build fails for a minor reason like a style check. People will push fixup commits like &quot;fixing code style&quot; or the dreaded &quot;minor&quot;. Eventually the build will pass but all those broken commits will be merged in with the feature.&lt;/p&gt;
+            &lt;p&gt;If you need to rerun a build or use &lt;code&gt;git bisect&lt;/code&gt; to locate when bugs were introduced (see &lt;a href=&quot;http://elliot.land/post/automatically-locate-when-and-where-bugs-were-introduced-with-git-bisect&quot;&gt;Automatically locate when are where bugs were introduced with git bisect&lt;/a&gt;) you will have a hard time pinpointing errors that are real as opposed to unrelated failures. Also, unless you absolutely need to ensure commit IDs forever you will have a lot of patches that just aren't useful in your history.&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/td&gt;
+      &lt;td&gt;⛔&lt;/td&gt;
+      &lt;td&gt;✅&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        &lt;div&gt;
+          &lt;strong&gt;+ &lt;a role=&quot;button&quot; data-toggle=&quot;collapse&quot; href=&quot;#keeps-a-linear-commit-history&quot; aria-expanded=&quot;false&quot; aria-controls=&quot;keeps-a-linear-commit-history&quot;&gt;
+            Keeps a linear commit history
+          &lt;/a&gt;&lt;/strong&gt;
+        &lt;/div&gt;
+        &lt;div id=&quot;keeps-a-linear-commit-history&quot; class=&quot;collapse in&quot;&gt;
+          &lt;div&gt;
+            &lt;p&gt;Branching in git is cheap, easy and wonderful. Even in mid-sized projects with a handful of developers using the &lt;strong&gt;Create a merge commit&lt;/strong&gt; strategy can lead to a very convoluted history that's often impossible to follow. For example:&lt;/p&gt;
+            &lt;p&gt;&lt;img src=&quot;https://cdn-images.postach.io/aa0e0e8e-5932-48c5-bbd5-bb782bc5caef/4fcfd2ee-cef9-46de-8cd8-ed2126cf8616/83153eb8-9310-41e6-9ec7-a886a9e84f73.png&quot; /&gt;&lt;/p&gt;
+            &lt;p&gt;Keeping a linear commit history requires that branches will have to be rebased or collapse their commits on top of the latest head of the branch they wish to merge into. This changes the history (and therefore commit IDs) of the branches, but it also provides a single line of history that is much easier to follow and understand.&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/td&gt;
+      &lt;td&gt;⛔&lt;/td&gt;
+      &lt;td&gt;✅&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        &lt;div&gt;
+          &lt;strong&gt;+ &lt;a role=&quot;button&quot; data-toggle=&quot;collapse&quot; href=&quot;#is-easier-for-git-beginners&quot; aria-expanded=&quot;false&quot; aria-controls=&quot;is-easier-for-git-beginners&quot;&gt;
+            Is easier for git beginners
+          &lt;/a&gt;&lt;/strong&gt;
+        &lt;/div&gt;
+        &lt;div id=&quot;is-easier-for-git-beginners&quot; class=&quot;collapse in&quot;&gt;
+          &lt;div&gt;
+            &lt;p&gt;Even though nothing is really deleted in git and you can always recover a bad rebase using the &lt;code&gt;git ref-log&lt;/code&gt;. It can still be a real problem for beginners that get themselves into a situation that they haven't yet developed the git ninja skills to work their way out of.&lt;/p&gt;
+            &lt;p&gt;This is often why projects opt for simple merge commits. It's about as full proof as you can get in terms of preventing the engineer from getting into sticky situations.&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/td&gt;
+      &lt;td&gt;✅&lt;/td&gt;
+      &lt;td&gt;✅&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        &lt;div&gt;
+          &lt;strong&gt;+ &lt;a role=&quot;button&quot; data-toggle=&quot;collapse&quot; href=&quot;#easily-link-back-to-the-pull-request&quot; aria-expanded=&quot;false&quot; aria-controls=&quot;easily-link-back-to-the-pull-request&quot;&gt;
+            Easily link back to the Pull Request
+          &lt;/a&gt;&lt;/strong&gt;
+        &lt;/div&gt;
+        &lt;div id=&quot;easily-link-back-to-the-pull-request&quot; class=&quot;collapse in&quot;&gt;
+          &lt;div&gt;
+            &lt;p&gt;This can be very important for open source projects where all of the issues and discussions are in GitHub itself. GitHub will automatically recognize issue and PR numbers in the form of &quot;#123&quot; in your commit messages and create real links back to those entities.&lt;/p&gt;&lt;p&gt;Except for &lt;strong&gt;Rebase and merge&lt;/strong&gt;, GitHub will include these automatically for you in the commit messages making it much nicer and easier when exploring the commit history to identify why things were changed.&lt;/p&gt;
+            &lt;p&gt;&lt;img src=&quot;https://cdn-images.postach.io/aa0e0e8e-5932-48c5-bbd5-bb782bc5caef/4fcfd2ee-cef9-46de-8cd8-ed2126cf8616/e84cacf2-c34e-4c54-ae0c-9a2001da4c3e.png&quot; /&gt;&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/td&gt;
+      &lt;td&gt;✅&lt;/td&gt;
+      &lt;td&gt;✅&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        &lt;div&gt;
+          &lt;strong&gt;+ &lt;a role=&quot;button&quot; data-toggle=&quot;collapse&quot; href=&quot;#avoids-code-cleanup-style-commits&quot; aria-expanded=&quot;false&quot; aria-controls=&quot;avoids-code-cleanup-style-commits&quot;&gt;
+            Avoids &quot;code cleanup&quot; style commits
+          &lt;/a&gt;&lt;/strong&gt;
+        &lt;/div&gt;
+        &lt;div id=&quot;avoids-code-cleanup-style-commits&quot; class=&quot;collapse in&quot;&gt;
+          &lt;div&gt;
+            &lt;p&gt;Referencing back to &lt;strong&gt;Avoids introducing commits that break in CI&lt;/strong&gt;, people that are not comfortable with rebasing will often create new commits to fix up the tests or builds.&lt;/p&gt;
+            &lt;p&gt;These are of no use in your history and actually make it harder to locate the real commit that made the genuine change to identify the motivation or description.&lt;/p&gt;
+            &lt;p&gt;This is where &lt;strong&gt;Squash and merge&lt;/strong&gt; really shines and works great in open source projects where the experience of engineers will vary and all changes will be put together in a single commit with a link back to the issue and/or pull request.&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/td&gt;
+      &lt;td&gt;⛔&lt;/td&gt;
+      &lt;td&gt;✅&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        &lt;div&gt;
+          &lt;strong&gt;+ &lt;a role=&quot;button&quot; data-toggle=&quot;collapse&quot; href=&quot;#merge-conflicts-are-easier-to-deal-with&quot; aria-expanded=&quot;false&quot; aria-controls=&quot;merge-conflicts-are-easier-to-deal-with&quot;&gt;
+            Merge conflicts are easier to deal with
+          &lt;/a&gt;&lt;/strong&gt;
+        &lt;/div&gt;
+        &lt;div id=&quot;merge-conflicts-are-easier-to-deal-with&quot; class=&quot;collapse in&quot;&gt;
+          &lt;div&gt;
+            &lt;p&gt;Rebasing (especially for those new to git) can sometimes be a more complicated way to deal with conflicts because you are dealing with lots of small conflicts that affect conflicts further down the line. We have all done it. When you realized halfway through a rebase that you have chosen the wrong side and you will be dealing with that same conflict many more times.&lt;/p&gt;
+            &lt;p&gt;If your project is dealing with external engineers or less experienced engineers it can be tough to enforce and make sure they have a nice rebase history.&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/td&gt;
+      &lt;td&gt;✅&lt;/td&gt;
+      &lt;td&gt;✅&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        &lt;div&gt;
+          &lt;strong&gt;+ &lt;a role=&quot;button&quot; data-toggle=&quot;collapse&quot; href=&quot;#can-edit-the-message-at-merge-time&quot; aria-expanded=&quot;false&quot; aria-controls=&quot;can-edit-the-message-at-merge-time&quot;&gt;
+            Can edit the message at merge time
+          &lt;/a&gt;&lt;/strong&gt;
+        &lt;/div&gt;
+        &lt;div id=&quot;can-edit-the-message-at-merge-time&quot; class=&quot;collapse in&quot;&gt;
+          &lt;div&gt;
+            &lt;p&gt;Sometimes you want to edit the commit message when merging. To fix spelling mistakes, adding extra ticket numbers, etc. &lt;strong&gt;Squash and merge&lt;/strong&gt; is great for this.&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/td&gt;
+      &lt;td&gt;⛔&lt;/td&gt;
+      &lt;td&gt;✅&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        &lt;div&gt;
+          &lt;strong&gt;+ &lt;a role=&quot;button&quot; data-toggle=&quot;collapse&quot; href=&quot;#avoids-suppressing-tags&quot; aria-expanded=&quot;false&quot; aria-controls=&quot;avoids-suppressing-tags&quot;&gt;
+            Avoids suppressing tags
+          &lt;/a&gt;&lt;/strong&gt;
+        &lt;/div&gt;
+        &lt;div id=&quot;avoids-suppressing-tags&quot; class=&quot;collapse in&quot;&gt;
+          &lt;div&gt;
+            &lt;p&gt;Tags are just labels that point to specific commit IDs. When rebasing or squashing the history is modified and so the existing commits that were rebased will now have a different commit IDs.&lt;/p&gt;
+            &lt;p&gt;If you rebase your feature branch you will find that any tags you previously had will now be gone, because they point to commits that are no longer in the history of your branch. The tags are still valid and will not be removed but there is no way to move tags to the equivalent rebased commit, even if no patches or merge conflicts were encountered.&lt;/p&gt;
+            &lt;p&gt;Tags created on your main or stable branch will stay intact because rebasing and squashing will only append new commits, but any tags within the feature branch will disappear form that history.&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/td&gt;
+      &lt;td&gt;✅&lt;/td&gt;
+      &lt;td&gt;⛔&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+</description>
+        <pubDate>Tue, 15 Jan 2019 01:00:00 -0500</pubDate>
+        <link>https://seantrane.github.io/posts/merging-strategies-in-github-19015/</link>
+        <guid isPermaLink="true">https://seantrane.github.io/posts/merging-strategies-in-github-19015/</guid>
+        
+        
+        <category>Engineering</category>
+        
+      </item>
+    
+      <item>
+        <title>Using Travis CI</title>
+        <description>&lt;p&gt;As a continuous integration platform, Travis CI supports your development process by automatically building and testing code changes, providing immediate feedback on the success of the change. Travis CI can also automate other parts of your development process by managing deployments and notifications.&lt;/p&gt;
+
+&lt;h2 id=&quot;getting-started-with-travis-ci&quot;&gt;Getting started with Travis CI&lt;/h2&gt;
+
+&lt;p&gt;It’s easy to get started with Travis CI. Their documentation has a page describing it; &lt;a href=&quot;https://docs.travis-ci.com/user/for-beginners/&quot;&gt;Travis CI for Beginners&lt;/a&gt;. There is also a great &lt;a href=&quot;https://github.com/dwyl/learn-travis&quot;&gt;Travis CI Tutorial&lt;/a&gt;. However, there are some important things to take note of:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;You should &lt;strong&gt;sign into Travis CI using your GitHub login&lt;/strong&gt;. This is because Travis CI will automatically show you repositories that you have read permissions to in GitHub, and it will restrict administrative control to those who also have admin permissions to a repo in GitHub.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Travis CI is free for public repositories&lt;/strong&gt;. You can, and should, experiment and learn Travis using a public repo in your personal GitHub account. You can sandbox and break things without having any effect on business operations. Everyone should take advantage of this.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Travis CI is much more powerful, by a significant magnitude, than you are probably aware of.&lt;/strong&gt; Do lot let perception control your reality. Travis CI can achieve the simplest of CI/CD plans with ease, but it is also capable of managing much more complex plans. Due to it’s excellent support for Docker, there really are few limits to what can be achieved.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;limitations-of-travis-ci&quot;&gt;Limitations of Travis CI&lt;/h2&gt;
+
+&lt;p&gt;No tool is without limitations and negative aspects. It is important to note the following limitations of Travis CI, although continual improvements to the platform cause this list to shrink every year.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;You cannot share build artifacts across jobs. &lt;/strong&gt;It is important to note that jobs do not share storage, as each job runs in a fresh VM or container. If your jobs need to share files (e.g., using build artifacts from the “Test” stage for deployment in the subsequent “Deploy” stage), you need to use an external storage mechanism such as an image repository or a remote server.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;travis-ci-configuration&quot;&gt;Travis CI Configuration&lt;/h2&gt;
+
+&lt;h3 id=&quot;breaking-down-the-travis-ci-configuration-file&quot;&gt;Breaking down the Travis CI configuration file&lt;/h3&gt;
+
+&lt;p&gt;This is a top-down examination of a typical Travis CI configuration file, &lt;code class=&quot;highlighter-rouge&quot;&gt;.travis.yml&lt;/code&gt;, and a description of the best practices exhibited therein.&lt;/p&gt;
+
+&lt;table class=&quot;table&quot;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th width=&quot;40%&quot;&gt;Configuration&lt;/th&gt;
+      &lt;th width=&quot;60%&quot;&gt;Description&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;na&quot;&gt;sudo&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;required&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+      &lt;/td&gt;
+      &lt;td&gt;
+        &lt;p&gt;The `&lt;code&gt;sudo&lt;/code&gt;` property is no longer required and &lt;a href=&quot;https://blog.travis-ci.com/2018-11-19-required-linux-infrastructure-migration&quot;&gt;its use is now discouraged&lt;/a&gt;.&lt;/p&gt;
+        &lt;p&gt;It had been `&lt;code&gt;false&lt;/code&gt;` by default, and marking in as `&lt;code&gt;required&lt;/code&gt;` was necessary
+          when using Docker. However, `&lt;code&gt;required&lt;/code&gt;` is now the default state and any other setting is
+          deprecated. It is therefore no longer needed to have this line, but important to make note of it, as it
+          can be found in many configuration examples.&lt;/p&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;na&quot;&gt;language&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;node_js&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+      &lt;/td&gt;
+      &lt;td&gt;The `&lt;code&gt;language&lt;/code&gt;` property is the most typical method of
+        selecting the image that will be used for builds. `&lt;code&gt;node_js&lt;/code&gt;` is the most popular, not only
+        because JavaScript is the most popular language but also because the image also contains other system
+        dependencies, such as; Java, Ruby, etc. Making it ideal for most build requirements.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;na&quot;&gt;node_js&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;8'&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+      &lt;/td&gt;
+      &lt;td&gt;If `&lt;code&gt;node_js&lt;/code&gt;` is the selected language/image, then you can specify which
+        Node version(s) using the `&lt;code&gt;node_js&lt;/code&gt;` property. As depicted, this property supports an array of
+        values. This is useful when required to test code against multiple versions of Node.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;na&quot;&gt;cache&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;directories&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;~/.npm&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;node_modules&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;npm&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+      &lt;/td&gt;
+      &lt;td&gt;The `&lt;code&gt;cache&lt;/code&gt;` property is used to dictate which dependencies and/or
+        directories should be cached across build jobs and stages. This is most helpful to avoid running dependency
+        installations more than once, saving up to 2 minutes for each additional job.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;na&quot;&gt;notifications&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;email&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;false&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+      &lt;/td&gt;
+      &lt;td&gt;The `&lt;code&gt;notifications&lt;/code&gt;` property is used to configure
+          build notification settings. To avoid an overabundance of emails, it is common to always include this
+          option and ensure the subsequent `&lt;code&gt;email&lt;/code&gt;` property is marked as `&lt;code&gt;false&lt;/code&gt;`.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;na&quot;&gt;services&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;docker&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+      &lt;/td&gt;
+      &lt;td&gt;The `&lt;code&gt;services&lt;/code&gt;` property is used to activate services
+          to be made available to build jobs. The most common of these services is `&lt;code&gt;docker&lt;/code&gt;` and this
+          should be enabled on all plans.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;na&quot;&gt;addons&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;sonarcloud&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;organization&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;sonar-org-name&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+      &lt;/td&gt;
+      &lt;td&gt;The `&lt;code&gt;addons&lt;/code&gt;` property is used to activate additional
+          3rd party applications and integrations. This is most commonly used for things like &lt;em&gt;SonarCloud&lt;/em&gt;
+          integration and &lt;em&gt;Chrome&lt;/em&gt; support. As depicted here, every single Travis CI build plan should have
+          `&lt;code&gt;sonarcloud&lt;/code&gt;` as an add-on with your `&lt;code&gt;sonar-org-name&lt;/code&gt;` as the `&lt;code&gt;organization&lt;/code&gt;`.
+          The SonarCloud add-on is required to ensure the `&lt;code&gt;sonar-scanner&lt;/code&gt;` binary is available and
+          connected to the matching SonarCloud profile. Please note that the Travis CI plan must also provide the
+          `SONAR_TOKEN` as an environment variable so that `&lt;code&gt;sonar-scanner&lt;/code&gt;` can authenticate the
+          account.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;na&quot;&gt;git&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;depth&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;false&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+      &lt;/td&gt;
+      &lt;td&gt;The `&lt;code&gt;git&lt;/code&gt;` property is used to control Git
+          configuration. This is most commonly used to increase the default depth (50 commits) of GitHub pulls.
+          When you want Travis CI to be able to analyze more than just the absolute latest commits to the master
+          branch, you need increase this setting or disable it altogether. For example; if you want to automate
+          your releases and changelogs, then you need to be able to analyze as many commits as are applicable to
+          said release. In many cases, this can exceed the default. The more automation and contributors you have,
+          the more this setting can interfere.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;na&quot;&gt;branches&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;only&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;master&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/^greenkeeper.*$/&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+      &lt;/td&gt;
+      &lt;td&gt;
+        &lt;p&gt;The `&lt;code&gt;branches&lt;/code&gt;` property is used to control which branches Travis CI will
+            watch for commits. This should always include the primary development branch, i.e.; `&lt;code&gt;master&lt;/code&gt;`.
+            Additional branches should be activated on a case-by-case basis. For example, if the repository is
+            integrated with Greenkeeper, then you must add support for `&lt;code&gt;greenkeeper/...&lt;/code&gt;` branches so
+            they can be processed.&lt;/p&gt;
+        &lt;p&gt;Pull Requests are automatically processed if they are made against the branches listed in this
+            configuration. In this example; any PR made against the `&lt;code&gt;master&lt;/code&gt;` branch will be
+            automatically processed. This means every PR will be able to exhibit accurate Status Checks in GitHub,
+            capable of preventing PR's from being merged if they fail the CI plan.&lt;/p&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;na&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;global&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;PATH=$HOME/.local/bin:$PATH&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;PATH=$PWD:$PATH&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+      &lt;/td&gt;
+      &lt;td&gt;
+        &lt;p&gt;The `&lt;code&gt;env&lt;/code&gt;` property is used to supply environment variables which, for
+            most plans, should only be stored in the Travis CI Build Settings area - only accessible to repository
+            admins. Travis CI supports encryption of environment variables, but it is still best practice to keep
+            these things out of the config file.&lt;/p&gt;
+        &lt;p&gt;The primary value of the `&lt;code&gt;env&lt;/code&gt;` property is modifying global
+              variables, especially when needing to modify `&lt;code&gt;PATH&lt;/code&gt;` variable. The example provided shows
+              the best practice for ensuring globally installed packages are accessible at the command line, in
+              addition to the current active directory (`&lt;code&gt;PWD&lt;/code&gt;`).&lt;/p&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;na&quot;&gt;before_install&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;npm install -g greenkeeper-lockfile&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+      &lt;/td&gt;
+      &lt;td&gt;The `&lt;code&gt;before_install&lt;/code&gt;` property is
+          generally used for installing global dependencies. It can be ignored but it is best practice to use it
+          for any system-level provisioning, and using the `&lt;code&gt;install&lt;/code&gt;` property for application-level
+          installation and provisioning.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;na&quot;&gt;install&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;travis_retry npm install&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+      &lt;/td&gt;
+      &lt;td&gt;
+        &lt;p&gt;The `&lt;code&gt;install&lt;/code&gt;` property is used to run all installation scripting, such
+            as `&lt;code&gt;npm install&lt;/code&gt;`. The caveat here, as exhibited in the example, is that the command should
+            always be prefixed with the `&lt;code&gt;travis_retry&lt;/code&gt;` command - which will ensure that any erroneous
+            install failures will be retried before failing the build. This can be common during dependency
+            installations when things like network drop-offs and registry blips affect the reliability of a plan.&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: the `&lt;code&gt;travis_retry&lt;/code&gt;` command can be
+            used in front of any command to ensure that it is retried upon failure.&lt;/p&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;na&quot;&gt;stages&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;test&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;deploy&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;repo = profile/repo&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;AND type != pull_request&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;AND branch = master&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+      &lt;/td&gt;
+      &lt;td&gt;
+        &lt;p&gt;The `&lt;code&gt;stages&lt;/code&gt;` property is used to segment jobs into individual stages.
+            Whilst this is not a required property, it is best practice to ensure that subsequent jobs are not run
+            if a previous job/stage has failed. This is because Travis CI will run all scripts within a job even if
+            a failure occurs during the first script. The job would still fail, but not before all scripts run.
+            This has a benefit of observing just how many scripts failed, instead of just the first one. But it has
+            the unfortunate consequence of potentially running a script that should be run if previous failures
+            occurred. This is obviously the case with things like deployments, but can also play a role in other
+            areas, such as; ensuring a build doesn't run for 10 minutes if a failure occurred in the first 2
+            minutes. As Travis CI is priced based on concurrent builds, it is important to ensure you do not
+            unnecessarily waste build time.&lt;/p&gt;
+        &lt;p&gt;As exhibited in the example, stages are a great way to add conditionals to restrict if and when a
+            stage is run. The example shows how to restrict a deployment stage to just the master branch of the
+            explicit repo and not on any PR's.&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: stages are processed in a linear fashion, meaning subsequent stages cannot
+            run until a previous stage as completed &lt;em&gt;successfully&lt;/em&gt;.&lt;/p&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;na&quot;&gt;jobs&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;include&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;stage&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;test&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Checks&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;and&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Tests'&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;npm run lint&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;npm run test&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;npm run build&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;stage&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;deploy&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Publish&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;and&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Release'&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;npm run semantic-release&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+      &lt;/td&gt;
+      &lt;td&gt;The `&lt;code&gt;jobs&lt;/code&gt;` property is used to group all
+          scripts/command into individual jobs. When using stages, you can have multiple jobs within the same
+          stage. The example show one job per stage, but there is plenty of documentation describing the
+          alternative.&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;conditional-scripting-and-statements&quot;&gt;Conditional scripting and statements&lt;/h3&gt;
+
+&lt;p&gt;Travis CI provides a number of &lt;a href=&quot;https://docs.travis-ci.com/user/conditional-builds-stages-jobs/&quot;&gt;methods for wrapping build stages and jobs with conditional statements&lt;/a&gt;. There is also &lt;a href=&quot;https://docs.travis-ci.com/user/conditions-v1&quot;&gt;a page describing the available conditions&lt;/a&gt;, and a page describing &lt;a href=&quot;https://docs.travis-ci.com/user/conditions-testing&quot;&gt;how conditionals can be tested&lt;/a&gt;. You can also find &lt;a href=&quot;https://docs.travis-ci.com/user/environment-variables/&quot;&gt;a list of environment variables that can be used in conditional statements&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;There are plenty of standard methods to learn therein. But there is little documentation about inline conditionals and the quirks of their behavior. This is a list of those quirks;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Inline conditional &lt;strong&gt;statements should be enclosed in single-quotes&lt;/strong&gt; or they will not be processed properly;
+  &lt;code class=&quot;highlighter-rouge&quot;&gt;'[[ $TRAVIS_BRANCH = master ]] &amp;amp;&amp;amp; echo &quot;is master&quot; || echo &quot;is not master&quot;;'&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;All &lt;strong&gt;statements should end with a semicolon&lt;/strong&gt; to ensure the statement is closed properly.&lt;/li&gt;
+  &lt;li&gt;Any unmet inline conditional will trigger a premature fail/exit of the build plan. This is because Travis CI expects all scripts output to complete without error. If a conditional fails, this does not occur. It is therefore required to provide an “else” branch in the conditional statement. However, the “else” must also not fail. So it is common to simply “echo” some text that signifies the bypass.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;na&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;$TRAVIS_BRANCH&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;=~&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;^greenkeeper.*$&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;]]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;greenkeeper-lockfile-update&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;||&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Skipping&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;greenkeeper-lockfile-update&quot;;'&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;$TRAVIS_BRANCH&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;=~&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;^greenkeeper.*$&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;]]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;npm&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;audit&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;||&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Skipping&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;npm&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;audit&quot;;'&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;commitlint-travis&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;npm run lint&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;npm run build&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;travis_retry github-label-sync -a &quot;$GH_TOKEN&quot; -l 'https://git.io/fAe5i' profile/repo&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;npm run test&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;$TRAVIS_BRANCH&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;master&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;]]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;sonar-scanner&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;||&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Skipping&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;sonar-scanner&quot;;'&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;$TRAVIS_BRANCH&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;=~&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;^greenkeeper.*$&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;]]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;greenkeeper-lockfile-upload&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;||&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Skipping&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;greenkeeper-lockfile-upload&quot;;'&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+</description>
+        <pubDate>Mon, 22 Oct 2018 02:00:00 -0400</pubDate>
+        <link>https://seantrane.github.io/posts/using-travis-ci-18295/</link>
+        <guid isPermaLink="true">https://seantrane.github.io/posts/using-travis-ci-18295/</guid>
+        
+        
+        <category>DevOps</category>
+        
+      </item>
+    
+      <item>
+        <title>SonarCloud Configuration</title>
+        <description>&lt;p&gt;Enhance your workflow with continuous code quality, &lt;a href=&quot;https://sonarcloud.io/&quot;&gt;SonarCloud&lt;/a&gt; automatically analyzes and decorates pull requests on &lt;a href=&quot;httpa://github.com/&quot;&gt;GitHub&lt;/a&gt;, &lt;a href=&quot;https://bitbucket.org/&quot;&gt;Bitbucket&lt;/a&gt; and &lt;a href=&quot;https://azure.microsoft.com/&quot;&gt;Azure DevOps&lt;/a&gt; on major languages. This page and section describes the details of Sonar usage.&lt;/p&gt;
+
+&lt;h2 id=&quot;sample-configuration-for-sonarcloud&quot;&gt;Sample Configuration for SonarCloud&lt;/h2&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ini&quot; data-lang=&quot;ini&quot;&gt;&lt;span class=&quot;py&quot;&gt;sonar.organization&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;profile&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;sonar.projectKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;profile:sample-repo&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;sonar.projectName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Sample Repo&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;sonar.projectVersion&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;latest&lt;/span&gt;
+
+&lt;span class=&quot;py&quot;&gt;sonar.links.homepage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;https://github.com/profile/sample-repo#readme&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;sonar.links.ci&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;https://travis-ci.com/profile/sample-repo&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;sonar.links.scm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;https://github.com/profile/sample-repo&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;sonar.links.issue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;https://github.com/profile/sample-repo/issues&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# sonar.analysis.mode=preview
+&lt;/span&gt;&lt;span class=&quot;py&quot;&gt;sonar.exclusions&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;**/node_modules/**/*, **/__tests__/**/*, **/tests/**/*, **/spec/**/*, **/test.ts, **/*.test.ts, **/*.spec.ts, **/*.e2e.ts&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# sonar.host.url=http://127.0.0.1:9000/sonar
+# sonar.issuesReport.html.enable=true
+# sonar.report.export.path=report.json
+# sonar.scanner.dumpToFile = dumpFile.txt
+# sonar.showProfiling = true
+&lt;/span&gt;&lt;span class=&quot;py&quot;&gt;sonar.sourceEncoding&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;UTF-8&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;sonar.sources&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;src&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;sonar.tests&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;__tests__&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# sonar.language=ts
+&lt;/span&gt;&lt;span class=&quot;py&quot;&gt;sonar.typescript.tsconfigPath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;tsconfig.json&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;sonar.typescript.lcov.reportPaths&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;coverage/lcov.info&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;sonar.typescript.tslint.reportPaths&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;coverage/unit-report.json&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;sonar-modules-configuration&quot;&gt;Sonar Modules Configuration&lt;/h2&gt;
+
+&lt;p&gt;Sonar “Modules” are used to define individual packages, apps, etc. This is useful for the management of monorepo’s.&lt;/p&gt;
+
+&lt;p&gt;Each Sonar “Module” must have an identifier that can be used to override inherited properties. Module identifiers should use “snake_case” module names as shown in the examples below.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ini&quot; data-lang=&quot;ini&quot;&gt;&lt;span class=&quot;c&quot;&gt;# Comma-separated list of Sonar &quot;Module&quot; identifiers:
+&lt;/span&gt;&lt;span class=&quot;py&quot;&gt;sonar.modules&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;hello_world&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# All Sonar configuration settings can be overridden using module identifier:
+&lt;/span&gt;&lt;span class=&quot;py&quot;&gt;hello_world.sonar.projectName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Hello World&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;hello_world.sonar.projectBaseDir&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;packages/hello-world&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+</description>
+        <pubDate>Mon, 15 Oct 2018 02:00:00 -0400</pubDate>
+        <link>https://seantrane.github.io/posts/sonarcloud-configuration-18288/</link>
+        <guid isPermaLink="true">https://seantrane.github.io/posts/sonarcloud-configuration-18288/</guid>
+        
+        
+        <category>DevOps</category>
+        
+        <category>Engineering</category>
+        
+        <category>Security</category>
+        
+      </item>
+    
+      <item>
+        <title>Using Sonar Quality Gates</title>
+        <description>&lt;p&gt;&lt;a href=&quot;https://www.sonarqube.org/&quot;&gt;SonarQube&lt;/a&gt; and &lt;a href=&quot;https://sonarcloud.io/&quot;&gt;SonarCloud&lt;/a&gt; require the use of &lt;a href=&quot;https://docs.sonarqube.org/latest/user-guide/quality-gates/&quot;&gt;Quality Gates&lt;/a&gt; to ensure code quality is maintained. This page contains
+descriptions for the variety of recommended Quality Gates that we judge our software by.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-need-for-quality-gate-levels&quot;&gt;The need for quality gate levels&lt;/h2&gt;
+
+&lt;p&gt;There are several levels of achievement when judging high quality software. Each piece of software has a different
+lifespan, and software with a longer lifespan tends to lose quality over time as software becomes more challenging to
+maintain. You can have software that has changed hands, and while quality standards may not have been high in the past,
+you want to ensure much higher standards on newly developed code.&lt;/p&gt;
+
+&lt;p&gt;Sonar provides a number of metrics and operators to describe code quality, but one must implement their own Quality
+Gates to get effective use out of the functionality. The more opinionated the Quality Gates are, the more effective
+they can be at maintaining high code quality standards.&lt;/p&gt;
+
+&lt;p&gt;You want software engineers to be incentivized to achieve high quality standards, while
+being flexible enough to not block momentum. If Quality Gates are not used to prevent code changes of a lesser standard, they
+can easily become blockers if there isn’t a prescriptive and opinionated way to handle them and describe what they
+mean.&lt;/p&gt;
+
+&lt;h2 id=&quot;sonar-quality-gates&quot;&gt;Sonar Quality Gates&lt;/h2&gt;
+
+&lt;section class=&quot;row&quot;&gt;
+
+  &lt;section class=&quot;col-lg-5&quot;&gt;
+
+    &lt;h3&gt;Platinum Quality Gate&lt;/h3&gt;
+    &lt;p&gt;Only applications and codebases of the highest quality are capable of passing the &lt;em&gt;Platinum Quality Gate&lt;/em&gt;.&lt;/p&gt;
+    &lt;p&gt;&lt;em&gt;Platinum apps&lt;/em&gt; and their developers demonstrate a true passion for excellence. They should be
+      recognized and rewarded as the metrics required for platinum status are no small feat for developers to
+      achieve. That is why so few apps will be capable of achieving platinum status.&lt;/p&gt;
+
+  &lt;/section&gt;
+  &lt;section class=&quot;col-lg-7&quot;&gt;
+
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th width=&quot;40%&quot;&gt;Metric&lt;/th&gt;
+          &lt;th width=&quot;20%&quot;&gt;On New Code&lt;/th&gt;
+          &lt;th width=&quot;20%&quot;&gt;Operator&lt;/th&gt;
+          &lt;th width=&quot;10%&quot;&gt;Warning&lt;/th&gt;
+          &lt;th width=&quot;10%&quot;&gt;Error&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Blocker Issues&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Yes&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is greater than&lt;/td&gt;
+          &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;0&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Coverage&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;No&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is less than&lt;/td&gt;
+          &lt;td&gt;95%&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;90%&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Coverage on New Code&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is less than&lt;/td&gt;
+          &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;95%&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Critical Issues&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Yes&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is greater than&lt;/td&gt;
+          &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;0&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Duplicated Lines (%)&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;No&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is greater than&lt;/td&gt;
+          &lt;td&gt;0%&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;1%&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Duplicated Lines on New Code (%)&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is greater than&lt;/td&gt;
+          &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;0%&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Maintainability Rating&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Never&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;A&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Maintainability Rating on New Code&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;A&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Major Issues&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;No&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is greater than&lt;/td&gt;
+          &lt;td&gt;5&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;10&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;New Major Issues&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is greater than&lt;/td&gt;
+          &lt;td&gt;0&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;5&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Reliability Rating&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Never&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;A&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Reliability Rating on New Code&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;A&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Security Rating&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Never&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;A&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Security Rating on New Code&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;A&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+  &lt;/section&gt;
+  &lt;section class=&quot;col-lg-5&quot;&gt;
+
+    &lt;h3&gt;Gold Quality Gate&lt;/h3&gt;
+    &lt;p&gt;The &lt;em&gt;Gold level&lt;/em&gt; is reserved for the applications and codebases that take the next leap above the
+      industry standard.&lt;/p&gt;
+    &lt;p&gt;Developers of &lt;em&gt;Gold apps&lt;/em&gt; are reaching for excellence and demonstrating a very high level of code
+      quality. They have a very real opportunity to take the next step to excellence.&lt;/p&gt;
+
+  &lt;/section&gt;
+  &lt;section class=&quot;col-lg-7&quot;&gt;
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th width=&quot;40%&quot;&gt;Metric&lt;/th&gt;
+          &lt;th width=&quot;20%&quot;&gt;On New Code&lt;/th&gt;
+          &lt;th width=&quot;20%&quot;&gt;Operator&lt;/th&gt;
+          &lt;th width=&quot;10%&quot;&gt;Warning&lt;/th&gt;
+          &lt;th width=&quot;10%&quot;&gt;Error&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Blocker Issues&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Yes&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is greater than&lt;/td&gt;
+          &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;0&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Coverage&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;No&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is less than&lt;/td&gt;
+          &lt;td&gt;90%&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;85%&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Coverage on New Code&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is less than&lt;/td&gt;
+          &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;90%&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Critical Issues&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Yes&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is greater than&lt;/td&gt;
+          &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;0&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Duplicated Lines (%)&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;No&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is greater than&lt;/td&gt;
+          &lt;td&gt;0%&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;3%&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Duplicated Lines on New Code (%)&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is greater than&lt;/td&gt;
+          &lt;td&gt;0%&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;1%&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Maintainability Rating&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Never&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;A&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Maintainability Rating on New Code&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;A&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Reliability Rating&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Never&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;A&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Reliability Rating on New Code&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;A&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Security Rating&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Never&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;A&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Security Rating on New Code&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;A&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+  &lt;/section&gt;
+  &lt;section class=&quot;col-lg-5&quot;&gt;
+    &lt;h3&gt;Silver Quality Gate&lt;/h3&gt;
+    &lt;p&gt;&lt;em&gt;Silver status&lt;/em&gt; represents the industry standard and should be the baseline that every application
+      and codebase aim to achieve.&lt;/p&gt;
+    &lt;p&gt;Most apps should fall into this category. When quality gates below this are applicable to more apps, there
+      should be unrest. While it is acceptable for an app to remain indefinitely at &lt;em&gt;Silver status&lt;/em&gt;, it is
+      totally unacceptable for an app to remain at any lower level.&lt;/p&gt;
+
+  &lt;/section&gt;
+  &lt;section class=&quot;col-lg-7&quot;&gt;
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th width=&quot;40%&quot;&gt;Metric&lt;/th&gt;
+          &lt;th width=&quot;20%&quot;&gt;On New Code&lt;/th&gt;
+          &lt;th width=&quot;20%&quot;&gt;Operator&lt;/th&gt;
+          &lt;th width=&quot;10%&quot;&gt;Warning&lt;/th&gt;
+          &lt;th width=&quot;10%&quot;&gt;Error&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Blocker Issues&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Yes&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is greater than&lt;/td&gt;
+          &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;0&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Coverage&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;No&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is less than&lt;/td&gt;
+          &lt;td&gt;85%&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;80%&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Coverage on New Code&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is less than&lt;/td&gt;
+          &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;85%&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Critical Issues&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;No&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is greater than&lt;/td&gt;
+          &lt;td&gt;5&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;10&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Duplicated Lines (%)&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;No&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is greater than&lt;/td&gt;
+          &lt;td&gt;1%&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;5%&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Duplicated Lines on New Code (%)&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is greater than&lt;/td&gt;
+          &lt;td&gt;0%&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;3%&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Maintainability Rating&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Never&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;A&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;B&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Maintainability Rating on New Code&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;A&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;New Critical Issues&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is greater than&lt;/td&gt;
+          &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;0&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Reliability Rating&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Never&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;A&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;B&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Reliability Rating on New Code&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;A&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Security Rating&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Never&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;A&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Security Rating on New Code&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;A&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+  &lt;/section&gt;
+  &lt;section class=&quot;col-lg-5&quot;&gt;
+    &lt;h3&gt;Bronze Quality Gate&lt;/h3&gt;
+    &lt;p&gt;Applications and codebases achieving &lt;em&gt;Bronze status&lt;/em&gt; are on the precipice of industry standard
+      acceptability, but falling short in some key areas.&lt;/p&gt;
+    &lt;p&gt;Developers of &lt;em&gt;Bronze apps&lt;/em&gt; should not remain bronze for long, as the industry standard is well
+      within reach and only complacence can keep them from it.&lt;/p&gt;
+
+  &lt;/section&gt;
+  &lt;section class=&quot;col-lg-7&quot;&gt;
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th width=&quot;40%&quot;&gt;Metric&lt;/th&gt;
+          &lt;th width=&quot;20%&quot;&gt;On New Code&lt;/th&gt;
+          &lt;th width=&quot;20%&quot;&gt;Operator&lt;/th&gt;
+          &lt;th width=&quot;10%&quot;&gt;Warning&lt;/th&gt;
+          &lt;th width=&quot;10%&quot;&gt;Error&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Blocker Issues&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Yes&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is greater than&lt;/td&gt;
+          &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;0&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Coverage&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;No&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is less than&lt;/td&gt;
+          &lt;td&gt;80%&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;70%&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Coverage on New Code&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is less than&lt;/td&gt;
+          &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;80%&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Critical Issues&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;No&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is greater than&lt;/td&gt;
+          &lt;td&gt;15&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;30&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Duplicated Lines (%)&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;No&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is greater than&lt;/td&gt;
+          &lt;td&gt;5%&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;10%&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Duplicated Lines on New Code (%)&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is greater than&lt;/td&gt;
+          &lt;td&gt;0%&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;5%&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Maintainability Rating&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Never&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;B&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;C&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Maintainability Rating on New Code&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;A&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;New Critical Issues&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is greater than&lt;/td&gt;
+          &lt;td&gt;1&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;5&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Reliability Rating&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Never&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;B&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;C&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Reliability Rating on New Code&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;A&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Security Rating&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Never&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;A&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;B&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Security Rating on New Code&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;A&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+  &lt;/section&gt;
+  &lt;section class=&quot;col-lg-5&quot;&gt;
+    &lt;h3&gt;Iron Quality Gate&lt;/h3&gt;
+    &lt;p&gt;The &lt;em&gt;Iron level&lt;/em&gt; is for applications and codebases that have a concerning lack of code quality, but
+      preventions of it getting any worse.&lt;/p&gt;
+
+  &lt;/section&gt;
+  &lt;section class=&quot;col-lg-7&quot;&gt;
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th width=&quot;40%&quot;&gt;Metric&lt;/th&gt;
+          &lt;th width=&quot;20%&quot;&gt;On New Code&lt;/th&gt;
+          &lt;th width=&quot;20%&quot;&gt;Operator&lt;/th&gt;
+          &lt;th width=&quot;10%&quot;&gt;Warning&lt;/th&gt;
+          &lt;th width=&quot;10%&quot;&gt;Error&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Blocker Issues&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;No&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is greater than&lt;/td&gt;
+          &lt;td&gt;0&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;5&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Coverage&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;No&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is less than&lt;/td&gt;
+          &lt;td&gt;70%&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;60%&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Coverage on New Code&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is less than&lt;/td&gt;
+          &lt;td&gt;80%&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;70%&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Critical Issues&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;No&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is greater than&lt;/td&gt;
+          &lt;td&gt;20&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;40&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Duplicated Lines (%)&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;No&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is greater than&lt;/td&gt;
+          &lt;td&gt;10%&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;20%&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Duplicated Lines on New Code (%)&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is greater than&lt;/td&gt;
+          &lt;td&gt;0%&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;10%&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Maintainability Rating&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Never&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;B&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;C&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Maintainability Rating on New Code&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;A&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;B&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;New Blocker Issues&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is greater than&lt;/td&gt;
+          &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;0&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;New Critical Issues&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is greater than&lt;/td&gt;
+          &lt;td&gt;1&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;10&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Reliability Rating&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Never&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;B&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;C&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Reliability Rating on New Code&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;A&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;B&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Security Rating&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Never&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;A&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;B&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Security Rating on New Code&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;A&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;B&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+  &lt;/section&gt;
+  &lt;section class=&quot;col-lg-5&quot;&gt;
+    &lt;h3&gt;Stone Quality Gate&lt;/h3&gt;
+    &lt;p&gt;&lt;em&gt;Stone status&lt;/em&gt;&lt;span&gt; is for applications and codebases that have a seriously alarming lack of code
+        quality. The are preventions of it getting any worse, but the situation needs immediate attention.&lt;/span&gt;&lt;/p&gt;
+
+  &lt;/section&gt;
+  &lt;section class=&quot;col-lg-7&quot;&gt;
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th width=&quot;40%&quot;&gt;Metric&lt;/th&gt;
+          &lt;th width=&quot;20%&quot;&gt;On New Code&lt;/th&gt;
+          &lt;th width=&quot;20%&quot;&gt;Operator&lt;/th&gt;
+          &lt;th width=&quot;10%&quot;&gt;Warning&lt;/th&gt;
+          &lt;th width=&quot;10%&quot;&gt;Error&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Blocker Issues&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;No&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is greater than&lt;/td&gt;
+          &lt;td&gt;0&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;10&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Coverage&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;No&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is less than&lt;/td&gt;
+          &lt;td&gt;60%&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;50%&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Coverage on New Code&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is less than&lt;/td&gt;
+          &lt;td&gt;70%&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;60%&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Critical Issues&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;No&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is greater than&lt;/td&gt;
+          &lt;td&gt;30&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;50&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Duplicated Lines (%)&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;No&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is greater than&lt;/td&gt;
+          &lt;td&gt;20%&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;30%&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Duplicated Lines on New Code (%)&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is greater than&lt;/td&gt;
+          &lt;td&gt;10%&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;20%&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Maintainability Rating&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Never&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;C&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;D&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Maintainability Rating on New Code&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;B&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;C&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;New Blocker Issues&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is greater than&lt;/td&gt;
+          &lt;td&gt;0&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;5&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;New Critical Issues&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is greater than&lt;/td&gt;
+          &lt;td&gt;5&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;15&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Reliability Rating&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Never&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;C&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;D&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Reliability Rating on New Code&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;B&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;C&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Security Rating&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Never&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;B&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;C&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Security Rating on New Code&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;B&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;C&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+  &lt;/section&gt;
+  &lt;section class=&quot;col-lg-5&quot;&gt;
+    &lt;h3&gt;Wood Quality Gate&lt;/h3&gt;
+    &lt;p&gt;Software that is capable of spontaneous combustion at a second glance. The &lt;em&gt;Wood status&lt;/em&gt; is no status
+      at all really. The situation will either improve or be relegated to the &lt;em&gt;bonfire of bad software&lt;/em&gt;.&lt;/p&gt;
+
+  &lt;/section&gt;
+  &lt;section class=&quot;col-lg-7&quot;&gt;
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th width=&quot;40%&quot;&gt;Metric&lt;/th&gt;
+          &lt;th width=&quot;20%&quot;&gt;On New Code&lt;/th&gt;
+          &lt;th width=&quot;20%&quot;&gt;Operator&lt;/th&gt;
+          &lt;th width=&quot;10%&quot;&gt;Warning&lt;/th&gt;
+          &lt;th width=&quot;10%&quot;&gt;Error&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Blocker Issues&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;No&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is greater than&lt;/td&gt;
+          &lt;td&gt;10&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;20&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Coverage&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;No&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is less than&lt;/td&gt;
+          &lt;td&gt;50%&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;40%&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Coverage on New Code&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is less than&lt;/td&gt;
+          &lt;td&gt;60%&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;50%&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Critical Issues&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;No&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is greater than&lt;/td&gt;
+          &lt;td&gt;40&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;60&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Duplicated Lines (%)&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;No&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is greater than&lt;/td&gt;
+          &lt;td&gt;30%&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;40%&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Duplicated Lines on New Code (%)&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is greater than&lt;/td&gt;
+          &lt;td&gt;20%&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;30%&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Maintainability Rating&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Never&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;C&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;D&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Maintainability Rating on New Code&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;C&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;D&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;New Blocker Issues&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is greater than&lt;/td&gt;
+          &lt;td&gt;0&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;10&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;New Critical Issues&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is greater than&lt;/td&gt;
+          &lt;td&gt;10&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;20&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Reliability Rating&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Never&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;C&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;D&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Reliability Rating on New Code&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;C&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;D&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Security Rating&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Never&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;C&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;D&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Security Rating on New Code&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Always&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;is worse than&lt;/td&gt;
+          &lt;td&gt;C&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;D&lt;/strong&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+  &lt;/section&gt;
+&lt;/section&gt;
+</description>
+        <pubDate>Tue, 18 Sep 2018 02:00:00 -0400</pubDate>
+        <link>https://seantrane.github.io/posts/using-sonar-quality-gates-18261/</link>
+        <guid isPermaLink="true">https://seantrane.github.io/posts/using-sonar-quality-gates-18261/</guid>
+        
+        
+        <category>DevOps</category>
+        
+        <category>Engineering</category>
+        
+        <category>Security</category>
+        
+      </item>
+    
+      <item>
+        <title>GitHub Labels that are logical, colorful and sensible</title>
+        <description>&lt;p&gt;The default GitHub Labels are, well… not ideal. This has been described many times:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://medium.com/@dave_lunny/sane-github-labels-c5d2e6004b63&quot;&gt;Sane GitHub Labels&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://robinpowered.com/blog/best-practice-system-for-organizing-and-tagging-github-issues/&quot;&gt;How we organize GitHub issues: A simple styleguide for tagging&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;There are many very good examples of GitHub Label strategies. Almost all of them are an improvement over the default. But for several reasons or another few, in practice, none of them have felt truly great or sustainable.&lt;/p&gt;
+
+&lt;h2 id=&quot;principles&quot;&gt;Principles&lt;/h2&gt;
+
+&lt;p&gt;The &lt;em&gt;presets&lt;/em&gt; were designed according to the following thoughts and principles:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;GitHub Labels are used for both Issues and Pull Requests (PR), therefore the label context should be agnostic.&lt;/li&gt;
+  &lt;li&gt;An Issue/PR without labels should not require labels to solicit attention, therefore the default state should be label-less.&lt;/li&gt;
+  &lt;li&gt;Issue/PR labels should only provide important context; priority, effort and the state of solution and/or decision-making.&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;“High Priority”&lt;/em&gt;, sure, but &lt;em&gt;“Low Priority”&lt;/em&gt; is a joke; go label-less instead.&lt;/li&gt;
+  &lt;li&gt;Labels and their associated colors should have a logical connection that is intuitive at-a-glance.&lt;/li&gt;
+  &lt;li&gt;Labels should be lowercase. It’s easier to type and less competitive with Label-names.&lt;/li&gt;
+  &lt;li&gt;Prefixes matter. Labels get chaotic without them. The chosen are;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;effort&lt;/code&gt; = relative effort involved, fibonacci from &lt;code class=&quot;highlighter-rouge&quot;&gt;1&lt;/code&gt; to &lt;code class=&quot;highlighter-rouge&quot;&gt;13&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;priority&lt;/code&gt; = designate immediacy; &lt;code class=&quot;highlighter-rouge&quot;&gt;now&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;2day&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;soon&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;state&lt;/code&gt; = describe decision; &lt;code class=&quot;highlighter-rouge&quot;&gt;approved&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;blocked&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;inactive&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;pending&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;type&lt;/code&gt; = describe type; &lt;code class=&quot;highlighter-rouge&quot;&gt;bug&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;chore&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;discussion&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;docs&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;feature&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;fix&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;security&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;testing&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;work&lt;/code&gt; = describe situation; &lt;code class=&quot;highlighter-rouge&quot;&gt;chaotic&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;complex&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;complicated&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;obvious&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;The only labels without prefixes are; &lt;code class=&quot;highlighter-rouge&quot;&gt;breaking&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;good first issue&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;greenkeeper&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;help&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;semantic-release&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;label-groups&quot;&gt;Label Groups&lt;/h2&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Standard&lt;/th&gt;
+      &lt;th&gt;Effort&lt;/th&gt;
+      &lt;th&gt;Priority&lt;/th&gt;
+      &lt;th&gt;State&lt;/th&gt;
+      &lt;th&gt;Type&lt;/th&gt;
+      &lt;th&gt;Work&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Standard labels commonly used in most repositories.&lt;/td&gt;
+      &lt;td&gt;Describes the relative effort to complete an issue or pull request.&lt;/td&gt;
+      &lt;td&gt;Priority labels, but focused on describing the immediacy of attention required.&lt;/td&gt;
+      &lt;td&gt;Describes the &lt;em&gt;decision&lt;/em&gt; state of the issue or pull request.&lt;/td&gt;
+      &lt;td&gt;Describes the &lt;em&gt;type&lt;/em&gt; of issue or pull request.&lt;/td&gt;
+      &lt;td&gt;Describes the kind of work involved in resolving the issue, using the &lt;a href=&quot;https://en.wikipedia.org/wiki/Cynefin_framework&quot;&gt;Cynefin framework&lt;/a&gt;.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;img src=&quot;https://github.com/seantrane/github-label-presets/raw/master/docs/images/github-labels-standard.png&quot; alt=&quot;Standard Labels&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;https://github.com/seantrane/github-label-presets/raw/master/docs/images/github-labels-effort.png&quot; alt=&quot;Effort Labels&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;https://github.com/seantrane/github-label-presets/raw/master/docs/images/github-labels-priority.png&quot; alt=&quot;Priority Labels&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;https://github.com/seantrane/github-label-presets/raw/master/docs/images/github-labels-state.png&quot; alt=&quot;State Labels&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;https://github.com/seantrane/github-label-presets/raw/master/docs/images/github-labels-type.png&quot; alt=&quot;Type Labels&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;https://github.com/seantrane/github-label-presets/raw/master/docs/images/github-labels-work.png&quot; alt=&quot;Work Labels&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h2 id=&quot;how-it-works&quot;&gt;How It Works&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/Financial-Times/github-label-sync&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;github-label-sync&lt;/code&gt;&lt;/a&gt; is used to &lt;em&gt;synchronize your GitHub labels with as few destructive operations as possible - similar labels get renamed&lt;/em&gt;.&lt;/li&gt;
+  &lt;li&gt;The &lt;a href=&quot;https://github.com/Financial-Times/github-label-sync#label-json&quot;&gt;label config&lt;/a&gt; is loaded via path or URL, or more specifically; the config file supplied by &lt;a href=&quot;https://github.com/seantrane/github-label-presets&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;@seantrane/github-label-presets&lt;/code&gt;&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;github-label-sync -l 'https://git.io/fAe5i' ${GITHUB_NAME}/${REPO}&lt;/code&gt; command is run to have the label config applied to &lt;em&gt;your&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;profile/repo&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;The command can be run anywhere and anytime, but it’s recommended during a CI plan. This will automatically keep your labels clean and synchronized with your chosen configuration - depending on how often your plan is run, of course.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;usage&quot;&gt;Usage&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Required:&lt;/strong&gt; &lt;a href=&quot;https://github.com/settings/tokens&quot;&gt;Generate a GitHub Access Token&lt;/a&gt;, provide it via &lt;code class=&quot;highlighter-rouge&quot;&gt;GITHUB_ACCESS_TOKEN&lt;/code&gt; environment variable. &lt;em&gt;If you cannot provide token as env-var, you may also pass it via CLI.&lt;/em&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Install &lt;code class=&quot;highlighter-rouge&quot;&gt;npm install -g github-label-sync&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Dry-run &lt;code class=&quot;highlighter-rouge&quot;&gt;github-label-sync -d -l 'https://git.io/fAe5i' ${GITHUB_NAME}/${REPO}&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;github-label-sync -l 'https://git.io/fAe5i' ${GITHUB_NAME}/${REPO}&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;optional:&lt;/em&gt; provide token via param; &lt;code class=&quot;highlighter-rouge&quot;&gt;github-label-sync -a ${GITHUB_TOKEN} -l ...&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;cicd&quot;&gt;CI/CD&lt;/h3&gt;
+
+&lt;p&gt;You can use your CI/CD process to automate the periodic syncing of your repository labels. This can help persist order automatically.&lt;/p&gt;
+
+&lt;h4 id=&quot;travis-ci&quot;&gt;Travis CI&lt;/h4&gt;
+
+&lt;p&gt;Make sure &lt;code class=&quot;highlighter-rouge&quot;&gt;GITHUB_ACCESS_TOKEN&lt;/code&gt; env-var is available.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;na&quot;&gt;before_install&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;npm install -g github-label-sync&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;github-label-sync -d -l 'https://git.io/fAe5i' ${GITHUB_NAME}/${REPO}&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;deploy&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;provider&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;script&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;github-label-sync -l 'https://git.io/fAe5i' ${GITHUB_NAME}/${REPO}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3 id=&quot;config-your-own&quot;&gt;Config your own…&lt;/h3&gt;
+
+&lt;p&gt;You can provide your own &lt;code class=&quot;highlighter-rouge&quot;&gt;labels.json&lt;/code&gt; via the &lt;code class=&quot;highlighter-rouge&quot;&gt;[ -l, --lables ]&lt;/code&gt; argument.&lt;/p&gt;
+
+</description>
+        <pubDate>Sat, 18 Aug 2018 02:00:00 -0400</pubDate>
+        <link>https://seantrane.github.io/posts/logical-colorful-github-labels-18230/</link>
+        <guid isPermaLink="true">https://seantrane.github.io/posts/logical-colorful-github-labels-18230/</guid>
+        
+        
+        <category>Engineering</category>
+        
+        <category>Project Management</category>
+        
+      </item>
+    
+      <item>
+        <title>AI System for Normal Conversation</title>
+        <description>&lt;p&gt;&lt;a href=&quot;https://ai.googleblog.com/2018/05/duplex-ai-system-for-natural-conversation.html&quot;&gt;Google Duplex: An AI System for Accomplishing Real-World Tasks Over the Phone&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Thu, 10 May 2018 02:00:00 -0400</pubDate>
+        <link>https://seantrane.github.io/posts/ai-for-normal-conversation-18130/</link>
+        <guid isPermaLink="true">https://seantrane.github.io/posts/ai-for-normal-conversation-18130/</guid>
+        
+        
+        <category>Technology</category>
+        
+      </item>
+    
+      <item>
+        <title>Failing badly at Microservices</title>
+        <description>&lt;p&gt;This is a very funny &lt;a href=&quot;https://www.youtube.com/watch?v=X0tjziAQfNQ&quot;&gt;presentation&lt;/a&gt; given by &lt;a href=&quot;https://github.com/koenighotze&quot;&gt;David Schmitz&lt;/a&gt; at &lt;a href=&quot;https://www.youtube.com/channel/UCCBVCTuk6uJrN3iFV_3vurg&quot;&gt;Devoxx&lt;/a&gt;, originally published on 
+30th August 2017.&lt;/p&gt;
+
+&lt;h2 id=&quot;10-tips-for-failing-badly-at-microservices-by-david-schmitz&quot;&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=X0tjziAQfNQ&quot;&gt;10 Tips for failing badly at Microservices by David Schmitz&lt;/a&gt;&lt;/h2&gt;
+
+&lt;style&gt;
+.embed-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
+}
+.embed-container iframe,
+.embed-container object,
+.embed-container embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+&lt;/style&gt;
+
+&lt;div class=&quot;embed-container&quot;&gt;
+  &lt;iframe title=&quot;YouTube video player&quot; width=&quot;640&quot; height=&quot;390&quot; src=&quot;http://www.youtube.com/embed/X0tjziAQfNQ&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+
+</description>
+        <pubDate>Mon, 30 Apr 2018 02:00:00 -0400</pubDate>
+        <link>https://seantrane.github.io/posts/failing-badly-at-microservices-18120/</link>
+        <guid isPermaLink="true">https://seantrane.github.io/posts/failing-badly-at-microservices-18120/</guid>
+        
+        
+        <category>Engineering</category>
+        
+        <category>Technology</category>
+        
+        <category>Video</category>
+        
+      </item>
+    
+      <item>
+        <title>Creating User Macros on Confluence</title>
+        <description>&lt;p&gt;Here are &lt;a href=&quot;https://gist.github.com/seantrane/2db794f66048642c68da83a318d8ac02&quot;&gt;some User Macros&lt;/a&gt; for Atlassian Confluence.&lt;/p&gt;
+
+&lt;h2 id=&quot;aui-button&quot;&gt;AUI Button&lt;/h2&gt;
+
+&lt;noscript&gt;&lt;pre&gt;## Macro name: aui-button
+## Macro title: AUI Button
+## Macro description: Add a &amp;quot;default&amp;quot; call-to-action button.
+## Macro has a body: N
+## @param Title:title=Title|type=string|required=true
+## @param URL:title=URL|type=string|required=true
+
+&amp;lt;a href=&amp;quot;$paramURL&amp;quot;&amp;gt;&amp;lt;button class=&amp;quot;aui-button&amp;quot;&amp;gt;$paramTitle&amp;lt;/button&amp;gt;&amp;lt;/a&amp;gt;
+&lt;/pre&gt;&lt;/noscript&gt;
+&lt;script src=&quot;https://gist.github.com/2db794f66048642c68da83a318d8ac02.js?file=aui-button.vm&quot;&gt; &lt;/script&gt;
+
+&lt;h2 id=&quot;aui-header-nav&quot;&gt;AUI Header Nav&lt;/h2&gt;
+
+&lt;noscript&gt;&lt;pre&gt;## Macro name: aui-header-nav
+## Macro title: AUI Header Nav
+## Macro description: Add a nav-bar header.
+## Macro has a body: Y
+## Body processing: Rendered
+## Output: Rendered
+##
+## Developed by: Sean Sciarrone
+## Date created: 2018-02-01
+## Installed by: Sean Sciarrone
+
+## @noparams
+
+&amp;lt;nav class=&amp;quot;aui-header&amp;quot;&amp;gt;
+  &amp;lt;ul class=&amp;quot;aui-nav&amp;quot;&amp;gt;
+    $body
+  &amp;lt;/ul&amp;gt;
+&amp;lt;/nav&amp;gt;
+&lt;/pre&gt;&lt;/noscript&gt;
+&lt;script src=&quot;https://gist.github.com/2db794f66048642c68da83a318d8ac02.js?file=aui-header-nav.vm&quot;&gt; &lt;/script&gt;
+
+&lt;h2 id=&quot;aui-nav-list-item&quot;&gt;AUI Nav List Item&lt;/h2&gt;
+
+&lt;noscript&gt;&lt;pre&gt;## Macro name: aui-nav-list-item
+## Macro title: AUI Nav List Item
+## Macro description: Add a linked list item to nav.
+## Macro has a body: N
+
+## @param Title:title=Title|type=string|required=true
+## @param URL:title=URL|type=string|required=true
+
+&amp;lt;li&amp;gt;&amp;lt;a href=&amp;quot;$paramURL&amp;quot;&amp;gt;$paramTitle&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;
+&lt;/pre&gt;&lt;/noscript&gt;
+&lt;script src=&quot;https://gist.github.com/2db794f66048642c68da83a318d8ac02.js?file=aui-nav-list-item.vm&quot;&gt; &lt;/script&gt;
+
+</description>
+        <pubDate>Thu, 01 Feb 2018 01:00:00 -0500</pubDate>
+        <link>https://seantrane.github.io/posts/creating-user-macros-on-confluence-18032/</link>
+        <guid isPermaLink="true">https://seantrane.github.io/posts/creating-user-macros-on-confluence-18032/</guid>
+        
+        
+        <category>Content Management</category>
+        
+        <category>Project Management</category>
+        
+      </item>
+    
+  </channel>
+</rss>
