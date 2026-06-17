@@ -53,7 +53,10 @@ jobs:
         # https://github.com/docker/setup-compose-action/releases/tag/v2.2.0
         uses: docker/setup-compose-action@16feee727cbdc83b6a014e6cc26fec4a79bcf30c
       - name: Build with Jekyll
-        run: docker compose build
+        run: |
+          echo "JEKYLL_ENV=${JEKYLL_ENV}" >> .env
+          echo "JEKYLL_GITHUB_TOKEN=${JEKYLL_GITHUB_TOKEN}" >> .env
+          docker compose build
         env:
           JEKYLL_ENV: production
           JEKYLL_GITHUB_TOKEN: ${{ secrets.GH_API_TOKEN || secrets.GITHUB_TOKEN }}
