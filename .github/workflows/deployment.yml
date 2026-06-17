@@ -41,11 +41,22 @@ jobs:
         id: pages
         # https://github.com/actions/configure-pages/releases/tag/v6.0.0
         uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d
+        with:
+          token: ${{ secrets.GH_TOKEN || secrets.GH_PAT || secrets.GITHUB_TOKEN }}
       - name: Build with Jekyll
         # Outputs to the './_site' directory by default
-        run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
+        run: bundle install && bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
         env:
           JEKYLL_ENV: production
+          JEKYLL_GITHUB_TOKEN: ${{ secrets.GH_API_TOKEN || secrets.GITHUB_TOKEN }}
+      # - name: Set up Docker Compose
+      #   # https://github.com/docker/setup-compose-action/releases/tag/v2.2.0
+      #   uses: docker/setup-compose-action@16feee727cbdc83b6a014e6cc26fec4a79bcf30c
+      # - name: Build with Jekyll
+      #   run: docker compose build
+      #   env:
+      #     JEKYLL_ENV: production
+      #     JEKYLL_GITHUB_TOKEN: ${{ secrets.GH_API_TOKEN || secrets.GITHUB_TOKEN }}
       - name: Upload artifact
         # Automatically uploads an artifact from the './_site' directory by default
         # https://github.com/actions/upload-pages-artifact/releases/tag/v5.0.0
