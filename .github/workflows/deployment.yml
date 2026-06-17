@@ -16,7 +16,7 @@ permissions:
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
-  group: "pages"
+  group: pages
   cancel-in-progress: false
 
 jobs:
@@ -33,7 +33,7 @@ jobs:
         # https://github.com/ruby/setup-ruby/releases/tag/v1.313.0
         uses: ruby/setup-ruby@89f90524b88a01fe6e0b732220432cc6142926af
         with:
-          ruby-version: "3.4" # Not needed with a .ruby-version, .tool-versions or mise.toml
+          ruby-version: '3.4' # Not needed with a .ruby-version, .tool-versions or mise.toml
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
           cache-version: 0 # Increment this number if you need to re-download cached gems
       - name: Setup Pages
