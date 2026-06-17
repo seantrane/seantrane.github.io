@@ -1,0 +1,63 @@
+---
+name: Deploy GitHub Pages
+
+# [Trigger events](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows)
+# [Event schema](https://docs.github.com/en/webhooks/webhook-events-and-payloads)
+on:
+  # push:
+  #   branches: ['main']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ${{ fromJson(vars.GH_RUNNER || '["ubuntu-latest"]') }}
+    steps:
+      - name: Checkout
+        # https://github.com/actions/checkout/releases/tag/v6.0.3
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
+        with:
+          repository: ${{ github.repository }}-dev # Private repo with Jekyll config/site
+          token: ${{ secrets.GH_TOKEN || secrets.GH_PAT || secrets.GITHUB_TOKEN }} # Token for private repo
+      - name: Setup Ruby
+        # https://github.com/ruby/setup-ruby/releases/tag/v1.313.0
+        uses: ruby/setup-ruby@89f90524b88a01fe6e0b732220432cc6142926af
+        with:
+          ruby-version: "3.4" # Not needed with a .ruby-version, .tool-versions or mise.toml
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+          cache-version: 0 # Increment this number if you need to re-download cached gems
+      - name: Setup Pages
+        id: pages
+        # https://github.com/actions/configure-pages/releases/tag/v6.0.0
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d
+      - name: Build with Jekyll
+        # Outputs to the './_site' directory by default
+        run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
+        env:
+          JEKYLL_ENV: production
+      - name: Upload artifact
+        # Automatically uploads an artifact from the './_site' directory by default
+        # https://github.com/actions/upload-pages-artifact/releases/tag/v5.0.0
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ${{ fromJson(vars.GH_RUNNER || '["ubuntu-latest"]') }}
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        # https://github.com/actions/deploy-pages/releases/tag/v5.0.0
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128
