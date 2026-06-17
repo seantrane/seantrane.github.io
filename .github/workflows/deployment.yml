@@ -56,7 +56,7 @@ jobs:
         run: |
           echo "JEKYLL_ENV=${JEKYLL_ENV}" >> .env
           echo "JEKYLL_GITHUB_TOKEN=${JEKYLL_GITHUB_TOKEN}" >> .env
-          docker-compose run jekyll sh -c "bundle install && bundle exec jekyll build || exit 1"
+          docker compose run jekyll sh -c "bundle install && bundle exec jekyll build || exit 1"
         env:
           JEKYLL_ENV: production
           JEKYLL_GITHUB_TOKEN: ${{ secrets.GH_API_TOKEN || secrets.GITHUB_TOKEN }}
