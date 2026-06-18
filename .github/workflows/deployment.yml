@@ -19,6 +19,9 @@ concurrency:
   group: pages
   cancel-in-progress: false
 
+env:
+  BASE_URL: https://seantrane.github.io
+
 jobs:
   build:
     runs-on: ${{ fromJson(vars.GH_RUNNER || '["ubuntu-latest"]') }}
@@ -30,6 +33,8 @@ jobs:
           repository: ${{ github.repository }}-dev # Private repo with Jekyll config/site
           ref: main
           token: ${{ secrets.GH_TOKEN || secrets.GH_PAT || secrets.GITHUB_TOKEN }} # Token for private repo
+
+      # TECHNIQUE #1:
       # - name: Setup Ruby
       #   # https://github.com/ruby/setup-ruby/releases/tag/v1.313.0
       #   uses: ruby/setup-ruby@89f90524b88a01fe6e0b732220432cc6142926af
@@ -45,21 +50,40 @@ jobs:
       #     token: ${{ secrets.GH_TOKEN || secrets.GH_PAT || secrets.GITHUB_TOKEN }}
       # - name: Build with Jekyll
       #   # Outputs to the './_site' directory by default
-      #   run: bundle install && bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
+      #   run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
       #   env:
       #     JEKYLL_ENV: production
       #     JEKYLL_GITHUB_TOKEN: ${{ secrets.GH_API_TOKEN || secrets.GITHUB_TOKEN }}
-      - name: Set up Docker Compose
-        # https://github.com/docker/setup-compose-action/releases/tag/v2.2.0
-        uses: docker/setup-compose-action@16feee727cbdc83b6a014e6cc26fec4a79bcf30c
+
+      # TECHNIQUE #2:
+      - name: Setup Ruby
+        # https://github.com/ruby/setup-ruby/releases/tag/v1.313.0
+        uses: ruby/setup-ruby@89f90524b88a01fe6e0b732220432cc6142926af
+        with:
+          # ruby-version: '3.4' # Not needed with a .ruby-version, .tool-versions or mise.toml
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+          cache-version: 0 # Increment this number if you need to re-download cached gems
       - name: Build with Jekyll
-        run: |
-          echo "JEKYLL_ENV=${JEKYLL_ENV}" >> .env
-          echo "JEKYLL_GITHUB_TOKEN=${JEKYLL_GITHUB_TOKEN}" >> .env
-          docker compose run jekyll sh -c "bundle install && bundle exec jekyll build || exit 1"
+        # Outputs to the './_site' directory by default
+        run: bundle exec jekyll build --baseurl "$BASE_URL"
         env:
+          BASE_URL: ${{ env.BASE_URL }}
           JEKYLL_ENV: production
           JEKYLL_GITHUB_TOKEN: ${{ secrets.GH_API_TOKEN || secrets.GITHUB_TOKEN }}
+
+      # TECHNIQUE #3:
+      # - name: Set up Docker Compose
+      #   # https://github.com/docker/setup-compose-action/releases/tag/v2.2.0
+      #   uses: docker/setup-compose-action@16feee727cbdc83b6a014e6cc26fec4a79bcf30c
+      # - name: Build with Jekyll
+      #   run: |
+      #     echo "JEKYLL_ENV=${JEKYLL_ENV}" >> .env
+      #     echo "JEKYLL_GITHUB_TOKEN=${JEKYLL_GITHUB_TOKEN}" >> .env
+      #     docker compose run jekyll sh -c "bundle install && bundle exec jekyll build || exit 1"
+      #   env:
+      #     JEKYLL_ENV: production
+      #     JEKYLL_GITHUB_TOKEN: ${{ secrets.GH_API_TOKEN || secrets.GITHUB_TOKEN }}
+
       - name: Upload artifact
         # Automatically uploads an artifact from the './_site' directory by default
         # https://github.com/actions/upload-pages-artifact/releases/tag/v5.0.0
