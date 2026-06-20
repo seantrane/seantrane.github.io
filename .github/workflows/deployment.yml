@@ -43,7 +43,7 @@ jobs:
         run: |
           BASE_URL=$(grep -m1 -E "^url:[[:space:]]*['\"]" _config.yml | sed -E "s/^url:[[:space:]]*['\"]([^'\"]*).*\$/\1/")
           bundle install --jobs=4
-          bundle exec jekyll build --baseurl "$BASE_URL"
+          bundle exec jekyll build
           ls -lahF --time-style=long-iso
           [[ -d ./_site ]] && ls -lahF --time-style=long-iso ./_site
         env:
