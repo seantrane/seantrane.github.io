@@ -24,8 +24,8 @@ jobs:
     runs-on: ${{ fromJson(vars.GH_RUNNER || '["ubuntu-latest"]') }}
     steps:
       - name: Checkout
-        # https://github.com/actions/checkout/releases/tag/v6.0.3
-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
+        # https://github.com/actions/checkout/releases/tag/v7.0.0
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
         with:
           repository: ${{ github.repository }}-dev # Private repo with Jekyll config/site
           ref: main
@@ -41,7 +41,7 @@ jobs:
       - name: Build with Jekyll
         # Outputs to the './_site' directory by default
         run: |
-          BASE_URL=$(grep -m1 -E "^url:[[:space:]]*['\"]" _config.yml | sed -E "s/^url:[[:space:]]*['\"]([^'\"]*).*\$/\1/")
+          SITE_URL=$(grep -m1 -E "^url:[[:space:]]*['\"]" _config.yml | sed -E "s/^url:[[:space:]]*['\"]([^'\"]*).*\$/\1/")
           bundle install --jobs=4
           bundle exec jekyll build
           ls -lahF --time-style=long-iso
